@@ -612,7 +612,10 @@ export const faqs: readonly Faq[] = [
   { q: "Is it free?", a: "Yes, every feature." },
   { q: "Does it need my PIN?", a: "It reads only your SMS." },
   { q: "Who sees my money?", a: "Only you." },
-  { q: "iPhone?", a: "Coming after the Android beta." },
+  {
+    q: "iPhone?",
+    a: "Coming after the Android beta. Sponsoring helps pay the App Store fee.",
+  },
   { q: "When can I start?", a: "Today. Download it for Android." },
   {
     q: "Does it work without internet?",
@@ -649,7 +652,7 @@ export const sponsor = {
 export const sponsorCosts: readonly Item[] = [
   {
     title: "Getting on the App Store",
-    body: "Apple charges US$99 a year before an app can be on the App Store. Until then, iPhone users can't install Pesa Clarity.",
+    body: "Apple charges US$99 a year to list an app. That puts Pesa Clarity on every iPhone, with updates from the App Store.",
   },
   {
     title: "Getting on Google Play",
