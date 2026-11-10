@@ -43,6 +43,8 @@ jobs:
           BASE_PATH: ${{ steps.pages.outputs.base_path }}
           # Which app release the download buttons use; empty means test-build.
           APP_RELEASE_TAG: ${{ vars.APP_RELEASE_TAG }}
+          # The CitaPay link the Sponsor page gives with; empty means "soon".
+          SPONSOR_URL: ${{ vars.SPONSOR_URL }}
           # Reads that release's version for the page (public data).
           GITHUB_TOKEN: ${{ github.token }}
       - uses: actions/upload-pages-artifact@v4

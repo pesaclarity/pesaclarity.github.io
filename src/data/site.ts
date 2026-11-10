@@ -447,7 +447,7 @@ export const screens = {
   home: {
     file: "home",
     name: "Home",
-    alt: "Pesa Clarity home screen showing safe to spend today, money left this month, the runway at this pace, what is left at month end and the financial health score",
+    alt: "Pesa Clarity home screen showing safe to spend today, money left this month, the runway at this pace, what is left at month end and the financial health score with its weakest part",
   },
   activity: {
     file: "activity",
@@ -612,7 +612,10 @@ export const faqs: readonly Faq[] = [
   { q: "Is it free?", a: "Yes, every feature." },
   { q: "Does it need my PIN?", a: "It reads only your SMS." },
   { q: "Who sees my money?", a: "Only you." },
-  { q: "iPhone?", a: "Coming after the Android beta." },
+  {
+    q: "iPhone?",
+    a: "Coming after the Android beta. Sponsoring helps pay the App Store fee.",
+  },
   { q: "When can I start?", a: "Today. Download it for Android." },
   {
     q: "Does it work without internet?",
@@ -631,5 +634,36 @@ export const faqs: readonly Faq[] = [
   {
     q: "Which download?",
     a: "Android has Google sign-in. F-Droid has no Google services.",
+  },
+];
+
+/**
+ * Sponsoring: one-time gifts by M-Pesa through CitaPay. `SPONSOR_URL` is the
+ * CitaPay tip-jar link, set as a repository variable; until it is set, the
+ * page says giving opens soon. Giving never unlocks anything in the app.
+ */
+export const sponsor = {
+  url: (import.meta.env.SPONSOR_URL as string | undefined) || "",
+  amounts: [50, 100, 200, 500],
+  provider: "CitaPay",
+} as const;
+
+/** What gifts pay for, most needed first. */
+export const sponsorCosts: readonly Item[] = [
+  {
+    title: "Getting on the App Store",
+    body: "Apple charges US$99 a year to list an app. That puts Pesa Clarity on every iPhone, with updates from the App Store.",
+  },
+  {
+    title: "Getting on Google Play",
+    body: "Google charges US$25, once. Then Android users get the app and its updates from Play instead of installing a file.",
+  },
+  {
+    title: "Keeping it running",
+    body: "The website, a web address of its own, and the text messages that carry sign-in codes for backups.",
+  },
+  {
+    title: "Time",
+    body: "New banks, fixes and features, built and tested by the people who make it.",
   },
 ];

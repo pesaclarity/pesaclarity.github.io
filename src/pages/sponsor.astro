@@ -1,0 +1,142 @@
+---
+import Base from "../layouts/Base.astro";
+import { links, sponsor, sponsorCosts } from "../data/site";
+---
+
+<Base
+  title="Sponsor Pesa Clarity"
+  description="Pesa Clarity is free, with no ads and no investors. A small gift helps get it onto the App Store and Google Play and keeps it running."
+>
+  <article class="container sponsor-page">
+    <div class="prose">
+      <p class="eyebrow">Sponsor</p>
+      <h1>Pesa Clarity is free. Help keep it that way.</h1>
+      <p class="statement">
+        No ads, no investors, no selling data. Your money data stays on your
+        phone. People who find it useful pay for the rest.
+      </p>
+    </div>
+
+    <section class="give card" aria-labelledby="give-title">
+      <h2 id="give-title">Buy us a coffee</h2>
+      <p class="muted">
+        One-time gifts by <span class="nowrap">M-Pesa</span>. Choose{" "}
+        {sponsor.amounts.map((a, i) => (
+          <>
+            <span class="number">{a.toLocaleString("en-KE")}</span>
+            {i < sponsor.amounts.length - 2
+              ? ", "
+              : i === sponsor.amounts.length - 2
+                ? " or "
+                : ""}
+          </>
+        ))}{" "}
+        shillings, or any amount.
+      </p>
+      {sponsor.url ? (
+        <div class="button-row">
+          <a class="button button-primary button-large" href={sponsor.url}>
+            Give with <span class="nowrap">M-Pesa</span>
+          </a>
+        </div>
+      ) : (
+        <p class="soon" data-sponsor="soon">
+          Giving by <span class="nowrap">M-Pesa</span> opens here soon. Until
+          then, a star on GitHub or telling a friend helps too.
+        </p>
+      )}
+      <p class="muted small">
+        Paid through {sponsor.provider}. <span class="nowrap">M-Pesa</span> asks
+        for your PIN as usual. Giving never unlocks anything: every feature is
+        free for everyone.
+      </p>
+    </section>
+
+    <section class="why" aria-labelledby="why-title">
+      <h2 id="why-title">Why we need it</h2>
+      <p class="muted">
+        The app is built in the open and costs little to run, but getting it to
+        everyone costs money.
+      </p>
+      <ul class="cards" role="list">
+        {sponsorCosts.map((c) => (
+          <li class="card-item">
+            <h3>{c.title}</h3>
+            <p>{c.body}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="muted">
+        Each year we will post what came in and what it paid for.
+      </p>
+    </section>
+
+    <section class="prose" aria-labelledby="privacy-title">
+      <h2 id="privacy-title">Your gift and your privacy</h2>
+      <p>
+        {sponsor.provider} handles the payment and sees what any{" "}
+        <span class="nowrap">M-Pesa</span> payment shows: your phone number, the
+        name on the account and the amount. We get the same details for our
+        records. We never sell or share them, and nothing from the app is sent
+        when you give.
+      </p>
+      <p class="warning">
+        We never call you, never send an <span class="nowrap">M-Pesa</span>{" "}
+        request you didn't start, and never ask for your PIN.
+      </p>
+    </section>
+
+    <section class="prose" aria-labelledby="other-title">
+      <h2 id="other-title">Other ways to help</h2>
+      <ul>
+        <li>
+          <a href={links.star}>Star the app on GitHub</a>, so more people find
+          it.
+        </li>
+        <li>
+          <a href={links.parserContributing}>Add your bank</a>, so its messages
+          are read too.
+        </li>
+        <li>
+          <a href={links.appIssues}>Report a bug</a> or{" "}
+          <a href={links.contribute}>help build it</a>.
+        </li>
+      </ul>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .sponsor-page {
+    display: grid;
+    gap: var(--space-7);
+    padding-block: var(--space-7);
+  }
+
+  .give {
+    display: grid;
+    gap: var(--space-3);
+    max-width: 40rem;
+  }
+
+  .give h2,
+  .why h2 {
+    margin: 0;
+  }
+
+  .soon {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .small {
+    font-size: 0.875rem;
+    margin: 0;
+  }
+
+  .warning {
+    padding: var(--space-3) var(--space-4);
+    border-radius: 1rem;
+    background: color-mix(in srgb, var(--color-warning) 12%, transparent);
+  }
+</style>

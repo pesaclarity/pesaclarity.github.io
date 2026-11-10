@@ -88,7 +88,7 @@ const steps = [
           src={withBase("/screens/home.webp")}
           width="390"
           height="844"
-          alt="Pesa Clarity home screen showing safe to spend today, money left this month, the runway at this pace, what is left at month end and the financial health score"
+          alt="Pesa Clarity home screen showing safe to spend today, money left this month, the runway at this pace, what is left at month end and the financial health score with its weakest part"
           fetchpriority="high"
         />
       </figure>
@@ -298,6 +298,29 @@ const steps = [
           </a>
           <a class="button button-secondary" href={links.contribute}>
             How to contribute
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sponsor" class="section" aria-labelledby="sponsor-title">
+    <div class="container split">
+      <h2 id="sponsor-title" class="label">
+        Sponsor
+      </h2>
+      <div>
+        <p class="statement">
+          Free, and it stays free. Help us get it onto the App Store.
+        </p>
+        <p class="muted">
+          No ads, no investors, no selling data. Apple charges US$99 a year to
+          put it on the App Store, and Google charges US$25 once for Play. Gifts
+          pay for that and keep it running.
+        </p>
+        <div class="button-row">
+          <a class="button button-primary" href={withBase("/sponsor/")}>
+            Sponsor Pesa Clarity
           </a>
         </div>
       </div>
