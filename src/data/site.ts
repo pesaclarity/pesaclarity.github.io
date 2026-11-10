@@ -172,10 +172,6 @@ export const moneyFeatures: readonly Item[] = [
     body: "What changed this month and where money goes. Tap any figure to see why.",
   },
   {
-    title: "Your currency",
-    body: "Pick your base currency; others convert at public rates.",
-  },
-  {
     title: "Message reader",
     body: "New message wording gets its amount and payee suggested for you to check.",
   },
@@ -198,7 +194,7 @@ export const businessFeatures: readonly Item[] = [
   },
   {
     title: "Sell and Pay",
-    body: "Pick items, take cash, M-Pesa or credit, and share a receipt.",
+    body: "Tap items or type an amount, take any way of paying, and share a receipt.",
   },
   {
     title: "Money",
@@ -258,6 +254,247 @@ export const lookFeatures: readonly Item[] = [
   },
 ];
 
+/** A titled group of items, with a line under the title. */
+export interface Highlight {
+  title: string;
+  lead: string;
+  items: readonly Item[];
+}
+
+/** Selling in a business space: the phone as the shop counter. */
+export const selling: Highlight = {
+  title: "Selling (POS)",
+  lead: "Sell from your phone: tap what you sell or type an amount, take any way of paying, and share a receipt.",
+  items: [
+    {
+      title: "Tap items or type an amount",
+      body: "A tile for each item with its price and stock, or a number pad for a quick sale.",
+    },
+    {
+      title: "Cash, M-Pesa, bank, credit or split",
+      body: "Cash works out the change. Credit keeps who owes and when. Split takes part now and the rest another way.",
+    },
+    {
+      title: "M-Pesa matched to the sale",
+      body: "Each sale waits for its M-Pesa message and matches it on its own.",
+    },
+    {
+      title: "A receipt for every sale",
+      body: "Share it as a picture, a PDF or text, with the M-Pesa code on it.",
+    },
+    {
+      title: "Stock that counts down",
+      body: "Each sale takes its items out of stock, with a nudge when one runs low.",
+    },
+    {
+      title: "Close the day",
+      body: "Count the drawer, see that it matches, and match each payment to its sale.",
+    },
+  ],
+};
+
+/** Money in more than one currency, in every space. */
+export const currencies: Highlight = {
+  title: "Many currencies",
+  lead: "For your own money and a business alike.",
+  items: [
+    {
+      title: "Your base currency",
+      body: "Pick the currency you count in. The app suggests your phone's.",
+    },
+    {
+      title: "Each amount as it was paid",
+      body: "Every payment keeps the currency its message shows, with your base amount under it.",
+    },
+    {
+      title: "Accounts kept apart",
+      body: "Two accounts at one bank, such as KES and USD at Equity, stay apart by account number.",
+    },
+    {
+      title: "Totals in one currency",
+      body: "Totals add everything up in your base currency, at the rate of each day.",
+    },
+    {
+      title: "The rate you got",
+      body: "Use the rate you were given for a payment in place of the day's rate.",
+    },
+    {
+      title: "Currency converter",
+      body: "Convert any amount between two currencies, with the last rates when offline.",
+    },
+  ],
+};
+
+/** The two halves of the features page. */
+export const featureSides = {
+  personal: {
+    title: "Personal",
+    lead: "Your own money, from your M-Pesa and bank SMS: what is safe to spend, what is due and where it goes.",
+  },
+  business: {
+    title: "Business",
+    lead: "A business space keeps its money apart from yours, with selling, stock, customers, suppliers and tax.",
+  },
+} as const;
+
+/** A screen from the app, as an image in public/screens/. */
+export interface Screen {
+  /** The file name, without `.webp`. */
+  file: string;
+  name: string;
+  alt: string;
+}
+
+/**
+ * Every app screen the site shows. The personal ones come from the app
+ * design canvas; the business ones are the app's own screens, filled with
+ * made-up records. All are 780 × 1688 WebP (390 × 844 at 2x). Regenerate
+ * them when the app changes.
+ */
+export const screens = {
+  home: {
+    file: "home",
+    name: "Home",
+    alt: "Pesa Clarity home screen showing safe to spend today, money left this month and upcoming bills",
+  },
+  activity: {
+    file: "activity",
+    name: "Activity",
+    alt: "Activity screen with a search bar, account filters and transactions grouped by day",
+  },
+  plan: {
+    file: "plan",
+    name: "Plan",
+    alt: "Plan screen showing planned income split by debt, tax, living and school, and spending by category",
+  },
+  goals: {
+    file: "goals",
+    name: "Goals",
+    alt: "Goals screen with the debt-free date, progress on each debt, savings goals and net worth",
+  },
+  debts: {
+    file: "debts",
+    name: "Debts",
+    alt: "Debts screen with the payoff strategy, this payday's split, the Fuliza tracker and a what-if slider",
+  },
+  insights: {
+    file: "insights",
+    name: "Insights",
+    alt: "Insights screen with what changed this month, spending by category and spending so far against last month",
+  },
+  today: {
+    file: "today",
+    name: "Today",
+    alt: "Business Today screen with sales today split by cash, M-Pesa and credit, up on a usual Thursday, buttons for Bought, Got paid, Paid and Close the day, and an M-Pesa sale waiting for its message",
+  },
+  sell: {
+    file: "sell",
+    name: "Sell",
+    alt: "Sell screen with a tile for each item showing its price and stock left, three items picked and the total ready to pay",
+  },
+  sellKeypad: {
+    file: "sell-keypad",
+    name: "Sell by amount",
+    alt: "Sell screen with a number pad, KES 350 typed for mixed vegetables and a Pay button",
+  },
+  pay: {
+    file: "pay",
+    name: "Pay",
+    alt: "Pay sheet listing the items with plus and minus buttons, a choice of cash, M-Pesa, bank, on credit or split, and a split of KES 200 cash now with the rest by M-Pesa",
+  },
+  receipt: {
+    file: "receipt",
+    name: "Receipt",
+    alt: "Sale saved with its receipt: two items, the total, paid by M-Pesa with its code, and buttons to share it as a picture, PDF or text",
+  },
+  money: {
+    file: "money",
+    name: "Money",
+    alt: "Money in and out screen with what cash, M-Pesa and the bank hold, and today's sales with the account and time of each",
+  },
+  people: {
+    file: "people",
+    name: "People",
+    alt: "People screen with what customers owe in all, each customer's amount and a Remind button for each",
+  },
+  stock: {
+    file: "stock",
+    name: "Stock",
+    alt: "Stock screen with the stock value, items running low, and each item with its price, cost and how much is left",
+  },
+  closeDay: {
+    file: "close-day",
+    name: "Close the day",
+    alt: "Close the day screen showing what should be in the drawer, the cash counted matching it, an M-Pesa payment to match and today's total sales",
+  },
+  tax: {
+    file: "tax",
+    name: "Tax",
+    alt: "Tax screen with a Turnover Tax estimate, last month's sales, what is left to pay and its due date",
+  },
+} as const satisfies Record<string, Screen>;
+
+/** The personal screens, on the features page. */
+export const personalScreens: readonly Screen[] = [
+  screens.home,
+  screens.activity,
+  screens.plan,
+  screens.goals,
+  screens.debts,
+  screens.insights,
+];
+
+/** The business screens, on the features page. */
+export const businessScreens: readonly Screen[] = [
+  screens.today,
+  screens.sell,
+  screens.pay,
+  screens.receipt,
+  screens.money,
+  screens.people,
+  screens.stock,
+  screens.closeDay,
+  screens.tax,
+];
+
+/** The home page's screens, under the one at the top. */
+export const homeScreens: readonly Screen[] = [
+  screens.activity,
+  screens.plan,
+  screens.debts,
+  screens.insights,
+];
+
+/** The two sides of the app, on the home page. */
+export interface Side {
+  title: string;
+  body: string;
+  link: string;
+  /** Where on the features page it leads. */
+  anchor: string;
+  screen: Screen;
+}
+
+export const sides: { title: string; items: readonly Side[] } = {
+  title: "For your money and your business",
+  items: [
+    {
+      title: "Your own money",
+      body: "Safe to spend today, bills, goals, debts and insights, from your M-Pesa and bank SMS.",
+      link: "Personal features",
+      anchor: "personal",
+      screen: screens.goals,
+    },
+    {
+      title: "Your business",
+      body: "Sell from your phone, take cash, M-Pesa or credit, keep stock and close the day.",
+      link: "Business features",
+      anchor: "business",
+      screen: screens.sell,
+    },
+  ],
+};
+
 export interface Faq {
   q: string;
   a: string;
@@ -275,7 +512,7 @@ export const faqs: readonly Faq[] = [
   },
   {
     q: "Can I use it for my business?",
-    a: "Yes. Add a business space for sales, stock and who owes you.",
+    a: "Yes. Add a business space to sell, keep stock and see who owes you.",
   },
   { q: "How big is the download?", a: `${downloadSize}.` },
   {

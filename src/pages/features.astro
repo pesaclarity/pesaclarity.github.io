@@ -1,12 +1,20 @@
 ---
+import { withBase } from "../lib/paths";
 import Base from "../layouts/Base.astro";
+import ScreenGallery from "../components/ScreenGallery.astro";
 import {
   businessFeatures,
+  businessScreens,
+  currencies,
   different,
   downloadSize,
   downloads,
+  featureSides,
   lookFeatures,
   moneyFeatures,
+  personalScreens,
+  screens,
+  selling,
   spaces,
   type Item,
 } from "../data/site";
@@ -18,30 +26,151 @@ interface Group {
   wide?: boolean;
 }
 
-// Alternate backgrounds, as on the home page.
+// After Personal, Business and Selling, alternating backgrounds as before.
 const groups: readonly Group[] = [
-  { id: "money", title: "Your money", items: moneyFeatures },
-  {
-    id: "spaces",
-    title: "A space for each part of life",
-    items: spaces,
-    wide: true,
-  },
-  { id: "business", title: "For a business", items: businessFeatures },
   { id: "look", title: "Your look", items: lookFeatures },
   { id: "why", title: "Why Pesa Clarity", items: different, wide: true },
+];
+
+const jumps = [
+  { href: "#personal", label: featureSides.personal.title },
+  { href: "#business", label: featureSides.business.title },
+  { href: "#selling", label: selling.title },
+  { href: "#spaces", label: "Spaces" },
 ];
 ---
 
 <Base
   title="Everything it does"
-  description="Every Pesa Clarity feature: your money, a space for each part of life, a business side, and how the app looks."
+  description="Every Pesa Clarity feature: your own money, a business with selling, stock and tax, many currencies, a space for each part of life, and how the app looks."
 >
   <section class="section features-intro" aria-labelledby="page-title">
     <div class="container">
       <p class="eyebrow">Features</p>
       <h1 id="page-title">Everything Pesa Clarity does</h1>
       <p class="muted">All of it on your phone, free, and in plain English.</p>
+      <nav aria-label="On this page">
+        <ul class="button-row jumps" role="list">
+          {jumps.map((j) => (
+            <li>
+              <a class="button button-secondary" href={j.href}>
+                {j.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  <section
+    id="personal"
+    class="section section-alt"
+    aria-labelledby="personal-title"
+  >
+    <div class="container">
+      <div class="section-intro">
+        <h2 id="personal-title" class="label">
+          {featureSides.personal.title}
+        </h2>
+        <p>{featureSides.personal.lead}</p>
+      </div>
+      <ScreenGallery screens={personalScreens} label="Personal screens" />
+      <ul class="cards cards-3 after-gallery" role="list">
+        {moneyFeatures.map((item) => (
+          <li class="card-item">
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </li>
+        ))}
+      </ul>
+
+      <div id="currencies" class="subgroup">
+        <div class="section-intro">
+          <h3 class="sublabel">{currencies.title}</h3>
+          <p>{currencies.lead}</p>
+        </div>
+        <ul class="cards cards-3" role="list">
+          {currencies.items.map((item) => (
+            <li class="card-item">
+              <h4>{item.title}</h4>
+              <p>{item.body}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="spaces" class="section" aria-labelledby="spaces-title">
+    <div class="container">
+      <h2 id="spaces-title" class="label">
+        A space for each part of life
+      </h2>
+      <ul class="cards cards-4" role="list">
+        {spaces.map((item) => (
+          <li class="card-item">
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section
+    id="business"
+    class="section section-alt"
+    aria-labelledby="business-title"
+  >
+    <div class="container">
+      <div class="section-intro">
+        <h2 id="business-title" class="label">
+          {featureSides.business.title}
+        </h2>
+        <p>{featureSides.business.lead}</p>
+      </div>
+      <ScreenGallery screens={businessScreens} label="Business screens" />
+      <ul class="cards cards-3 after-gallery" role="list">
+        {businessFeatures.map((item) => (
+          <li class="card-item">
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section id="selling" class="section" aria-labelledby="selling-title">
+    <div class="container selling">
+      <div>
+        <div class="section-intro">
+          <h2 id="selling-title" class="label">
+            {selling.title}
+          </h2>
+          <p>{selling.lead}</p>
+        </div>
+        <ul class="cards selling-list" role="list">
+          {selling.items.map((item) => (
+            <li class="card-item">
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <figure class="selling-shot">
+        <img
+          src={withBase(`/screens/${screens.sellKeypad.file}.webp`)}
+          width="390"
+          height="844"
+          alt={screens.sellKeypad.alt}
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>{screens.sellKeypad.name}</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -96,7 +225,79 @@ const groups: readonly Group[] = [
     padding-block: var(--space-7) var(--space-6);
   }
 
-  .features-intro p:last-child {
+  .features-intro p.muted {
     margin: 0;
+  }
+
+  .jumps {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-5) 0 0;
+  }
+
+  .section-intro .label {
+    margin-bottom: var(--space-3);
+  }
+
+  .after-gallery {
+    margin-top: var(--space-6);
+  }
+
+  .subgroup {
+    margin-top: var(--space-8);
+  }
+
+  .sublabel {
+    font-size: var(--text-xl);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-3);
+  }
+
+  .card-item h4 {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  /* Selling: what it does beside the number pad. */
+  .selling {
+    display: grid;
+    gap: var(--space-7);
+    align-items: start;
+  }
+
+  @media (min-width: 62rem) {
+    .selling {
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: var(--space-8);
+    }
+
+    .selling-shot {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+
+  .selling-shot {
+    margin: 0;
+    display: grid;
+    justify-items: center;
+    gap: var(--space-4);
+  }
+
+  .selling-shot img {
+    width: min(100%, 20rem);
+    height: auto;
+    border-radius: 2.5rem;
+    border: 8px solid var(--color-device);
+    box-shadow: 0 50px 100px -40px rgb(58 47 51 / 0.45);
+  }
+
+  .selling-shot figcaption {
+    font-family: var(--font-display);
+    font-weight: 600;
   }
 </style>

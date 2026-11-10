@@ -131,3 +131,38 @@ test("internal links stay under the base path", () => {
     }
   }
 });
+
+test("every image has alt text and is in the build", () => {
+  for (const { name, html } of pages) {
+    for (const [tag] of html.matchAll(/<img\b[^>]*>/g)) {
+      assert.match(tag, /\salt="[^"]+"/, `${name}: ${tag} has no alt text`);
+      const src = tag.match(/\ssrc="([^"]+)"/)?.[1];
+      assert.ok(src, `${name}: ${tag} has no src`);
+      const file = join(dist, src.slice(base.length));
+      assert.ok(existsSync(file), `${name}: ${src} is missing from dist/`);
+    }
+  }
+});
+
+test("links to a part of a page find it", () => {
+  const ids = new Map(
+    pages.map(({ name, html }) => [
+      name,
+      new Set([...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1])),
+    ]),
+  );
+  for (const { name, html } of pages) {
+    for (const [, href] of html.matchAll(/<a\b[^>]*\shref="([^"]*#[^"]+)"/g)) {
+      if (/^(https?:|mailto:)/.test(href)) continue;
+      const [path, hash] = href.split("#");
+      const target = path
+        ? `${path.slice(base.length).replace(/^\//, "")}index.html`
+        : name;
+      assert.ok(ids.has(target), `${name}: ${href} points at no page`);
+      assert.ok(
+        ids.get(target).has(hash),
+        `${name}: ${href} finds no #${hash}`,
+      );
+    }
+  }
+});

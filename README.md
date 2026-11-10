@@ -30,9 +30,10 @@ CI runs format check, `astro check`, build and the tests on every pull request.
 
 ```
 public/              favicon, touch icon, Open Graph image, logo SVGs (from pesaclarity/docs)
+public/screens/      app screens, 780 × 1688 WebP, listed in src/data/site.ts
 src/styles/tokens.css  every design token (colours light and dark, type, radii, sizes)
 src/styles/global.css  base styles and shared classes
-src/data/site.ts     links, the five principles and the repository list
+src/data/site.ts     links, feature lists, screens and FAQ
 src/components/      header, footer, logo mark
 src/layouts/Base.astro  page shell: SEO and Open Graph meta, fonts, skip link
 src/pages/           index (one-page landing), privacy, terms, 404, robots.txt
