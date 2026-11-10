@@ -447,7 +447,7 @@ export const screens = {
   home: {
     file: "home",
     name: "Home",
-    alt: "Pesa Clarity home screen showing safe to spend today, money left this month, the runway at this pace, what is left at month end and the financial health score",
+    alt: "Pesa Clarity home screen showing safe to spend today, money left this month, the runway at this pace, what is left at month end and the financial health score with its weakest part",
   },
   activity: {
     file: "activity",
