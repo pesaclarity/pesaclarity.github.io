@@ -303,7 +303,10 @@ export const businessFeatures: readonly Item[] = [
     title: "Tax estimates",
     body: "Turnover Tax, VAT and income tax estimates from your records, with rules that ship with the app.",
   },
-  { title: "Receipts", body: "After every sale, as a picture, a PDF or text." },
+  {
+    title: "Receipts and printing",
+    body: "After every sale, as a picture, a PDF or text, or printed at the counter. Invoices, statements and reports print on any printer.",
+  },
   {
     title: "Invoices",
     body: "From items or hours, with withholding tax worked out, your M-PESA QR and attached documents.",
@@ -338,7 +341,7 @@ export interface Highlight {
 /** Selling in a business space: the phone as the shop counter. */
 export const selling: Highlight = {
   title: "Selling (POS)",
-  lead: "Sell from your phone: tap what you sell or type an amount, take any way of paying, and share a receipt.",
+  lead: "Sell from your phone: tap what you sell or type an amount, take any way of paying, and share or print a receipt.",
   items: [
     {
       title: "Tap items or type an amount",
@@ -354,7 +357,7 @@ export const selling: Highlight = {
     },
     {
       title: "A receipt for every sale",
-      body: "Share it as a picture, a PDF or text, with the M-Pesa code on it.",
+      body: "Share it as a picture, a PDF or text, or print it on a 58 or 80 mm Bluetooth receipt printer, with the M-Pesa code on it.",
     },
     {
       title: "Stock that counts down",
@@ -362,7 +365,7 @@ export const selling: Highlight = {
     },
     {
       title: "Close the day",
-      body: "Count the drawer, see that it matches, and match each payment to its sale.",
+      body: "Count the drawer, see that it matches, match each payment to its sale, and print the day's summary.",
     },
   ],
 };
