@@ -439,8 +439,7 @@ export interface Screen {
 
 /**
  * Every app screen the site shows: the app's own screens, filled with
- * made-up records (Home, Plan, Goals, Debts and Insights come from the app
- * design canvas).
+ * made-up records.
  * All are 780 × 1688 WebP (390 × 844 at 2x). Regenerate them when the app
  * changes.
  */
@@ -448,7 +447,7 @@ export const screens = {
   home: {
     file: "home",
     name: "Home",
-    alt: "Pesa Clarity home screen showing safe to spend today, money left this month and upcoming bills",
+    alt: "Pesa Clarity home screen showing safe to spend today, money left this month, the runway at this pace, what is left at month end and the financial health score",
   },
   activity: {
     file: "activity",
@@ -458,22 +457,22 @@ export const screens = {
   plan: {
     file: "plan",
     name: "Plan",
-    alt: "Plan screen showing planned income split by debt, tax, living and school, and spending by category",
+    alt: "Plan screen showing planned income split by debt, tax, living, school and savings, and spending by category",
   },
   goals: {
     file: "goals",
     name: "Goals",
-    alt: "Goals screen with the debt-free date, progress on each debt, savings goals and net worth",
+    alt: "Goals screen with the debt-free date and how much is paid, progress on each debt and savings goals",
   },
   debts: {
     file: "debts",
     name: "Debts",
-    alt: "Debts screen with the payoff strategy, this payday's split, the Fuliza tracker and a what-if slider",
+    alt: "Debts screen with what is left to pay and the debt-free date, the payoff order, each debt, the Fuliza tracker and a what-if slider",
   },
   insights: {
     file: "insights",
     name: "Insights",
-    alt: "Insights screen with what changed this month, spending by category and spending so far against last month",
+    alt: "Insights screen with what changed this month, such as food up on last month, and spending by category",
   },
   accounts: {
     file: "accounts",
@@ -488,12 +487,12 @@ export const screens = {
   today: {
     file: "today",
     name: "Today",
-    alt: "Business Today screen with sales today split by cash, M-Pesa and credit, up on a usual Thursday, buttons for Bought, Got paid, Paid and Close the day, and an M-Pesa sale waiting for its message",
+    alt: "Business Today screen with sales today split by cash, M-Pesa and credit, up on a usual Thursday, buttons for Bought, Got paid, Paid and Close the day, more ways to record, and payments waiting for their M-Pesa message",
   },
   sell: {
     file: "sell",
     name: "Sell",
-    alt: "Sell screen with a group drop-down, a tile for each item showing its price and stock left, three items picked and the total ready to pay",
+    alt: "Sell screen with a group drop-down, a tile for each item showing its price and stock left, three items picked, an Add to a tab button and the total ready to pay",
   },
   sellKeypad: {
     file: "sell-keypad",
@@ -508,12 +507,12 @@ export const screens = {
   receipt: {
     file: "receipt",
     name: "Receipt",
-    alt: "Sale saved with its receipt: two items, the total, paid by M-Pesa with its code, Send as set to a picture, and a Share receipt button",
+    alt: "Sale saved with its receipt: two items, the total, paid by M-Pesa with its code, Send as set to a picture, and Share receipt and Print buttons",
   },
   money: {
     file: "money",
     name: "Money",
-    alt: "Money in and out screen with what cash, M-Pesa and the bank hold, and today's sales with the account and time of each",
+    alt: "Money screen with what cash, M-Pesa and the bank hold, and today's sales with the account and time of each",
   },
   people: {
     file: "people",
@@ -528,7 +527,7 @@ export const screens = {
   closeDay: {
     file: "close-day",
     name: "Close the day",
-    alt: "Close the day screen showing what should be in the drawer, the cash counted matching it, an M-Pesa payment to match and today's total sales",
+    alt: "Close the day screen showing what should be in the drawer, the cash counted matching it, an M-Pesa payment to match, today's total sales and a button to print the day's summary",
   },
   tax: {
     file: "tax",
