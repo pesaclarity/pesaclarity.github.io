@@ -284,9 +284,16 @@ export const businessFeatures: readonly Item[] = [
   },
   {
     title: "Stock",
-    body: "Items, prices, restocks and counts, with a nudge when running low.",
+    body: "Items, prices, restocks and counts, with a nudge when running low. Sell by the bottle, tot or double, and buy by the crate.",
   },
-  { title: "Close the day", body: "Count the drawer and see that it matches." },
+  {
+    title: "Open tabs",
+    body: "Rounds for a table or a person, with the bill printed and paid at the end.",
+  },
+  {
+    title: "Close the day",
+    body: "Count the drawer and see that it matches. A place open late can end its day at 2, 4 or 6 am.",
+  },
   {
     title: "Pay yourself",
     body: "Move your pay to Personal, so business and home stay apart.",
@@ -364,8 +371,16 @@ export const selling: Highlight = {
       body: "Each sale takes its items out of stock, with a nudge when one runs low.",
     },
     {
+      title: "One item, several ways",
+      body: "Sell whisky by the tot, the double or the bottle, and buy lager by the crate. Stock reads 5 bottles and 12 tots, and 30 tots always make a bottle.",
+    },
+    {
+      title: "Open tabs",
+      body: "Add rounds to a table or a name, print the bill and pay it in one go. Stock leaves when it is paid, and Close the day shows any tab still open.",
+    },
+    {
       title: "Close the day",
-      body: "Count the drawer, see that it matches, match each payment to its sale, and print the day's summary.",
+      body: "Count the drawer, see that it matches, match each payment to its sale, and print the day's summary. A bar open late can end its day at 2, 4 or 6 am.",
     },
   ],
 };
