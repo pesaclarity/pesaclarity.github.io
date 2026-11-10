@@ -398,10 +398,11 @@ export interface Screen {
 }
 
 /**
- * Every app screen the site shows. The personal ones come from the app
- * design canvas; the business ones are the app's own screens, filled with
- * made-up records. All are 780 × 1688 WebP (390 × 844 at 2x). Regenerate
- * them when the app changes.
+ * Every app screen the site shows: the app's own screens, filled with
+ * made-up records (Home, Plan, Goals, Debts and Insights come from the app
+ * design canvas).
+ * All are 780 × 1688 WebP (390 × 844 at 2x). Regenerate them when the app
+ * changes.
  */
 export const screens = {
   home: {
@@ -412,7 +413,7 @@ export const screens = {
   activity: {
     file: "activity",
     name: "Activity",
-    alt: "Activity screen with a search bar, account filters and transactions grouped by day",
+    alt: "Activity screen with a search bar, drop-downs for account and type, this week's money out and in, and transactions grouped by day, one waiting for its payee's name",
   },
   plan: {
     file: "plan",
@@ -434,6 +435,16 @@ export const screens = {
     name: "Insights",
     alt: "Insights screen with what changed this month, spending by category and spending so far against last month",
   },
+  accounts: {
+    file: "accounts",
+    name: "My accounts",
+    alt: "My accounts screen with totals in USD, M-Pesa in KES, two Equity Bank accounts told apart by account number, one in KES and one in USD, and cash in SSP",
+  },
+  currencies: {
+    file: "currencies",
+    name: "Activity",
+    alt: "Activity screen with a note that 23 amounts at Equity Bank are now in its USD account, this week's totals in USD, a KES 25,000 rent payment with about USD 193.50 under it, and a USD salary",
+  },
   today: {
     file: "today",
     name: "Today",
@@ -442,7 +453,7 @@ export const screens = {
   sell: {
     file: "sell",
     name: "Sell",
-    alt: "Sell screen with a tile for each item showing its price and stock left, three items picked and the total ready to pay",
+    alt: "Sell screen with a group drop-down, a tile for each item showing its price and stock left, three items picked and the total ready to pay",
   },
   sellKeypad: {
     file: "sell-keypad",
@@ -452,12 +463,12 @@ export const screens = {
   pay: {
     file: "pay",
     name: "Pay",
-    alt: "Pay sheet listing the items with plus and minus buttons, a choice of cash, M-Pesa, bank, on credit or split, and a split of KES 200 cash now with the rest by M-Pesa",
+    alt: "Pay sheet with the items and their plus and minus buttons, and the way-to-pay menu open: cash, M-Pesa, bank, on credit or split",
   },
   receipt: {
     file: "receipt",
     name: "Receipt",
-    alt: "Sale saved with its receipt: two items, the total, paid by M-Pesa with its code, and buttons to share it as a picture, PDF or text",
+    alt: "Sale saved with its receipt: two items, the total, paid by M-Pesa with its code, Send as set to a picture, and a Share receipt button",
   },
   money: {
     file: "money",
@@ -472,7 +483,7 @@ export const screens = {
   stock: {
     file: "stock",
     name: "Stock",
-    alt: "Stock screen with the stock value, items running low, and each item with its price, cost and how much is left",
+    alt: "Stock screen with the stock value, items running low, a drop-down to show products or services, and each item with its price, cost and how much is left",
   },
   closeDay: {
     file: "close-day",
@@ -494,6 +505,12 @@ export const personalScreens: readonly Screen[] = [
   screens.goals,
   screens.debts,
   screens.insights,
+];
+
+/** Many currencies, under Personal on the features page. */
+export const currencyScreens: readonly Screen[] = [
+  screens.accounts,
+  screens.currencies,
 ];
 
 /** The business screens, on the features page. */

@@ -6,6 +6,7 @@ import {
   businessFeatures,
   businessScreens,
   currencies,
+  currencyScreens,
   different,
   downloadSize,
   downloads,
@@ -90,7 +91,8 @@ const jumps = [
           <h3 class="sublabel">{currencies.title}</h3>
           <p>{currencies.lead}</p>
         </div>
-        <ul class="cards cards-3" role="list">
+        <ScreenGallery screens={currencyScreens} label="Currency screens" />
+        <ul class="cards cards-3 after-gallery" role="list">
           {currencies.items.map((item) => (
             <li class="card-item">
               <h4>{item.title}</h4>
