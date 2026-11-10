@@ -633,3 +633,34 @@ export const faqs: readonly Faq[] = [
     a: "Android has Google sign-in. F-Droid has no Google services.",
   },
 ];
+
+/**
+ * Sponsoring: one-time gifts by M-Pesa through CitaPay. `SPONSOR_URL` is the
+ * CitaPay tip-jar link, set as a repository variable; until it is set, the
+ * page says giving opens soon. Giving never unlocks anything in the app.
+ */
+export const sponsor = {
+  url: (import.meta.env.SPONSOR_URL as string | undefined) || "",
+  amounts: [50, 100, 200, 500],
+  provider: "CitaPay",
+} as const;
+
+/** What gifts pay for, most needed first. */
+export const sponsorCosts: readonly Item[] = [
+  {
+    title: "Getting on the App Store",
+    body: "Apple charges US$99 a year before an app can be on the App Store. Until then, iPhone users can't install Pesa Clarity.",
+  },
+  {
+    title: "Getting on Google Play",
+    body: "Google charges US$25, once. Then Android users get the app and its updates from Play instead of installing a file.",
+  },
+  {
+    title: "Keeping it running",
+    body: "The website, a web address of its own, and the text messages that carry sign-in codes for backups.",
+  },
+  {
+    title: "Time",
+    body: "New banks, fixes and features, built and tested by the people who make it.",
+  },
+];

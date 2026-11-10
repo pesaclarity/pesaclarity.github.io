@@ -23,6 +23,16 @@ const pages = htmlFiles(dist).map((path) => ({
   html: readFileSync(path, "utf8"),
 }));
 
+test("the sponsor page says giving opens soon until its link is set", () => {
+  const html = pages.find((p) => p.name === "sponsor/index.html").html;
+  if (process.env.SPONSOR_URL) {
+    assert.ok(html.includes(process.env.SPONSOR_URL));
+  } else {
+    assert.match(html, /data-sponsor="soon"/);
+  }
+  assert.match(html, /US\$99 a year/);
+});
+
 test("builds the expected pages", () => {
   const names = pages.map((p) => p.name).sort();
   assert.deepEqual(names, [
@@ -31,6 +41,7 @@ test("builds the expected pages", () => {
     "index.html",
     "install/index.html",
     "privacy/index.html",
+    "sponsor/index.html",
     "terms/index.html",
   ]);
 });
@@ -100,6 +111,7 @@ test("sitemap lists the public pages and not the 404", () => {
     `${base}/features/`,
     `${base}/install/`,
     `${base}/privacy/`,
+    `${base}/sponsor/`,
     `${base}/terms/`,
   ]);
   assert.match(

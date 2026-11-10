@@ -33,6 +33,14 @@ const nav = [
           </li>
         ))}
         <li>
+          <a
+            class="button button-secondary nav-cta nav-sponsor"
+            href={withBase("/sponsor/")}
+          >
+            Sponsor
+          </a>
+        </li>
+        <li>
           <a class="button button-primary nav-cta" href={downloads.android}>
             Download
           </a>
@@ -115,7 +123,8 @@ const nav = [
     }
   }
 
-  @media (max-width: 22rem) {
+  /* Room for Sponsor and Download on a phone: the mark alone. */
+  @media (max-width: 30rem) {
     .wordmark {
       display: none;
     }
