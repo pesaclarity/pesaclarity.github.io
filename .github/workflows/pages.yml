@@ -47,7 +47,7 @@ jobs:
           SPONSOR_URL: ${{ vars.SPONSOR_URL }}
           # Reads that release's version for the page (public data).
           GITHUB_TOKEN: ${{ github.token }}
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
