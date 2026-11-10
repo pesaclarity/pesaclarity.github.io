@@ -20,7 +20,7 @@ import { links, sponsor, sponsorCosts } from "../data/site";
     <section class="give card" aria-labelledby="give-title">
       <h2 id="give-title">Buy us a coffee</h2>
       <p class="muted">
-        One-time gifts by M-Pesa. Choose{" "}
+        One-time gifts by <span class="nowrap">M-Pesa</span>. Choose{" "}
         {sponsor.amounts.map((a, i) => (
           <>
             <span class="number">{a.toLocaleString("en-KE")}</span>
@@ -36,18 +36,19 @@ import { links, sponsor, sponsorCosts } from "../data/site";
       {sponsor.url ? (
         <div class="button-row">
           <a class="button button-primary button-large" href={sponsor.url}>
-            Give with M-Pesa
+            Give with <span class="nowrap">M-Pesa</span>
           </a>
         </div>
       ) : (
         <p class="soon" data-sponsor="soon">
-          Giving by M-Pesa opens here soon. Until then, a star on GitHub or
-          telling a friend helps too.
+          Giving by <span class="nowrap">M-Pesa</span> opens here soon. Until
+          then, a star on GitHub or telling a friend helps too.
         </p>
       )}
       <p class="muted small">
-        Paid through {sponsor.provider}. M-Pesa asks for your PIN as usual.
-        Giving never unlocks anything: every feature is free for everyone.
+        Paid through {sponsor.provider}. <span class="nowrap">M-Pesa</span> asks
+        for your PIN as usual. Giving never unlocks anything: every feature is
+        free for everyone.
       </p>
     </section>
 
@@ -73,14 +74,15 @@ import { links, sponsor, sponsorCosts } from "../data/site";
     <section class="prose" aria-labelledby="privacy-title">
       <h2 id="privacy-title">Your gift and your privacy</h2>
       <p>
-        {sponsor.provider} handles the payment and sees what any M-Pesa payment
-        shows: your phone number, the name on the account and the amount. We get
-        the same details for our records. We never sell or share them, and
-        nothing from the app is sent when you give.
+        {sponsor.provider} handles the payment and sees what any{" "}
+        <span class="nowrap">M-Pesa</span> payment shows: your phone number, the
+        name on the account and the amount. We get the same details for our
+        records. We never sell or share them, and nothing from the app is sent
+        when you give.
       </p>
       <p class="warning">
-        We never call you, never send an M-Pesa request you didn't start, and
-        never ask for your PIN.
+        We never call you, never send an <span class="nowrap">M-Pesa</span>{" "}
+        request you didn't start, and never ask for your PIN.
       </p>
     </section>
 

@@ -350,3 +350,8 @@ main:focus {
   letter-spacing: -0.03em;
   margin: 0;
 }
+
+/* Keeps a name such as M-Pesa on one line. */
+.nowrap {
+  white-space: nowrap;
+}
