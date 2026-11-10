@@ -4,25 +4,21 @@ import Base from "../layouts/Base.astro";
 import ScreenGallery from "../components/ScreenGallery.astro";
 import {
   accounts,
-  apkFiles,
+  appRelease,
   different,
   downloadSize,
   downloads,
   faqs,
   homeScreens,
   links,
-  releaseTag,
   sides,
   spaces,
   whatsNew,
 } from "../data/site";
-import { fetchAppRelease, formatDay, formatSize } from "../data/release.mjs";
+import { formatDay } from "../data/release.mjs";
 
-const release = await fetchAppRelease(releaseTag, {
-  token: import.meta.env.GITHUB_TOKEN,
-});
+const release = appRelease;
 const releaseDay = release ? formatDay(release.date) : null;
-const mainSize = formatSize(release?.sizes[apkFiles.android] ?? NaN);
 const newest = release?.changes.slice(0, whatsNew.homeCount) ?? [];
 
 const highlights = [
@@ -347,8 +343,8 @@ const steps = [
             ? `Version ${release.version}${releaseDay ? `, ${releaseDay}` : ""}. `
             : ""}
           {downloads.testBuild ? "Test build, updated often. " : ""}
-          {mainSize ? `${mainSize} for most phones` : downloadSize}. Open the
-          file on your phone and allow installs when asked. Older phone? Get the{" "}
+          {downloadSize}. Open the file on your phone and allow installs when
+          asked. Older phone? Get the{" "}
           <a href={downloads.android32}>version for older phones</a>.{" "}
           <a href={withBase("/install/")}>How to install</a> ·{" "}
           <a href={links.releases}>All releases</a>

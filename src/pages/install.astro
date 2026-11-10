@@ -1,11 +1,9 @@
 ---
 import Base from "../layouts/Base.astro";
-import { apks, downloads, links, releaseTag, whatsNew } from "../data/site";
-import { fetchAppRelease, formatDay, formatSize } from "../data/release.mjs";
+import { apks, appRelease, downloads, links, whatsNew } from "../data/site";
+import { formatDay, formatSize } from "../data/release.mjs";
 
-const release = await fetchAppRelease(releaseTag, {
-  token: import.meta.env.GITHUB_TOKEN,
-});
+const release = appRelease;
 const releaseDay = release ? formatDay(release.date) : null;
 const sizeOf = (file: string) => formatSize(release?.sizes[file] ?? NaN);
 const changes = release?.changes ?? [];

@@ -180,3 +180,12 @@ test("the install page offers every download", () => {
   }
   assert.doesNotMatch(install.html, /about 20\s+MB/i);
 });
+
+test("sizes come from the release, never typed by hand", () => {
+  for (const { name, html } of pages) {
+    assert.doesNotMatch(html, /\babout \d+\s*MB\b/i, name);
+    for (const [size] of html.matchAll(/\b\d+(?:\.\d+)?\s*MB\b/g)) {
+      assert.match(size, /^\d+\.\d MB$/, `${name}: ${size}`);
+    }
+  }
+});

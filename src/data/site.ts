@@ -1,5 +1,7 @@
 /** Site-wide names, links and copy that more than one page uses. */
 
+import { fetchAppRelease, formatSize } from "./release.mjs";
+
 const org = "https://github.com/pesaclarity";
 
 export const site = {
@@ -106,6 +108,19 @@ export const whatsNew = {
   more: "See all that's new",
 } as const;
 
+/**
+ * The release the buttons offer, read once when the site is built: its
+ * version, date, sizes and what's new. Null when the build has no network.
+ */
+export const appRelease = await fetchAppRelease(releaseTag, {
+  token: import.meta.env.GITHUB_TOKEN,
+});
+
+/** `19.4 MB`, the file most phones take; null when the size is unknown. */
+export const mainApkSize: string | null = formatSize(
+  appRelease?.sizes[apkFiles.android] ?? NaN,
+);
+
 export interface Account {
   name: string;
   /** Shown under the name, for accounts that still need a hand. */
@@ -131,8 +146,10 @@ export interface Item {
   body: string;
 }
 
-/** How big the Android download is, for the download buttons. */
-export const downloadSize = "About 19 MB on most phones";
+/** How big the Android download is, from the release, else in words. */
+export const downloadSize = mainApkSize
+  ? `${mainApkSize} on most phones`
+  : "A small download";
 
 /** What makes Pesa Clarity different. */
 export const different: readonly Item[] = [
@@ -154,7 +171,12 @@ export const different: readonly Item[] = [
     title: "Made for Kenyan money",
     body: "M-Pesa, Fuliza, Saccos, banks, KES and KRA tax estimates.",
   },
-  { title: "Small download", body: `${downloadSize}.` },
+  {
+    title: "Small download",
+    body: mainApkSize
+      ? `${mainApkSize} on most phones.`
+      : "Quick to get, even on mobile data.",
+  },
   {
     title: "For every part of life",
     body: "You, your home, your business, your group and more, each kept apart.",
@@ -583,7 +605,12 @@ export const faqs: readonly Faq[] = [
     q: "Can I use it for my business?",
     a: "Yes. Add a business space to sell, keep stock and see who owes you.",
   },
-  { q: "How big is the download?", a: `${downloadSize}.` },
+  {
+    q: "How big is the download?",
+    a: mainApkSize
+      ? `${mainApkSize} on most phones.`
+      : "A small download, quick on mobile data.",
+  },
   {
     q: "Which download?",
     a: "Android has Google sign-in. F-Droid has no Google services.",
