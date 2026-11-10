@@ -4,6 +4,7 @@ import Base from "../layouts/Base.astro";
 import ScreenGallery from "../components/ScreenGallery.astro";
 import {
   accounts,
+  apkFiles,
   different,
   downloadSize,
   downloads,
@@ -13,13 +14,16 @@ import {
   releaseTag,
   sides,
   spaces,
+  whatsNew,
 } from "../data/site";
-import { fetchAppRelease, formatDay } from "../data/release.mjs";
+import { fetchAppRelease, formatDay, formatSize } from "../data/release.mjs";
 
 const release = await fetchAppRelease(releaseTag, {
   token: import.meta.env.GITHUB_TOKEN,
 });
 const releaseDay = release ? formatDay(release.date) : null;
+const mainSize = formatSize(release?.sizes[apkFiles.android] ?? NaN);
+const newest = release?.changes.slice(0, whatsNew.homeCount) ?? [];
 
 const highlights = [
   "Free forever",
@@ -343,12 +347,23 @@ const steps = [
             ? `Version ${release.version}${releaseDay ? `, ${releaseDay}` : ""}. `
             : ""}
           {downloads.testBuild ? "Test build, updated often. " : ""}
-          {downloadSize}. Open the file on your phone and allow installs when
-          asked. Older phone? Get the{" "}
+          {mainSize ? `${mainSize} for most phones` : downloadSize}. Open the
+          file on your phone and allow installs when asked. Older phone? Get the{" "}
           <a href={downloads.android32}>version for older phones</a>.{" "}
           <a href={withBase("/install/")}>How to install</a> ·{" "}
           <a href={links.releases}>All releases</a>
         </p>
+        {release && newest.length > 0 && (
+          <div class="cta-new">
+            <h3>{whatsNew.title(release.version)}</h3>
+            <ul>
+              {newest.map((change) => (
+                <li>{change}</li>
+              ))}
+            </ul>
+            <a href={withBase("/install/#whats-new")}>{whatsNew.more}</a>
+          </div>
+        )}
       </div>
     </div>
   </section>
@@ -527,6 +542,28 @@ const steps = [
     color: var(--color-on-brand);
     font-weight: 700;
     margin-bottom: var(--space-4);
+  }
+
+  /* What's new, under the download buttons */
+  .cta-new {
+    flex-basis: 100%;
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .cta-new h3 {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-3);
+  }
+
+  .cta-new ul {
+    margin: 0 0 var(--space-3);
+    padding-left: 1.2em;
+    color: var(--color-text-muted);
+  }
+
+  .cta-new li + li {
+    margin-top: var(--space-1);
   }
 
   /* FAQ */

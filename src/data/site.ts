@@ -46,12 +46,64 @@ const releaseFiles =
  * APKs on the app's GitHub Releases, one per flavour and chip: the plain
  * name is for most phones (64-bit), `-32bit` for older ones.
  */
+export const apkFiles = {
+  android: "pesaclarity-play.apk",
+  android32: "pesaclarity-play-32bit.apk",
+  fdroid: "pesaclarity-foss.apk",
+  fdroid32: "pesaclarity-foss-32bit.apk",
+} as const;
+
 export const downloads = {
-  android: `${releaseFiles}/pesaclarity-play.apk`,
-  android32: `${releaseFiles}/pesaclarity-play-32bit.apk`,
-  fdroid: `${releaseFiles}/pesaclarity-foss.apk`,
-  fdroid32: `${releaseFiles}/pesaclarity-foss-32bit.apk`,
+  android: `${releaseFiles}/${apkFiles.android}`,
+  android32: `${releaseFiles}/${apkFiles.android32}`,
+  fdroid: `${releaseFiles}/${apkFiles.fdroid}`,
+  fdroid32: `${releaseFiles}/${apkFiles.fdroid32}`,
   testBuild: releaseTag === "test-build",
+} as const;
+
+/** A download on the install page: what it is for, and its file. */
+export interface Apk {
+  label: string;
+  body: string;
+  href: string;
+  /** The release asset's name, which its size is read by. */
+  file: string;
+}
+
+/** Every APK, in plain words. */
+export const apks: readonly Apk[] = [
+  {
+    label: "For most phones",
+    body: "With Google sign-in. Start here.",
+    href: downloads.android,
+    file: apkFiles.android,
+  },
+  {
+    label: "For older phones",
+    body: "For 32-bit and Android Go phones.",
+    href: downloads.android32,
+    file: apkFiles.android32,
+  },
+  {
+    label: "F-Droid build",
+    body: "Free of Google services.",
+    href: downloads.fdroid,
+    file: apkFiles.fdroid,
+  },
+  {
+    label: "F-Droid, older phones",
+    body: "The F-Droid build for 32-bit phones.",
+    href: downloads.fdroid32,
+    file: apkFiles.fdroid32,
+  },
+];
+
+/** Headings for what's new in the build the buttons offer. */
+export const whatsNew = {
+  title: (version: string) => `What's new in ${version}`,
+  /** How many changes the home page shows. */
+  homeCount: 3,
+  more: "See all that's new",
 } as const;
 
 export interface Account {

@@ -166,3 +166,17 @@ test("links to a part of a page find it", () => {
     }
   }
 });
+
+test("the install page offers every download", () => {
+  const install = pages.find((p) => p.name === "install/index.html");
+  assert.ok(install);
+  for (const file of [
+    "pesaclarity-play.apk",
+    "pesaclarity-play-32bit.apk",
+    "pesaclarity-foss.apk",
+    "pesaclarity-foss-32bit.apk",
+  ]) {
+    assert.match(install.html, new RegExp(`href="[^"]+/${file}"`), file);
+  }
+  assert.doesNotMatch(install.html, /about 20\s+MB/i);
+});
