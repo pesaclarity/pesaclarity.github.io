@@ -1,6 +1,12 @@
 ---
 import Base from "../layouts/Base.astro";
-import { downloads, links } from "../data/site";
+import { apks, appRelease, downloads, links, whatsNew } from "../data/site";
+import { formatDay, formatSize } from "../data/release.mjs";
+
+const release = appRelease;
+const releaseDay = release ? formatDay(release.date) : null;
+const sizeOf = (file: string) => formatSize(release?.sizes[file] ?? NaN);
+const changes = release?.changes ?? [];
 ---
 
 <Base
@@ -16,17 +22,34 @@ import { downloads, links } from "../data/site";
         It takes a few minutes, once.
       </p>
 
-      <h2>1. Download the app</h2>
+      <h2 id="download">1. Download the app</h2>
       <p>
-        On your phone, tap <a href={downloads.android}>Download for Android</a>.
-        If your phone has no Google services, use the{" "}
-        <a href={downloads.fdroid}>F-Droid build</a> instead.
+        On your phone, tap the file for your phone. Most phones take the first
+        one.
       </p>
+      {release && (
+        <p class="muted" data-version={release.version}>
+          Version {release.version}
+          {releaseDay ? `, ${releaseDay}` : ""}.
+          {downloads.testBuild ? " Test build, updated often." : ""}
+        </p>
+      )}
+      <ul class="apks" role="list">
+        {apks.map((apk) => (
+          <li>
+            <a class="apk" href={apk.href}>
+              <span class="apk-label">{apk.label}</span>
+              <span class="apk-body">{apk.body}</span>
+              {sizeOf(apk.file) && (
+                <span class="apk-size number">{sizeOf(apk.file)}</span>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
       <p>
-        Older or Android Go phone? If Android says the app isn't compatible, use
-        the <a href={downloads.android32}>version for older phones</a> (or the{" "}
-        <a href={downloads.fdroid32}>F-Droid one</a>). Each download is about 20
-        MB or less.
+        Older or Android Go phone? Take the one for older phones.{" "}
+        <a href={links.releases}>All releases</a> are on GitHub.
       </p>
 
       <h2>2. Allow the install</h2>
@@ -91,6 +114,17 @@ import { downloads, links } from "../data/site";
         to allow messages again.
       </p>
 
+      {changes.length > 0 && release && (
+        <section id="whats-new" aria-labelledby="whats-new-title">
+          <h2 id="whats-new-title">{whatsNew.title(release.version)}</h2>
+          <ul class="changes">
+            {changes.map((change) => (
+              <li>{change}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       <h2>Still stuck?</h2>
       <p>
         <a href={links.appIssues}>Tell us what your phone shows</a>, with its
@@ -109,7 +143,64 @@ import { downloads, links } from "../data/site";
     margin-top: var(--space-6);
   }
 
-  ol li {
+  ol li,
+  .changes li {
     margin-block: var(--space-2);
+  }
+
+  .apks {
+    display: grid;
+    gap: var(--space-3);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-5) 0;
+  }
+
+  @media (min-width: 40rem) {
+    .apks {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .apk {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-content: start;
+    gap: var(--space-1) var(--space-4);
+    height: 100%;
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    background: var(--color-surface);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .apk:hover {
+    border-color: var(--color-text-muted);
+  }
+
+  .apks li:first-child .apk {
+    border: 2px solid var(--color-brand);
+  }
+
+  .apk-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-lg);
+    color: var(--color-brand-link);
+  }
+
+  .apk-body {
+    grid-column: 1;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .apk-size {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    font-weight: 600;
   }
 </style>

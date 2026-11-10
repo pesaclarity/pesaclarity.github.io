@@ -1,67 +1,42 @@
 ---
 import { withBase } from "../lib/paths";
+import type { Screen } from "../data/site";
 
-/** Screens rendered from the app design canvas; regenerate the images when the designs change. */
-const screens = [
-  {
-    file: "activity",
-    name: "Activity",
-    alt: "Activity screen with a search bar, account filters and transactions grouped by day",
-  },
-  {
-    file: "plan",
-    name: "Plan",
-    alt: "Plan screen showing planned income split by debt, tax, living and school, and spending by category",
-  },
-  {
-    file: "debts",
-    name: "Debts",
-    alt: "Debts screen with the payoff strategy, this payday's split, the Fuliza tracker and a what-if slider",
-  },
-  {
-    file: "insights",
-    name: "Insights",
-    alt: "Insights screen with what changed this month, spending by category and spending so far against last month",
-  },
-];
+interface Props {
+  screens: readonly Screen[];
+  /** Names the row for screen readers when it scrolls. */
+  label: string;
+}
+
+const { screens, label } = Astro.props;
+// Up to four sit in a grid; more scroll sideways, as on a phone.
+const scrolls = screens.length > 4;
 ---
 
-<section
-  id="screens"
-  class="section section-alt"
-  aria-labelledby="screens-title"
+<div
+  class:list={["gallery-wrap", { scrolls }]}
+  role={scrolls ? "region" : undefined}
+  aria-label={scrolls ? label : undefined}
+  tabindex={scrolls ? 0 : undefined}
 >
-  <div class="container">
-    <h2 id="screens-title" class="label">
-      Screens
-    </h2>
-
-    <ul class="gallery" role="list">
-      {screens.map((s) => (
-        <li>
-          <img
-            src={withBase(`/screens/${s.file}.webp`)}
-            width="390"
-            height="844"
-            alt={s.alt}
-            loading="lazy"
-            decoding="async"
-          />
-          <p>{s.name}</p>
-        </li>
-      ))}
-    </ul>
-  </div>
-</section>
+  <ul class="gallery" role="list">
+    {screens.map((s) => (
+      <li>
+        <img
+          src={withBase(`/screens/${s.file}.webp`)}
+          width="390"
+          height="844"
+          alt={s.alt}
+          loading="lazy"
+          decoding="async"
+        />
+        <p>{s.name}</p>
+      </li>
+    ))}
+  </ul>
+</div>
 
 <style>
-  .label {
-    font-size: var(--text-section);
-    letter-spacing: -0.03em;
-    line-height: 1.08;
-    margin-bottom: var(--space-6);
-  }
-
   .gallery {
     display: grid;
     gap: var(--space-5);
@@ -91,6 +66,32 @@ const screens = [
     font-weight: 600;
   }
 
+  /* More than four screens make a row that scrolls sideways; the row is
+     the region keyboard users focus to scroll it. */
+  .scrolls {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-color: var(--color-border) transparent;
+    margin-inline: calc(var(--gutter) * -1);
+    padding: var(--space-2) var(--gutter) var(--space-5);
+    scroll-padding-inline: var(--gutter);
+  }
+
+  .scrolls .gallery {
+    display: flex;
+    gap: var(--space-5);
+    width: max-content;
+  }
+
+  .scrolls .gallery > li {
+    flex: 0 0 clamp(13rem, 21vw, 17rem);
+    scroll-snap-align: start;
+  }
+
+  .scrolls:focus-visible {
+    outline-offset: -3px;
+  }
+
   @media (max-width: 52rem) {
     .gallery {
       display: flex;
@@ -105,6 +106,17 @@ const screens = [
     .gallery > li {
       flex: 0 0 min(70%, 16rem);
       scroll-snap-align: start;
+    }
+
+    .scrolls .gallery {
+      overflow: visible;
+      margin: 0;
+      padding: 0;
+      gap: var(--space-4);
+    }
+
+    .scrolls .gallery > li {
+      flex-basis: min(70vw, 16rem);
     }
   }
 </style>

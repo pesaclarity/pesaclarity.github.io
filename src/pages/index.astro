@@ -4,20 +4,22 @@ import Base from "../layouts/Base.astro";
 import ScreenGallery from "../components/ScreenGallery.astro";
 import {
   accounts,
+  appRelease,
   different,
   downloadSize,
   downloads,
   faqs,
+  homeScreens,
   links,
-  releaseTag,
+  sides,
   spaces,
+  whatsNew,
 } from "../data/site";
-import { fetchAppRelease, formatDay } from "../data/release.mjs";
+import { formatDay } from "../data/release.mjs";
 
-const release = await fetchAppRelease(releaseTag, {
-  token: import.meta.env.GITHUB_TOKEN,
-});
+const release = appRelease;
 const releaseDay = release ? formatDay(release.date) : null;
+const newest = release?.changes.slice(0, whatsNew.homeCount) ?? [];
 
 const highlights = [
   "Free forever",
@@ -101,6 +103,40 @@ const steps = [
     </div>
   </section>
 
+  <section id="sides" class="section section-alt" aria-labelledby="sides-title">
+    <div class="container">
+      <h2 id="sides-title" class="label">
+        {sides.title}
+      </h2>
+      <ul class="sides" role="list">
+        {sides.items.map((side) => (
+          <li class="side">
+            <div class="side-copy">
+              <h3>{side.title}</h3>
+              <p>{side.body}</p>
+              <a
+                class="button button-secondary"
+                href={withBase(`/features/#${side.anchor}`)}
+              >
+                {side.link}
+              </a>
+            </div>
+            <div class="side-shot">
+              <img
+                src={withBase(`/screens/${side.screen.file}.webp`)}
+                width="390"
+                height="844"
+                alt={side.screen.alt}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
   <section id="what" class="section" aria-labelledby="what-title">
     <div class="container">
       <h2 id="what-title" class="label">
@@ -117,7 +153,18 @@ const steps = [
     </div>
   </section>
 
-  <ScreenGallery />
+  <section
+    id="screens"
+    class="section section-alt"
+    aria-labelledby="screens-title"
+  >
+    <div class="container">
+      <h2 id="screens-title" class="label">
+        Screens
+      </h2>
+      <ScreenGallery screens={homeScreens} label="Screens" />
+    </div>
+  </section>
 
   <section id="features" class="section" aria-labelledby="features-title">
     <div class="container">
@@ -302,6 +349,17 @@ const steps = [
           <a href={withBase("/install/")}>How to install</a> ·{" "}
           <a href={links.releases}>All releases</a>
         </p>
+        {release && newest.length > 0 && (
+          <div class="cta-new">
+            <h3>{whatsNew.title(release.version)}</h3>
+            <ul>
+              {newest.map((change) => (
+                <li>{change}</li>
+              ))}
+            </ul>
+            <a href={withBase("/install/#whats-new")}>{whatsNew.more}</a>
+          </div>
+        )}
       </div>
     </div>
   </section>
@@ -412,6 +470,64 @@ const steps = [
     }
   }
 
+  /* Personal and business, side by side */
+  .sides {
+    display: grid;
+    gap: var(--space-5);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  @media (min-width: 52rem) {
+    .sides {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .side {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+  }
+
+  .side-copy {
+    padding: var(--space-6) var(--space-6) var(--space-5);
+  }
+
+  .side-copy h3 {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-3);
+  }
+
+  .side-copy p {
+    color: var(--color-text-muted);
+    max-width: 30rem;
+    margin-bottom: var(--space-5);
+  }
+
+  /* The top of the screen, rising from the bottom of the card. */
+  .side-shot {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: clamp(14rem, 10rem + 12vw, 20rem);
+    overflow: hidden;
+    padding-inline: var(--space-5);
+  }
+
+  .side-shot img {
+    width: min(100%, 17rem);
+    height: auto;
+    border-radius: 2rem 2rem 0 0;
+    border: 6px solid var(--color-device);
+    border-bottom: 0;
+    box-shadow: 0 30px 60px -30px rgb(58 47 51 / 0.4);
+  }
+
   .step-n {
     display: grid;
     place-items: center;
@@ -422,6 +538,28 @@ const steps = [
     color: var(--color-on-brand);
     font-weight: 700;
     margin-bottom: var(--space-4);
+  }
+
+  /* What's new, under the download buttons */
+  .cta-new {
+    flex-basis: 100%;
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .cta-new h3 {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-3);
+  }
+
+  .cta-new ul {
+    margin: 0 0 var(--space-3);
+    padding-left: 1.2em;
+    color: var(--color-text-muted);
+  }
+
+  .cta-new li + li {
+    margin-top: var(--space-1);
   }
 
   /* FAQ */

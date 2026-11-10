@@ -131,3 +131,61 @@ test("internal links stay under the base path", () => {
     }
   }
 });
+
+test("every image has alt text and is in the build", () => {
+  for (const { name, html } of pages) {
+    for (const [tag] of html.matchAll(/<img\b[^>]*>/g)) {
+      assert.match(tag, /\salt="[^"]+"/, `${name}: ${tag} has no alt text`);
+      const src = tag.match(/\ssrc="([^"]+)"/)?.[1];
+      assert.ok(src, `${name}: ${tag} has no src`);
+      const file = join(dist, src.slice(base.length));
+      assert.ok(existsSync(file), `${name}: ${src} is missing from dist/`);
+    }
+  }
+});
+
+test("links to a part of a page find it", () => {
+  const ids = new Map(
+    pages.map(({ name, html }) => [
+      name,
+      new Set([...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1])),
+    ]),
+  );
+  for (const { name, html } of pages) {
+    for (const [, href] of html.matchAll(/<a\b[^>]*\shref="([^"]*#[^"]+)"/g)) {
+      if (/^(https?:|mailto:)/.test(href)) continue;
+      const [path, hash] = href.split("#");
+      const target = path
+        ? `${path.slice(base.length).replace(/^\//, "")}index.html`
+        : name;
+      assert.ok(ids.has(target), `${name}: ${href} points at no page`);
+      assert.ok(
+        ids.get(target).has(hash),
+        `${name}: ${href} finds no #${hash}`,
+      );
+    }
+  }
+});
+
+test("the install page offers every download", () => {
+  const install = pages.find((p) => p.name === "install/index.html");
+  assert.ok(install);
+  for (const file of [
+    "pesaclarity-play.apk",
+    "pesaclarity-play-32bit.apk",
+    "pesaclarity-foss.apk",
+    "pesaclarity-foss-32bit.apk",
+  ]) {
+    assert.match(install.html, new RegExp(`href="[^"]+/${file}"`), file);
+  }
+  assert.doesNotMatch(install.html, /about 20\s+MB/i);
+});
+
+test("sizes come from the release, never typed by hand", () => {
+  for (const { name, html } of pages) {
+    assert.doesNotMatch(html, /\babout \d+\s*MB\b/i, name);
+    for (const [size] of html.matchAll(/\b\d+(?:\.\d+)?\s*MB\b/g)) {
+      assert.match(size, /^\d+\.\d MB$/, `${name}: ${size}`);
+    }
+  }
+});
