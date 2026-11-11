@@ -17,6 +17,7 @@ import {
   screens,
   selling,
   spaces,
+  manageSpaces,
   type Item,
 } from "../data/site";
 
@@ -117,6 +118,27 @@ const jumps = [
           </li>
         ))}
       </ul>
+      <div class="selling manage-spaces">
+        <ul class="cards selling-list" role="list">
+          {manageSpaces.map((item) => (
+            <li class="card-item">
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </li>
+          ))}
+        </ul>
+        <figure class="selling-shot">
+          <img
+            src={withBase(`/screens/${screens.spaces.file}.webp`)}
+            width="390"
+            height="844"
+            alt={screens.spaces.alt}
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>{screens.spaces.name}</figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
@@ -265,6 +287,10 @@ const jumps = [
   }
 
   /* Selling: what it does beside the number pad. */
+  .manage-spaces {
+    margin-top: var(--space-7);
+  }
+
   .selling {
     display: grid;
     gap: var(--space-7);
