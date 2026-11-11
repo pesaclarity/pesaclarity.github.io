@@ -1,6 +1,6 @@
 # pesaclarity-web
 
-The public website for [Pesa Clarity](https://github.com/pesaclarity), a free, ad-free, open-source Android app (with an iPhone version in the works) that turns M-Pesa and bank messages into a daily plan, with all analysis on the phone. The site says what Pesa Clarity is, what it believes, exactly what stays on the phone, why it is open source, and how to join the beta or contribute. It has no app features, no accounts, no cookies, no analytics and no client-side JavaScript.
+The public website for [Pesa Clarity](https://github.com/pesaclarity), a free, ad-free, open-source app for Android and iPhone that turns M-Pesa and bank messages into a daily plan, with all analysis on the phone. The site says what Pesa Clarity is, what it believes, exactly what stays on the phone, why it is open source, and how to join the beta or contribute. It has no app features, no accounts, no cookies, no analytics and no client-side JavaScript.
 
 Codename **dirisha**, Swahili for "window": the project's window to the public.
 
@@ -36,7 +36,7 @@ src/styles/global.css  base styles and shared classes
 src/data/site.ts     links, feature lists, screens and FAQ
 src/components/      header, footer, logo mark
 src/layouts/Base.astro  page shell: SEO and Open Graph meta, fonts, skip link
-src/pages/           index (one-page landing), privacy, terms, 404, robots.txt
+src/pages/           index (landing), features, install, sponsor, privacy, terms, 404, robots.txt
 tests/               checks on the built output
 ```
 
