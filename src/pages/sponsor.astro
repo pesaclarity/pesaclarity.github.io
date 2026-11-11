@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
-import { links, sponsor, sponsorCosts } from "../data/site";
+import { links, screens, sponsor, sponsorCosts } from "../data/site";
+import { withBase } from "../lib/paths";
 ---
 
 <Base
@@ -50,6 +51,29 @@ import { links, sponsor, sponsorCosts } from "../data/site";
         for your PIN as usual. Giving never unlocks anything: every feature is
         free for everyone.
       </p>
+    </section>
+
+    <section class="in-app" aria-labelledby="in-app-title">
+      <div class="prose">
+        <h2 id="in-app-title">In the app</h2>
+        <p class="muted">
+          The F-Droid build has a Support screen in Profile, and now and then a
+          quiet card on Home: never in the first 30 days, never when money is
+          tight, and never again if you say so. The Play and iPhone apps show
+          nothing about giving; this page is where to give.
+        </p>
+      </div>
+      <figure class="shot">
+        <img
+          src={withBase(`/screens/${screens.support.file}.webp`)}
+          width="390"
+          height="844"
+          alt={screens.support.alt}
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>{screens.support.name}</figcaption>
+      </figure>
     </section>
 
     <section class="why" aria-labelledby="why-title">
@@ -122,6 +146,32 @@ import { links, sponsor, sponsorCosts } from "../data/site";
   .give h2,
   .why h2 {
     margin: 0;
+  }
+
+  .in-app {
+    display: grid;
+    gap: var(--space-5);
+    align-items: start;
+  }
+
+  @media (min-width: 62rem) {
+    .in-app {
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    }
+  }
+
+  .shot {
+    margin: 0;
+    display: grid;
+    justify-items: center;
+    gap: var(--space-2);
+  }
+
+  .shot img {
+    width: min(100%, 18rem);
+    height: auto;
+    border-radius: 1.5rem;
+    border: 1px solid var(--color-border);
   }
 
   .soon {

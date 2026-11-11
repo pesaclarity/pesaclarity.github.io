@@ -197,6 +197,26 @@ export const spaces: readonly Item[] = [
   { title: "Something else", body: "A project or anything to keep apart" },
 ];
 
+/** Looking after your spaces. Nothing is shared between them. */
+export const manageSpaces: readonly Item[] = [
+  {
+    title: "Each space its own",
+    body: "Every space keeps its own locked records on your phone. Nothing is shared between them.",
+  },
+  {
+    title: "Change a space",
+    body: "Rename it, change its kind or what a business sells, after a note saying what comes and goes.",
+  },
+  {
+    title: "Fix where things went",
+    body: "Move transactions logged in the wrong space, and choose their category there.",
+  },
+  {
+    title: "Clear or delete",
+    body: "Clear a space's records, all or a date range, or delete the space. Keep it 30 days if you like.",
+  },
+];
+
 /** Everyday money, in every space. */
 export const moneyFeatures: readonly Item[] = [
   {
@@ -493,6 +513,16 @@ export const screens = {
     file: "sell",
     name: "Sell",
     alt: "Sell screen with a group drop-down, a tile for each item showing its price and stock left, three items picked, an Add to a tab button and the total ready to pay",
+  },
+  spaces: {
+    file: "spaces",
+    name: "Spaces",
+    alt: "Spaces screen listing Personal, open now, a business called Green Basket and a household called Home, with where the app opens, Recently deleted and Delete all my data",
+  },
+  support: {
+    file: "support",
+    name: "Support Pesa Clarity",
+    alt: "Support screen in the F-Droid app: free and it stays free, an amount drop-down set to 200, a Give 200 with M-Pesa button, what it costs, your gifts and Don't ask me again",
   },
   sellKeypad: {
     file: "sell-keypad",
