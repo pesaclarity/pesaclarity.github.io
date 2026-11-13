@@ -24,7 +24,7 @@ npm run dev       # http://localhost:4321
 | `npm run format` / `format:check` | Prettier, with the Astro plugin                                                                                                 |
 | `npm test`                        | Checks the built site: no JavaScript, nothing loaded from other servers, titles, Open Graph, sitemap. Run after `npm run build` |
 
-CI runs format check, `astro check`, build and the tests on every pull request.
+`tool/check` runs the format check, `astro check`, build and the tests; the git hooks run it for you (see CONTRIBUTING.md).
 
 ## Project layout
 

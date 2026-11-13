@@ -1,0 +1,49 @@
+#!/bin/sh
+# Runs the site's checks on your machine, the same ones CI used to run.
+#
+#   tool/check          everything: format, astro check, build, tests
+#   tool/check --fast   format, astro check and the unit tests (no build)
+#
+# Needs Node (the version in .nvmrc) and `npm ci` run once.
+set -u
+cd "$(dirname "$0")/.." || exit 1
+export ASTRO_TELEMETRY_DISABLED=1
+
+fast=0
+case "${1:-}" in
+  --fast) fast=1 ;;
+  "") ;;
+  *) echo "usage: tool/check [--fast]" >&2; exit 2 ;;
+esac
+
+if ! command -v npm >/dev/null 2>&1; then
+  echo "check: npm not found. Install Node $(cat .nvmrc) (e.g. 'nvm install') and run 'npm ci'." >&2
+  exit 1
+fi
+if [ ! -d node_modules ]; then
+  echo "check: node_modules is missing. Run 'npm ci' first." >&2
+  exit 1
+fi
+
+# step NAME FIX COMMAND...: runs COMMAND, stops with NAME and FIX if it fails.
+step() {
+  name=$1 fix=$2
+  shift 2
+  echo "==> $name"
+  if ! "$@"; then
+    echo "" >&2
+    echo "check failed: $name" >&2
+    echo "  fix: $fix" >&2
+    exit 1
+  fi
+}
+
+step "Format" "run 'npm run format' and commit the result" npm run --silent format:check
+step "Astro check" "fix the type or template errors above" npm run --silent check
+if [ "$fast" = 1 ]; then
+  step "Unit tests" "fix the failing tests above" node --test tests/release.test.mjs
+else
+  step "Build" "fix the build errors above" npm run --silent build
+  step "Test built site" "fix the failing tests above" npm test --silent
+fi
+echo "All checks passed."

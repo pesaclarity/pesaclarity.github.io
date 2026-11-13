@@ -1,0 +1,3 @@
+#!/bin/sh
+# All checks before each push. Skip in an emergency: git push --no-verify
+exec "$(git rev-parse --show-toplevel)/tool/check"
