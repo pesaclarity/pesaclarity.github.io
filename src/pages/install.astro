@@ -102,6 +102,31 @@ const changes = release?.changes ?? [];
           your messages.
         </li>
       </ol>
+      <h3 id="xiaomi">Xiaomi, Redmi and POCO phones</h3>
+      <p>
+        On these phones there is often no{" "}
+        <strong>Allow restricted settings</strong> option, and SMS shows{" "}
+        <strong>App was denied access</strong>. Install through Obtainium
+        instead, a free, open-source app store that takes the app straight from
+        our releases. Apps it installs are not restricted, and it keeps Pesa
+        Clarity up to date.
+      </p>
+      <ol>
+        <li>Uninstall Pesa Clarity if you already installed it from a file.</li>
+        <li>
+          Download <a href={links.obtainium}>Obtainium</a> (the file ending{" "}
+          <code>arm64-v8a-release.apk</code>) and install it.
+        </li>
+        <li>
+          In Obtainium tap <strong>Add app</strong>, paste{" "}
+          <code>{links.appSource}</code>, switch on{" "}
+          <strong>Include prereleases</strong> and tap <strong>Add</strong>.
+        </li>
+        <li>
+          Install <code>{apks[0].file}</code> when it offers the files, then
+          open Pesa Clarity and allow SMS.
+        </li>
+      </ol>
       <p>
         Pesa Clarity reads messages only from the accounts you pick, and only on
         your phone.

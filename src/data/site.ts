@@ -33,6 +33,10 @@ export const links = {
   // Where the message rules live, so anyone can add their bank.
   parsers: `${org}/ujumbe-parsers`,
   webSource: `${org}/pesaclarity-web`,
+  // An open-source app store that installs straight from GitHub Releases.
+  // Apps it installs are not "restricted", so Xiaomi phones let them read SMS.
+  obtainium: "https://github.com/ImranR98/Obtainium/releases/latest",
+  appSource: `${org}/pesaclarity-app`,
 } as const;
 
 // The app release the download buttons point to: a tag such as v0.2.0, or
