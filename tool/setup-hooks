@@ -1,0 +1,5 @@
+#!/bin/sh
+# Points git at the versioned hooks in .githooks/. Safe to run again.
+cd "$(dirname "$0")/.." || exit 1
+git config core.hooksPath .githooks
+echo "Git hooks enabled from .githooks/ (skip once with --no-verify)."

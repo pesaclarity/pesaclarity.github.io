@@ -13,15 +13,19 @@ npm ci
 npm run dev
 ```
 
-## Before opening a pull request
+## Checks run on your machine
+
+GitHub only builds and deploys the site; the checks run locally. Once, after cloning:
 
 ```sh
-npm run format
-npm run check
-npm run build && npm test
+tool/setup-hooks
 ```
 
-Also check the page at phone width (375 px) and desktop width, in light and dark mode, and with keyboard only.
+Then every push runs `tool/check`: format, `astro check`, build and the built-site tests. Run it by hand at any time, or `tool/check --fast` (format, `astro check`, unit tests) while you work; `npm run format` fixes formatting. In an emergency, skip the hook with `git push --no-verify`.
+
+## Before opening a pull request
+
+Run `tool/check`, then also check the page at phone width (375 px) and desktop width, in light and dark mode, and with keyboard only.
 
 - Colours, type and sizes come from `src/styles/tokens.css`. Add a token there rather than a raw value in a component.
 - Keep text contrast at 4.5:1 or more and touch targets at 44 px or more.
