@@ -153,12 +153,11 @@ const changes = release?.changes ?? [];
           on the same Wi-Fi.
         </li>
         <li>
-          On the iPhone, download the{" "}
-          <a href={downloads.ios}>iPhone test build</a> in Safari.
-        </li>
-        <li>
-          In SideStore tap <strong>My Apps</strong>, then <strong>+</strong>,
-          pick the file and sign in with your Apple ID.
+          In SideStore open <strong>Sources</strong>, tap <strong>+</strong>
+          and add <code>{downloads.iosSource}</code>. Pesa Clarity shows up; tap{" "}
+          <strong>Get</strong> and sign in with your Apple ID. No source?
+          Download the <a href={downloads.ios}>iPhone test build</a> in Safari
+          and open it from <strong>My Apps</strong> › <strong>+</strong>.
         </li>
         <li>
           Open Pesa Clarity. iPhones never let apps read SMS, so tap{" "}
@@ -181,8 +180,9 @@ const changes = release?.changes ?? [];
         to allow messages again.
       </p>
       <p>
-        On iPhone, download the newest test build and open it in SideStore or
-        AltStore the same way; it replaces the app you have and keeps your data.
+        On iPhone, SideStore shows <strong>Update</strong> when a new test build
+        is out, if you added the source. Otherwise download the newest file and
+        open it the same way. Either keeps your data.
       </p>
 
       {changes.length > 0 && release && (
