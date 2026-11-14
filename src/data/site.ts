@@ -65,6 +65,15 @@ export const downloads = {
   fdroid: `${releaseFiles}/${apkFiles.fdroid}`,
   fdroid32: `${releaseFiles}/${apkFiles.fdroid32}`,
   testBuild: releaseTag === "test-build",
+  // The unsigned iPhone build is only on the test build for now.
+  ios: `${links.releases}/download/test-build/pesaclarity-ios-unsigned.ipa`,
+} as const;
+
+/** Free tools that sign and install an iPhone app with your own Apple ID. */
+export const iphoneTools = {
+  sideStore: "https://sidestore.io",
+  altStore: "https://altstore.io",
+  xcodeSteps: `${links.appSource}#install-on-your-own-iphone-with-xcode`,
 } as const;
 
 /** A download on the install page: what it is for, and its file. */

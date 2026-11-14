@@ -1,6 +1,13 @@
 ---
 import Base from "../layouts/Base.astro";
-import { apks, appRelease, downloads, links, whatsNew } from "../data/site";
+import {
+  apks,
+  appRelease,
+  downloads,
+  iphoneTools,
+  links,
+  whatsNew,
+} from "../data/site";
 import { formatDay, formatSize } from "../data/release.mjs";
 
 const release = appRelease;
@@ -132,11 +139,50 @@ const changes = release?.changes ?? [];
         your phone.
       </p>
 
+      <h2 id="iphone">On iPhone</h2>
+      <p>
+        Pesa Clarity is not on the App Store yet, and iPhones only install apps
+        signed by Apple or by you. You can sign a test build with your own Apple
+        ID, for free. It then works for 7 days at a time.
+      </p>
+      <ol>
+        <li>
+          Set up <a href={iphoneTools.sideStore}>SideStore</a> on the iPhone,
+          following its guide. You need a computer once, to pair the phone.
+          <a href={iphoneTools.altStore}>AltStore</a> works too, with a computer
+          on the same Wi-Fi.
+        </li>
+        <li>
+          On the iPhone, download the{" "}
+          <a href={downloads.ios}>iPhone test build</a> in Safari.
+        </li>
+        <li>
+          In SideStore tap <strong>My Apps</strong>, then <strong>+</strong>,
+          pick the file and sign in with your Apple ID.
+        </li>
+        <li>
+          Open Pesa Clarity. iPhones never let apps read SMS, so tap{" "}
+          <strong>Connect your messages</strong> and set up the Shortcuts
+          automation it shows. Older months come from a statement import.
+        </li>
+      </ol>
+      <p>
+        Every 7 days the app needs signing again. SideStore does it for you over
+        Wi-Fi; with AltStore, keep its computer on the same Wi-Fi with AltServer
+        running. Signing again keeps your data. Sign-in is off on these builds.
+        Have a Mac? You can{" "}
+        <a href={iphoneTools.xcodeSteps}>install it with Xcode</a> instead.
+      </p>
+
       <h2>Updating</h2>
       <p>
         Download the newest file the same way and install it over the app you
         have. Your data stays. Uninstalling first deletes it, and you would need
         to allow messages again.
+      </p>
+      <p>
+        On iPhone, download the newest test build and open it in SideStore or
+        AltStore the same way; it replaces the app you have and keeps your data.
       </p>
 
       {changes.length > 0 && release && (
