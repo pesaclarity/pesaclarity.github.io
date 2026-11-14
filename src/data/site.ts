@@ -67,6 +67,8 @@ export const downloads = {
   testBuild: releaseTag === "test-build",
   // The unsigned iPhone build is only on the test build for now.
   ios: `${links.releases}/download/test-build/pesaclarity-ios-unsigned.ipa`,
+  // A SideStore/AltStore source that lists the newest iPhone test build.
+  iosSource: `${links.releases}/download/test-build/pesaclarity-sidestore.json`,
 } as const;
 
 /** Free tools that sign and install an iPhone app with your own Apple ID. */
