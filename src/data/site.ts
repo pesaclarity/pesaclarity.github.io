@@ -494,7 +494,7 @@ export const screens = {
   home: {
     file: "home",
     name: "Home",
-    alt: "Pesa Clarity home screen showing safe to spend today, money left this month, the runway at this pace, what is left at month end and the financial health score with its weakest part",
+    alt: "Pesa Clarity home screen showing safe to spend today, money left this month, the runway at this pace, what is left at month end, the financial health card and a bar to ask about your money",
   },
   activity: {
     file: "activity",
@@ -514,12 +514,12 @@ export const screens = {
   debts: {
     file: "debts",
     name: "Debts",
-    alt: "Debts screen with what is left to pay and the debt-free date, the payoff order, each debt, the Fuliza tracker and a what-if slider",
+    alt: "Debts screen with what is left to pay and the debt-free date, the payoff order, each debt including Fuliza, and the Fuliza tracker",
   },
   insights: {
     file: "insights",
     name: "Insights",
-    alt: "Insights screen with what changed this month, such as food up on last month, and spending by category",
+    alt: "Insights screen with what changed this month, such as food up on last month with a link to ask about it, and spending by category",
   },
   accounts: {
     file: "accounts",
@@ -534,7 +534,7 @@ export const screens = {
   today: {
     file: "today",
     name: "Today",
-    alt: "Business Today screen with sales today split by cash, M-Pesa and credit, up on a usual Thursday, buttons for Bought, Got paid, Paid and Close the day, more ways to record, and payments waiting for their M-Pesa message",
+    alt: "Business Today screen with sales today split by cash, M-Pesa and credit, up on a usual Thursday, buttons for Bought, Got paid, Paid and Close the day, more ways to record, payments waiting for their M-Pesa message and a bar to ask about the business",
   },
   sell: {
     file: "sell",
