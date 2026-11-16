@@ -100,9 +100,11 @@ import { withBase } from "../lib/paths";
       <p>
         {sponsor.provider} handles the payment and sees what any{" "}
         <span class="nowrap">M-Pesa</span> payment shows: your phone number, the
-        name on the account and the amount. We get the same details for our
-        records. We never sell or share them, and nothing from the app is sent
-        when you give.
+        name on the account and the amount, and any note you type. We receive
+        only the money and the <span class="nowrap">M-Pesa</span> notice of it,
+        and never sell or share it. Nothing from the app is sent when you give.
+        CitaPay's <a href={links.citapayTerms}>terms</a> cover the payment, and
+        our <a href={withBase("/privacy/")}>privacy policy</a> says more.
       </p>
       <p class="warning">
         We never call you, never send an <span class="nowrap">M-Pesa</span>{" "}

@@ -694,13 +694,16 @@ export const faqs: readonly Faq[] = [
   },
 ];
 
+/** Pesa Clarity's CitaPay page. Its `?amount=` is in cents (20000 is KES 200). */
+export const citapayPage = "https://pay.citatech.cloud/pay/@pesaclarity";
+
 /**
- * Sponsoring: one-time gifts by M-Pesa through CitaPay. `SPONSOR_URL` is the
- * CitaPay tip-jar link, set as a repository variable; until it is set, the
- * page says giving opens soon. Giving never unlocks anything in the app.
+ * Sponsoring: one-time gifts by M-Pesa through CitaPay. The page gives with
+ * CitaPay's link, or `SPONSOR_URL` when that repository variable is set.
+ * Giving never unlocks anything in the app.
  */
 export const sponsor = {
-  url: (import.meta.env.SPONSOR_URL as string | undefined) || "",
+  url: (import.meta.env.SPONSOR_URL as string | undefined) || citapayPage,
   amounts: [50, 100, 200, 500],
   provider: "CitaPay",
 } as const;
