@@ -37,6 +37,8 @@ export const links = {
   // Apps it installs are not "restricted", so Xiaomi phones let them read SMS.
   obtainium: "https://github.com/ImranR98/Obtainium/releases/latest",
   appSource: `${org}/pesaclarity-app`,
+  // The payment service's own terms, which cover a gift's payment.
+  citapayTerms: "https://pay.citatech.cloud/legal/terms",
 } as const;
 
 // The app release the download buttons point to: a tag such as v0.2.0, or

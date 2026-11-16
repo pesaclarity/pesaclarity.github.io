@@ -2,7 +2,8 @@
 import Base from "../layouts/Base.astro";
 import { dpo, links } from "../data/site";
 
-const updated = "10 November 2026";
+const version = "2.0";
+const updated = "16 November 2026";
 ---
 
 <Base
@@ -13,13 +14,15 @@ const updated = "10 November 2026";
     <div class="prose">
       <p class="eyebrow">Privacy</p>
       <h1>Privacy policy</h1>
-      <p class="muted">Last updated {updated}.</p>
+      <p class="muted">
+        Version {version}, last updated {updated}.
+      </p>
 
       <h2>The short version</h2>
       <p>
         Pesa Clarity works out your budget on your phone. Your transactions,
-        messages and statements stay on it. Our server does three narrow jobs
-        and never sees a transaction.
+        messages, statements and the questions you ask about them stay on it.
+        Our server does three narrow jobs and never sees a transaction.
       </p>
 
       <h2>What stays on your phone</h2>
@@ -71,6 +74,37 @@ const updated = "10 November 2026";
         phone's secure hardware and released only after you unlock the app with
         your PIN, fingerprint or Face ID.
       </p>
+
+      <h2>Ask</h2>
+      <p>
+        Ask answers questions about your money in your own words, such as "how
+        much did I spend on food last month?". Small models that ship inside the
+        app read your question and word the answer, on your phone. Every number
+        comes from your own records in the space you have open.
+      </p>
+      <ul>
+        <li>
+          Nothing is sent anywhere. Your questions, the answers and the records
+          they come from never leave your phone, and Ask works without internet.
+        </li>
+        <li>
+          Ask has no federated learning. "Improve the app" never includes
+          anything from Ask.
+        </li>
+        <li>
+          Conversations are kept in the space's encrypted database for as long
+          as you choose in Ask settings: until you delete them, or for a year,
+          90, 30 or 7 days. You can also switch saving off.
+        </li>
+        <li>
+          Words you teach Ask, such as "chakula" for Food, stay in that space
+          too.
+        </li>
+        <li>
+          You can delete one conversation, or every conversation in a space.
+          Backups leave conversations out.
+        </li>
+      </ul>
 
       <h2>What our server holds</h2>
       <dl>
@@ -126,6 +160,38 @@ const updated = "10 November 2026";
         currency's code, such as KES; the service sees your IP address, as any
         website does. You can set your own rates instead.
       </p>
+
+      <h2>Giving (F-Droid build)</h2>
+      <p>
+        The F-Droid build has a Support screen for anyone who wants to give a
+        small gift by <span class="nowrap">M-Pesa</span>. Giving is your choice
+        and never unlocks anything.
+      </p>
+      <ul>
+        <li>
+          The Support screen opens CitaPay's page in your browser. Its address
+          carries only the amount you chose.
+        </li>
+        <li>
+          CitaPay, run by Citatech, and Safaricom's{" "}
+          <span class="nowrap">M-Pesa</span> process the payment. They see what
+          any <span class="nowrap">M-Pesa</span> payment shows, such as your
+          phone number and name, plus the amount and any note you type.
+        </li>
+        <li>
+          CitaPay's terms cover the payment:{" "}
+          <a href={links.citapayTerms}>pay.citatech.cloud/legal/terms</a>.
+        </li>
+        <li>
+          Pesa Clarity receives only the money and the{" "}
+          <span class="nowrap">M-Pesa</span> notice of it.
+        </li>
+        <li>
+          The app sends nothing to CitaPay. To say thank you, it recognises your
+          gift from your own <span class="nowrap">M-Pesa</span> message, on your
+          phone.
+        </li>
+      </ul>
 
       <h2>Your choices</h2>
       <p>The app asks on first run, and you can change these any time:</p>
