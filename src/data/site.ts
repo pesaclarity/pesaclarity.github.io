@@ -149,6 +149,7 @@ const learning =
 export const accounts: readonly Account[] = [
   { name: "M-Pesa" },
   { name: "Airtel Money", note: learning },
+  { name: "Co-operative Bank", note: learning },
   { name: "Equity Bank" },
   { name: "I&M Bank" },
   { name: "KCB" },
