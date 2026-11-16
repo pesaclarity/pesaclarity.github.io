@@ -1,4 +1,4 @@
-# Contributing to pesaclarity-web
+# Contributing to the website (pesaclarity.github.io)
 
 Thank you for helping. The code of conduct, security policy and general contributing guide are the organisation defaults in [pesaclarity/.github](https://github.com/pesaclarity/.github); this file covers only what is specific to the website.
 
