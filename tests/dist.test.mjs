@@ -23,12 +23,16 @@ const pages = htmlFiles(dist).map((path) => ({
   html: readFileSync(path, "utf8"),
 }));
 
-test("the sponsor page says giving opens soon until its link is set", () => {
+test("the sponsor page gives with CitaPay, or SPONSOR_URL when set", () => {
   const html = pages.find((p) => p.name === "sponsor/index.html").html;
+  assert.ok(html.includes("https://pay.citatech.cloud/legal/terms"));
   if (process.env.SPONSOR_URL) {
     assert.ok(html.includes(process.env.SPONSOR_URL));
   } else {
-    assert.match(html, /data-sponsor="soon"/);
+    assert.ok(
+      html.includes('href="https://pay.citatech.cloud/pay/@pesaclarity"'),
+    );
+    assert.doesNotMatch(html, /data-sponsor="soon"/);
   }
   assert.match(html, /US\$99 a year/);
 });
