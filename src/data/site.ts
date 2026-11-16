@@ -25,14 +25,14 @@ export const links = {
   // The app repo: the star that shows people the project is alive.
   star: `${org}/pesaclarity-app`,
   brand: `${org}/docs/blob/main/BRAND.md`,
-  contributing: `${org}/pesaclarity-web/blob/main/CONTRIBUTING.md`,
+  contributing: `${org}/pesaclarity.github.io/blob/main/CONTRIBUTING.md`,
   // The guide every repo shares.
   contribute: `${org}/.github/blob/main/CONTRIBUTING.md`,
   parserContributing: `${org}/ujumbe-parsers/blob/main/CONTRIBUTING.md`,
   parserIssues: `${org}/ujumbe-parsers/issues`,
   // Where the message rules live, so anyone can add their bank.
   parsers: `${org}/ujumbe-parsers`,
-  webSource: `${org}/pesaclarity-web`,
+  webSource: `${org}/pesaclarity.github.io`,
   // An open-source app store that installs straight from GitHub Releases.
   // Apps it installs are not "restricted", so Xiaomi phones let them read SMS.
   obtainium: "https://github.com/ImranR98/Obtainium/releases/latest",
@@ -153,6 +153,7 @@ export const accounts: readonly Account[] = [
   { name: "I&M Bank" },
   { name: "KCB" },
   { name: "Loop", note: learning },
+  { name: "Standard Chartered", note: learning },
 ];
 
 /** A card: a short title and one line under it. */
@@ -237,6 +238,14 @@ export const moneyFeatures: readonly Item[] = [
   {
     title: "Reads your SMS",
     body: "M-Pesa, Airtel Money and bank alerts become your records, on your phone.",
+  },
+  {
+    title: "Balances that add up",
+    body: "Each account's balance comes from its messages, with Fuliza owed taken off. Add a cash account, or set a balance yourself.",
+  },
+  {
+    title: "Finds what's missing",
+    body: "When a balance doesn't add up, the app shows where the money went and helps you add what's missing.",
   },
   {
     title: "Past months from a statement",
@@ -659,7 +668,7 @@ export const faqs: readonly Faq[] = [
   { q: "Who sees my money?", a: "Only you." },
   {
     q: "iPhone?",
-    a: "Coming after the Android beta. Sponsoring helps pay the App Store fee.",
+    a: "A test build installs with SideStore or AltStore, signed with your own Apple ID. The App Store comes later, and sponsoring helps pay its fee.",
   },
   { q: "When can I start?", a: "Today. Download it for Android." },
   {
