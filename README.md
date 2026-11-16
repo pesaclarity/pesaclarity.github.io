@@ -1,4 +1,4 @@
-# pesaclarity-web
+# pesaclarity.github.io
 
 The public website for [Pesa Clarity](https://github.com/pesaclarity), a free, ad-free, open-source app for Android and iPhone that turns M-Pesa and bank messages into a daily plan, with all analysis on the phone. The site says what Pesa Clarity is, what it believes, exactly what stays on the phone, why it is open source, and how to join the beta or contribute. It has no app features, no accounts, no cookies, no analytics and no client-side JavaScript.
 
@@ -54,7 +54,7 @@ The build is plain static files in `dist/` served from the site root, so any sta
 
 - **Netlify:** import the repository; `netlify.toml` sets the build, Node 24 and security headers, and Netlify's `URL` is used as the site address unless `SITE_URL` is set.
 - **Cloudflare Pages:** build command `npm run build`, output directory `dist`, environment variables `NODE_VERSION=24` and `SITE_URL=<your domain>`.
-- **GitHub Pages (used now):** `.github/workflows/pages.yml` builds and deploys on every push to `main`. It sets `SITE_URL` and `BASE_PATH` from the Pages settings, so the site works at `https://pesaclarity.github.io/pesaclarity-web/` and moves to a custom domain without code changes. Needs the repository public and Settings > Pages > Source set to "GitHub Actions".
+- **GitHub Pages (used now):** `.github/workflows/pages.yml` builds and deploys on every push to `main`. It sets `SITE_URL` and `BASE_PATH` from the Pages settings, so the site works at `https://pesaclarity.github.io` (this repository is the organisation's Pages site, served from the root) and moves to a custom domain without code changes. Needs the repository public and Settings > Pages > Source set to "GitHub Actions".
 
 Most hosts serve `404.html` for missing paths automatically.
 
@@ -62,7 +62,7 @@ Most hosts serve `404.html` for missing paths automatically.
 
 - **Star [the app](https://github.com/pesaclarity/pesaclarity-app)** so more people find a private money app that runs on their phone.
 - Help with copy, accessibility and Swahili translations is welcome.
-- **Pick a first issue:** [good first issues](https://github.com/pesaclarity/pesaclarity-web/issues?q=is%3Aopen+label%3A%22good+first+issue%22) or [help wanted](https://github.com/pesaclarity/pesaclarity-web/issues?q=is%3Aopen+label%3A%22help+wanted%22).
+- **Pick a first issue:** [good first issues](https://github.com/pesaclarity/pesaclarity.github.io/issues?q=is%3Aopen+label%3A%22good+first+issue%22) or [help wanted](https://github.com/pesaclarity/pesaclarity.github.io/issues?q=is%3Aopen+label%3A%22help+wanted%22).
 - **Read [CONTRIBUTING.md](CONTRIBUTING.md)** before your first pull request. Never include real messages, statements or phone numbers.
 
 ## Licence
