@@ -2,8 +2,8 @@
 import Base from "../layouts/Base.astro";
 import { dpo, links } from "../data/site";
 
-const version = "2.0";
-const updated = "16 November 2026";
+const version = "2.1";
+const updated = "17 November 2026";
 ---
 
 <Base
@@ -22,7 +22,7 @@ const updated = "16 November 2026";
       <p>
         Pesa Clarity works out your budget on your phone. Your transactions,
         messages, statements and the questions you ask about them stay on it.
-        Our server does three narrow jobs and never sees a transaction.
+        Our server does four narrow jobs and never sees a transaction.
       </p>
 
       <h2>What stays on your phone</h2>
@@ -113,7 +113,8 @@ const updated = "16 November 2026";
           Your account id, the email or Google account you sign in with, and
           when you signed up, in and out. One-time sign-in codes are deleted
           within a day of expiring, and sign-in records after 90 days. You can
-          also use the app without an account.
+          also use the app without an account; it then contacts our server only
+          for the update check.
         </dd>
         <dt>Encrypted backups</dt>
         <dd>
@@ -131,6 +132,17 @@ const updated = "16 November 2026";
           to the categoriser, combined with other users' before we can see them.
           Never your transactions. You can switch this off at any time.
         </dd>
+        <dt>Update check</dt>
+        <dd>
+          Once a day, with or without an account, the app asks our server
+          whether a newer version or a notice is waiting, such as a fix for a
+          bank that changed its messages. The request carries only the app's
+          version, which build it is (Play, F-Droid, iPhone or website) and the
+          platform. It carries no account, device or install id. Our server
+          keeps no record of the request. The answer is signed, so the app shows
+          only notices that really come from us. The app asks you to update
+          before you carry on only when a version is known to get amounts wrong.
+        </dd>
       </dl>
 
       <h2>Who runs our server</h2>
@@ -138,7 +150,10 @@ const updated = "16 November 2026";
         These services run it for us and process data only on our instructions:
       </p>
       <ul>
-        <li>Google Cloud runs the server.</li>
+        <li>
+          Google Cloud runs the server. Like any web host, it keeps standard
+          request logs, such as IP address and time, for security.
+        </li>
         <li>Neon stores sign-in data in its database.</li>
         <li>Cloudflare R2 stores encrypted backups.</li>
         <li>Brevo sends sign-in codes by email.</li>
