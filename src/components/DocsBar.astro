@@ -1,0 +1,55 @@
+---
+import Search from "./Search.astro";
+import { withBase } from "../lib/paths";
+
+/* The bar under the header on docs pages: a link home to the docs, and
+   search over the docs only. */
+---
+
+<div class="docs-bar">
+  <div class="container docs-bar-inner">
+    <a class="docs-home" href={withBase("/docs/")}>
+      Docs
+    </a>
+    <div class="docs-bar-search">
+      <Search
+        id="docs-bar-search"
+        label="Search docs"
+        placeholder="Search docs"
+        area="Docs"
+        size="small"
+      />
+    </div>
+  </div>
+</div>
+
+<style>
+  .docs-bar {
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .docs-bar-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    min-height: 4rem;
+  }
+
+  .docs-home {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--size-touch-target);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-lg);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .docs-bar-search {
+    flex: 1;
+    min-width: 0;
+    max-width: 28rem;
+  }
+</style>

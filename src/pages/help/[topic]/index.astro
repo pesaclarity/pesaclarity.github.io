@@ -1,0 +1,103 @@
+---
+import Base from "../../../layouts/Base.astro";
+import ContactBox from "../../../components/ContactBox.astro";
+import { withBase } from "../../../lib/paths";
+import { helpTopics, type HelpTopic } from "../../../data/help";
+import { articleUrl, helpArticles, partsOf } from "../../../lib/help";
+
+export function getStaticPaths() {
+  return helpTopics.map((topic) => ({
+    params: { topic: topic.id },
+    props: { topic },
+  }));
+}
+
+interface Props {
+  topic: HelpTopic;
+}
+
+const { topic } = Astro.props;
+const articles = (await helpArticles()).filter(
+  (a) => partsOf(a).topic === topic.id,
+);
+---
+
+<Base title={`${topic.title} · Help`} description={topic.body}>
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="container">
+      <nav aria-label="Breadcrumb" class="crumbs">
+        <a href={withBase("/help/")}>Help</a>
+      </nav>
+      <h1 id="page-title">{topic.title}</h1>
+      <p class="lead">{topic.body}</p>
+    </div>
+  </section>
+
+  <section class="section topic" aria-labelledby="articles-title">
+    <div class="container narrow">
+      <h2 id="articles-title" class="visually-hidden">
+        Articles
+      </h2>
+      {articles.length > 0 ? (
+        <ul class="article-list" role="list">
+          {articles.map((a) => (
+            <li>
+              <a class="link-card" href={articleUrl(a)}>
+                <h3>{a.data.title}</h3>
+                <p>{a.data.description}</p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="empty">
+          Articles for this topic are on their way. Until then, the{" "}
+          <a href={withBase("/help/#common-questions")}>common questions</a> may
+          answer yours, or write to us.
+        </p>
+      )}
+      <div class="contact">
+        <ContactBox title="Still stuck? Contact us" level={2} />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .crumbs a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--size-touch-target);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .topic {
+    border-top: 0;
+  }
+
+  .narrow {
+    max-width: 52rem;
+    margin-inline: 0;
+  }
+
+  .article-list {
+    display: grid;
+    gap: var(--space-3);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .article-list .link-card {
+    padding: var(--space-5);
+  }
+
+  .empty {
+    font-size: var(--text-lg);
+  }
+
+  .contact {
+    margin-top: var(--space-7);
+  }
+</style>

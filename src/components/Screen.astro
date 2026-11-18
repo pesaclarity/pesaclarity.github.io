@@ -1,0 +1,35 @@
+---
+import { darkScreen } from "../lib/screens";
+import { withBase } from "../lib/paths";
+import type { Screen } from "../data/site";
+
+/* One app screen, with its dark version in dark mode when it has one. */
+interface Props {
+  screen: Screen;
+  class?: string;
+}
+
+const { screen, class: className } = Astro.props;
+const dark = darkScreen(screen.file);
+---
+
+<img
+  class:list={[className, { "screen-light": dark }]}
+  src={withBase(`/screens/${screen.file}.webp`)}
+  width="390"
+  height="844"
+  alt={screen.alt}
+  loading="lazy"
+  decoding="async"
+/>
+{dark && (
+  <img
+    class:list={[className, "screen-dark"]}
+    src={withBase(`/screens/${dark}.webp`)}
+    width="390"
+    height="844"
+    alt={screen.alt}
+    loading="lazy"
+    decoding="async"
+  />
+)}

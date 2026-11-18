@@ -1,0 +1,89 @@
+---
+import Base from "../../../layouts/Base.astro";
+import DocsBar from "../../../components/DocsBar.astro";
+import { withBase } from "../../../lib/paths";
+import { docSections, type DocSection } from "../../../data/docs";
+import { docPages, docUrl, sourceName } from "../../../lib/docs";
+
+export function getStaticPaths() {
+  return docSections.map((section) => ({
+    params: { section: section.id },
+    props: { section },
+  }));
+}
+
+interface Props {
+  section: DocSection;
+}
+
+const { section } = Astro.props;
+const pages = (await docPages()).filter((p) => p.data.section === section.id);
+---
+
+<Base title={`${section.title} · Docs`} description={section.body}>
+  <DocsBar />
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="container">
+      <nav aria-label="Breadcrumb" class="crumbs">
+        <a href={withBase("/docs/")}>Docs</a>
+      </nav>
+      <h1 id="page-title">{section.title}</h1>
+      <p class="lead">{section.body}</p>
+    </div>
+  </section>
+  <section class="section pages" aria-labelledby="pages-title">
+    <div class="container narrow">
+      <h2 id="pages-title" class="visually-hidden">
+        Pages
+      </h2>
+      <ul class="page-list" role="list">
+        {pages.map((p) => (
+          <li>
+            <a class="link-card" href={docUrl(p)}>
+              <h3>{p.data.title}</h3>
+              {p.data.description && <p>{p.data.description}</p>}
+              <span class="tag tag-code">{sourceName(p)}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .crumbs a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--size-touch-target);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .pages {
+    border-top: 0;
+  }
+
+  .narrow {
+    max-width: 52rem;
+    margin-inline: 0;
+  }
+
+  .page-list {
+    display: grid;
+    gap: var(--space-3);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .page-list .link-card {
+    padding: var(--space-5);
+  }
+
+  .page-list .tag {
+    align-self: flex-start;
+    margin-top: var(--space-2);
+    color: var(--color-text-muted);
+  }
+</style>

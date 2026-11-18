@@ -41,7 +41,7 @@ step() {
 step "Format" "run 'npm run format' and commit the result" npm run --silent format:check
 step "Astro check" "fix the type or template errors above" npm run --silent check
 if [ "$fast" = 1 ]; then
-  step "Unit tests" "fix the failing tests above" node --test tests/release.test.mjs
+  step "Unit tests" "fix the failing tests above" node --test tests/release.test.mjs tests/sources.test.mjs
 else
   step "Build" "fix the build errors above" npm run --silent build
   step "Test built site" "fix the failing tests above" npm test --silent

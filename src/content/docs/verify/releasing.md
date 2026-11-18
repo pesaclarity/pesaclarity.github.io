@@ -1,0 +1,133 @@
+---
+title: "How the app is released"
+description: "How a release of the app is built, signed and published. Nothing here has been submitted to a store yet; the checklists at the end track what is still to do."
+section: "verify"
+order: 31
+repo: "pesaclarity-app"
+path: "RELEASING.md"
+commit: "b401ac205bc8a9bebebe5c52e983bb761f6901d8"
+source: "https://github.com/pesaclarity/pesaclarity-app/blob/b401ac205bc8a9bebebe5c52e983bb761f6901d8/RELEASING.md"
+edit: "https://github.com/pesaclarity/pesaclarity-app/edit/main/RELEASING.md"
+---
+How a release of the app is built, signed and published. Nothing here has been submitted to a store yet; the checklists at the end track what is still to do.
+
+## 1. Prepare
+
+1. Bump `version` in `pubspec.yaml` (`name+code`, for example `0.2.0+2`). The code must go up on every release.
+2. Add `fastlane/metadata/android/en-US/changelogs/<code>.txt`: a few plain sentences on what changed. F-Droid and the release notes read this file.
+3. Make sure `tool/check` (tests and dependency scan) passes on the release commit, then tag it `vX.Y.Z`.
+
+## 2. Build settings
+
+Release builds take these `--dart-define` values. Keep them in the release environment, not in the repo.
+
+| Define | What it is |
+| --- | --- |
+| `PESACLARITY_API_URL` | The server's base URL (https only) |
+| `PESACLARITY_PINNED_HOSTS` | Our server hosts, comma-separated, such as `api.pesaclarity.org,vault.pesaclarity.org` |
+| `PESACLARITY_TRUSTED_ROOTS` | The root certificates those hosts' chains may end in, as comma-separated base64 DER. At least two: the root in use and one the provider may switch to. An invalid value makes the app refuse to connect, by design. |
+| `PESACLARITY_PLAY_CLOUD_PROJECT` | `play` only: the Google Cloud project number for Play Integrity |
+| `PESACLARITY_DISTRIBUTION` | `website` for the APKs on the website's download page, so their Update button opens that page instead of a store. The APK workflow (`test-apk.yml`) sets it. Leave it unset for Play, F-Droid and iPhone builds |
+| `PESACLARITY_DOWNLOAD_URL` | Optional: the website's download page (default `https://pesaclarity.github.io/install/#download`) |
+
+**Update notices.** On opening, and at most once a day, the app asks the server's `GET /v1/app-status` for the newest version and any notices, without an account. It shows only responses signed with a key pinned in `lib/src/features/app_status/domain/pinned_keys.dart`, as the ujumbe parser packs pin theirs: compiled in, never downloaded. Until `appStatusProductionPublicKey` holds the public key from pesaclarity-backend's `uv run ngome-app-status-key`, the app asks nothing and shows no notices. To change keys, ship a release that pins both the old and the new key before the server signs with the new one. The app blocks itself ("Please update Pesa Clarity") only for a verified notice whose reason is `amounts_wrong` and whose minimum version is newer than the build.
+
+The app pins certificate authorities, not keys: Cloud Run and Cloudflare renew our certificates with new keys every few months, which would lock out every installed app if keys were pinned.
+
+Find the root a host uses: the last certificate's issuer in
+
+```sh
+openssl s_client -connect api.pesaclarity.org:443 -showcerts </dev/null
+```
+
+Download that root from the authority (Google Trust Services publishes theirs at pki.goog), check its fingerprint against the authority's page, and convert it:
+
+```sh
+openssl x509 -in root.pem -outform der | base64 -w0
+```
+
+Include every root the providers list for our hosts, plus the next one they announce. Before a provider changes authority, ship a release that trusts both.
+
+Build, with `SOURCE_DATE_EPOCH` set for reproducibility (see `docs/reproducible-builds.md`):
+
+```sh
+export SOURCE_DATE_EPOCH=$(git log -1 --format=%ct)
+flutter build appbundle --release --flavor play --obfuscate --split-debug-info=build/symbols/play --dart-define=...
+./tool/prepare_foss.sh   # on a throwaway checkout in /home/vagrant/build/com.pesaclarity.app; see docs/reproducible-builds.md
+flutter build apk --release --flavor foss --obfuscate --split-debug-info=build/symbols/foss --dart-define=...
+```
+
+Keep `build/symbols` for each release (outside the repo) to read stack traces from crash reports.
+
+## 3. Signing keys
+
+The upload key (Play) and the release key (F-Droid and direct downloads) never go in the repo, in CI logs or on a shared drive.
+
+- **Where the key lives.** In a hardware key (a YubiKey or similar PIV/PKCS#11 token, or a cloud HSM) or in a secrets manager with access logging. A backup copy is kept encrypted, offline, in a second location, with the recovery steps written down.
+- **Who can use it.** Named release maintainers only. Using the key needs the hardware token or a manually approved secrets-manager request.
+- **Local signing.** `android/key.properties` (see `android/key.properties.example`) points Gradle at the keystore. For a PKCS#11 token, sign the unsigned output with `apksigner sign --provider-class sun.security.pkcs11.SunPKCS11 --ks NONE --ks-type PKCS11 ...` instead.
+- **CI signing (optional).** If CI signs, store the keystore and passwords as secrets in a protected GitHub environment that needs a maintainer's approval, decode the keystore to a temporary file in the job and delete it afterwards. Never sign pull-request builds.
+- **Play App Signing.** Google holds the app signing key for Play; we hold the upload key. Register a new upload key with Play support if it is ever lost or exposed.
+- **F-Droid.** With reproducible builds, F-Droid rebuilds the APK, checks it matches ours and ships it with our signature, so updates install over our direct-download APK.
+
+## 3a. Manual release to Google Play (no Actions minutes)
+
+The steps the `Release to Google Play` workflow automates, done by hand:
+
+1. **Deploy the server** with pesaclarity-backend's `tool/deploy_cloud_run.sh` (its README, "Deploying without GitHub Actions"). Set `APP_API_URL_SECRET` there and the script stores the service address in Secret Manager.
+2. **Build the bundle** on your machine, with the upload key in `android/key.properties`:
+
+   ```sh
+   cp release.env.example release.env   # git-ignored: BUILD_NUMBER, and either
+                                        # PESACLARITY_API_URL or GCP_PROJECT_ID +
+                                        # PESACLARITY_API_URL_SECRET
+   tool/build_release.sh
+   ```
+
+   It reads the address from Secret Manager when asked (with your `gcloud` login), refuses anything but https, points the vault at the same server unless `PESACLARITY_VAULT_URL` says otherwise, and prints where the bundle, mapping and Dart symbols are.
+3. **Upload by hand** in Play Console › Test and release › Internal testing (or Closed testing): create a release, upload `app-play-release.aab`, add the notes from `fastlane/metadata/android/en-US/changelogs/<code>.txt`, then send it for review. Google reviews the SMS permission declaration (section 4) and the Data safety form before the first release goes out; new personal developer accounts also need a closed test with at least 12 testers for 14 days before production.
+
+The address is kept out of the repository, but it is compiled into the app, so anyone with the APK can read it. The server must not rely on it staying secret.
+
+## 4. Google Play: SMS permissions declaration
+
+Play allows `READ_SMS` and `RECEIVE_SMS` only for approved core uses. Pesa Clarity applies under the SMS-based money management exception, and a person at Google reviews it. Before the first Play release (draft answers are in `docs/play-console.md`):
+
+1. Check the app matches the policy: SMS budgeting is the core feature, no permissions beyond SMS, notifications, restart and network are requested, and the in-app disclosure before the SMS permission prompt explains what is read and why.
+2. Publish the privacy policy at a public URL and add it to the store listing.
+3. In Play Console, open **App content** and complete the permissions declaration form for SMS and Call Log permissions:
+   - choose the core functionality that matches SMS-based money management;
+   - describe how the app uses SMS: reads messages only from the banks and wallets the user selects, parses them on the phone and keeps only the transaction fields;
+   - add a link to a short screen recording that shows the disclosure, the permission prompt and the feature that uses the messages.
+4. Complete the **Data safety** form consistently with the privacy policy: SMS is processed on the phone and not collected by the server.
+5. Upload the build to an internal or closed testing track and submit for review. Expect questions; answer from this page and the spec.
+
+## 5. F-Droid
+
+1. Reproducible build and the offenders in `docs/reproducible-builds.md` resolved for `foss`. The recipe runs `tool/prepare_foss.sh` as its `prebuild` (it needs git, a C compiler and `make`, and SQLCipher and LibTomCrypt as srclibs or network; see docs/reproducible-builds.md, F-Droid recipe), and our own `foss` release APK is built the same way so the two match.
+2. Store text and changelogs come from `fastlane/metadata/android/en-US`.
+3. Open a merge request to fdroiddata with the build recipe: Flutter srclib at the pinned version, `foss` flavour, the same build command and defines, and our signing certificate for reproducible-build verification.
+
+## 6. App Store (iPhone)
+
+Not set up yet. Before the first upload:
+
+1. Join the Apple Developer Program and register the bundle id `com.pesaclarity.app`.
+2. In App Store Connect, create the app, fill in the privacy details (the email address for accounts; nothing else leaves the phone) and the export compliance answer. The app encrypts its database with SQLCipher, so answer that it uses encryption; it qualifies for the mass-market exemption. Then add `ITSAppUsesNonExemptEncryption` to `ios/Runner/Info.plist` to match.
+3. Set the signing team in Xcode, or add signing to the `iOS build` workflow with an App Store Connect API key, and upload to TestFlight.
+4. App Review will try the Shortcuts automation: the review notes should explain the three steps on the Connect your messages screen.
+
+## Release checklist (not done yet)
+
+- [ ] Server deployed; `PESACLARITY_PINNED_HOSTS` and `PESACLARITY_TRUSTED_ROOTS` set for its hosts
+- [ ] Play Console project and Google Cloud project created; Play Integrity added to the `play` flavour behind `IntegrityAttestor`, with server-side token checks
+- [ ] Upload and release keys created in a hardware key or secrets manager, with an offline backup
+- [ ] SMS permissions declaration and Data safety form submitted and approved
+- [x] SQLCipher built from source for `foss` (`tool/foss/build_sqlcipher_sources.sh`); PDFium removed from `foss`
+- [x] No prebuilt ML library in either build: TFLite/LiteRT removed, the Ask models on rayo compiled from source (pesaclarity/docs decision 0020)
+- [ ] rayo pinned to its `v0.1.0` tag in `pubspec.yaml` once the tag exists (a commit until then)
+- [ ] Ask on rayo timed on a low-end 32-bit phone and a recent arm64 one (decision 0020, risks)
+- [ ] A `play` database opened by a `foss` build on a device
+- [ ] External penetration test against OWASP MASVS L2 passed, findings fixed
+- [ ] Performance budget met on a 2 GB phone (`docs/performance-budget.md`)
+- [ ] ODPC registration done (spec: Privacy and compliance)

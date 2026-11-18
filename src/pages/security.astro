@@ -1,0 +1,340 @@
+---
+import Base from "../layouts/Base.astro";
+import { withBase } from "../lib/paths";
+import { links } from "../data/site";
+
+// Every line here restates the privacy policy (/privacy/) or a document in
+// the developer docs; each section links where it comes from. Change them
+// together.
+const canSee = [
+  "Your sign-in: your account id, the email or Google account you sign in with, and when you signed up, in and out",
+  "Your encrypted backups, as files it cannot open, if you use our vault. It keeps your latest 10",
+  "Model updates to the categoriser, clipped, noised and combined with other people's, if Help improve the app is on",
+  "Once a day, the app's version, which build it is and the platform, when it asks for updates. No account, device or install id",
+  "Standard request logs, such as IP address and time, which our host keeps for security",
+];
+const cantSee = [
+  "Any transaction, message, balance or statement",
+  "What is inside a backup: it is encrypted on your phone with your passphrase before upload",
+  "Your questions to Ask, or its answers",
+  "Your budgets, debts, goals, payees and categories",
+];
+
+const threats = [
+  {
+    when: "If your phone is lost",
+    title: "Locked records",
+    body: "The database is encrypted, its key held by the phone's secure hardware. With app lock on, it opens only after you unlock the app.",
+  },
+  {
+    when: "If our server is breached",
+    title: "Nothing to read",
+    body: "It holds sign-ins and backups it cannot open. No transactions.",
+  },
+  {
+    when: "If someone fakes a notice",
+    title: "Signed answers",
+    body: "The update check's answer is signed, so the app shows only notices that really come from us.",
+  },
+  {
+    when: "If a fake app uploads",
+    title: "Checked uploads",
+    body: "The vault checks with Google or Apple that each backup comes from the genuine app.",
+  },
+  {
+    when: "If someone studies the models",
+    title: "Private learning",
+    body: "Updates are clipped and noised on your phone, and combined with others' before we see them.",
+  },
+  {
+    when: "If you don't trust us",
+    title: "Check the code",
+    body: "Everything is open source, and the F-Droid build can be rebuilt from source to compare.",
+  },
+];
+---
+
+<Base
+  title="Security"
+  description="What stays on your phone, what Pesa Clarity's server can and can't see, the threat model in short, how to report a vulnerability and how to verify the app."
+>
+  <div
+    data-pagefind-body
+    data-pagefind-meta="crumb:Security"
+    data-pagefind-filter="area:Help"
+  >
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="container">
+        <p class="eyebrow">Security</p>
+        <h1 id="page-title">Your money stays yours.</h1>
+        <p class="lead">
+          Pesa Clarity works out your budget on your phone. Our server does a
+          few narrow jobs and never sees a transaction. Here is what that means,
+          and how to check it.
+        </p>
+        <div class="button-row">
+          <a class="button button-primary" href="#report">
+            Report a vulnerability
+          </a>
+          <a class="button button-secondary" href="#verify">
+            Verify the app
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="on-your-phone" class="section" aria-labelledby="phone-title">
+      <div class="container split">
+        <h2 id="phone-title" class="label">
+          What stays on your phone
+        </h2>
+        <div>
+          <p class="statement">
+            Your messages, transactions, statements, budgets, debts, goals, and
+            the questions you ask about them.
+          </p>
+          <p class="muted">
+            They sit in an encrypted database. Its key is held by your phone's
+            secure hardware. With app lock on, the key is released only after
+            you unlock the app with your PIN, fingerprint or Face ID. Once a
+            message is read, its text is deleted.
+          </p>
+          <p class="source muted">
+            From the privacy policy:{" "}
+            <a href={withBase("/privacy/")}>What stays on your phone</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="server"
+      class="section section-alt"
+      aria-labelledby="server-title"
+    >
+      <div class="container">
+        <h2 id="server-title" class="label">
+          What our server can and can't see
+        </h2>
+        <div class="see">
+          <div class="see-card">
+            <h3>
+              <span class="dot" aria-hidden="true"></span>Can see
+            </h3>
+            <ul class="see-list can" role="list">
+              {canSee.map((s) => (
+                <li>{s}</li>
+              ))}
+            </ul>
+          </div>
+          <div class="see-card">
+            <h3>
+              <span class="dot dot-red" aria-hidden="true"></span>Can't see
+            </h3>
+            <ul class="see-list cant" role="list">
+              {cantSee.map((s) => (
+                <li>{s}</li>
+              ))}
+            </ul>
+            <p class="muted no-account">
+              You can use the app without an account. It then contacts our
+              server only for the daily update check.
+            </p>
+          </div>
+        </div>
+        <p class="source muted">
+          From the privacy policy:{" "}
+          <a href={withBase("/privacy/")}>What our server holds</a> and{" "}
+          <a href={withBase("/privacy/")}>Who runs our server</a>. The server's
+          own account:{" "}
+          <a href={withBase("/docs/server/overview/")}>Server overview</a>.
+        </p>
+      </div>
+    </section>
+
+    <section id="threats" class="section" aria-labelledby="threats-title">
+      <div class="container">
+        <h2 id="threats-title" class="label">
+          Threat model, in short
+        </h2>
+        <ul class="cards cards-3" role="list">
+          {threats.map((t) => (
+            <li class="card-item threat">
+              <p class="eyebrow">{t.when}</p>
+              <h3>{t.title}</h3>
+              <p>{t.body}</p>
+            </li>
+          ))}
+        </ul>
+        <div class="button-row after-cards">
+          <a class="button button-secondary" href={withBase("/docs/security/")}>
+            The security docs
+          </a>
+          <a class="button button-secondary" href={withBase("/privacy/")}>
+            Privacy policy
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="report"
+      class="section section-alt"
+      aria-labelledby="report-title"
+    >
+      <div class="container split">
+        <h2 id="report-title" class="label">
+          Report a vulnerability
+        </h2>
+        <div>
+          <p class="statement">
+            Report privately on GitHub: open the affected repository, then
+            Security › Report a vulnerability.
+          </p>
+          <p class="muted">
+            Please don't open a public issue. We acknowledge within 3 working
+            days, ask for 90 days or until a fix ships before disclosure, and
+            credit reporters who want credit.
+          </p>
+          <div class="button-row">
+            <a class="button button-primary" href={links.security}>
+              Read the security policy
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="verify" class="section" aria-labelledby="verify-title">
+      <div class="container split">
+        <h2 id="verify-title" class="label">
+          Verify the app
+        </h2>
+        <div>
+          <ol class="verify-steps">
+            <li>
+              Read the code that handles your money: the{" "}
+              <a href={links.appSource}>app</a>, the{" "}
+              <a href={links.parsers}>message rules</a> and the{" "}
+              <a href={withBase("/docs/server/overview/")}>server</a> are all
+              public.
+            </li>
+            <li>
+              Rebuild the F-Droid build from the release's source with the
+              pinned toolchain, and compare it with the published APK. Expect
+              only the signature to differ.
+            </li>
+          </ol>
+          <div class="prose-body">
+            <pre data-language="sh"><code>diffoscope pesaclarity-foss.apk my-build.apk
+apksigcopier compare pesaclarity-foss.apk --unsigned my-build.apk</code></pre>
+          </div>
+          <div class="button-row">
+            <a
+              class="button button-secondary"
+              href={withBase("/docs/verify/reproducible-builds/")}
+            >
+              Step-by-step guide
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .page-hero .button-row {
+    margin-top: var(--space-5);
+  }
+
+  .source {
+    margin: var(--space-5) 0 0;
+    font-size: var(--text-sm);
+  }
+
+  .see {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 52rem) {
+    .see {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .see-card {
+    padding: var(--space-6);
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+  }
+
+  .see-card h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .dot {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    background: var(--color-text);
+  }
+
+  .dot-red {
+    background: var(--color-brand-link);
+  }
+
+  .see-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .see-list li {
+    position: relative;
+    padding: var(--space-3) 0 var(--space-3) var(--space-6);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .see-list li:first-child {
+    border-top: 0;
+  }
+
+  .see-list li::before {
+    position: absolute;
+    left: 0.15rem;
+    font-weight: 700;
+  }
+
+  .can li::before {
+    content: "✓";
+  }
+
+  .cant li::before {
+    content: "✕";
+    color: var(--color-brand-link);
+  }
+
+  .no-account {
+    margin: var(--space-4) 0 0;
+    font-size: var(--text-sm);
+  }
+
+  .threat .eyebrow {
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-2);
+  }
+
+  .verify-steps {
+    padding-left: 1.3em;
+    margin-bottom: var(--space-5);
+  }
+
+  .verify-steps li + li {
+    margin-top: var(--space-3);
+  }
+</style>

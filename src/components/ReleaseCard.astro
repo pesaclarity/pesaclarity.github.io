@@ -1,0 +1,161 @@
+---
+import { withBase } from "../lib/paths";
+import {
+  changeCount,
+  changeHtml,
+  formatDay,
+  sourceUrl,
+  type ProductRelease,
+} from "../lib/changes";
+
+/* One release of one product. Short: each change's first clause, up to a
+   few per group, with a link to the whole release on the product's page. */
+interface Props {
+  release: ProductRelease;
+  short?: boolean;
+}
+
+const { release, short = false } = Astro.props;
+const limit = short ? 5 : Infinity;
+const total = changeCount(release);
+const shown = release.groups.map((g) => ({
+  ...g,
+  changes: g.changes.slice(0, limit),
+}));
+const truncated =
+  shown.reduce((n, g) => n + g.changes.length, 0) < total ||
+  release.groups.some((g) => g.changes.some((c) => c.children.length));
+const day = formatDay(release.day);
+const unreleased = release.version === null;
+const pageUrl = withBase(`/changes/${release.product.id}/#${release.anchor}`);
+// release-please links each version to a comparison; hand-written
+// changelogs do not, and keep their own capitals.
+const capital = release.compare !== null;
+const groupTitle = (t: string) =>
+  t || (unreleased ? "Coming" : "First release");
+---
+
+<article
+  class="release"
+  id={short ? undefined : release.anchor}
+  aria-labelledby={`${release.product.id}-${release.anchor}`}
+>
+  <div class="release-head">
+    <span class="tag">{release.product.label}</span>
+    <h2 class="number" id={`${release.product.id}-${release.anchor}`}>
+      <span class="visually-hidden">{release.product.label}</span>
+      {unreleased ? "Next" : release.version}
+    </h2>
+    <p class="muted">
+      {unreleased ? "Not released yet" : (day ?? "Not tagged on GitHub")}
+    </p>
+  </div>
+  <div class="release-body">
+    {shown.map((g) => (
+      <section>
+        <h3>{groupTitle(g.title)}</h3>
+        <ul>
+          {g.changes.map((c) => (
+            <li>
+              <Fragment set:html={changeHtml(c.text, short, capital)} />
+              {!short && c.children.length > 0 && (
+                <ul>
+                  {c.children.map((child) => (
+                    <li set:html={changeHtml(child, false, capital)} />
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+    <p class="release-foot muted">
+      {short && truncated ? (
+        <a href={pageUrl}>
+          {unreleased
+            ? "Everything coming"
+            : `All ${total} changes in ${release.version}`}
+        </a>
+      ) : release.compare ? (
+        <a href={release.compare}>Compare on GitHub</a>
+      ) : null}
+      {(short && truncated) || release.compare ? " · " : ""}from{" "}
+      <a href={sourceUrl(release.product)}>
+        {release.product.repo}/{release.product.path}
+      </a>
+    </p>
+  </div>
+</article>
+
+<style>
+  .release {
+    display: grid;
+    gap: var(--space-4) var(--space-6);
+    padding: var(--space-6);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+  }
+
+  @media (min-width: 52rem) {
+    .release {
+      grid-template-columns: 13rem minmax(0, 1fr);
+    }
+  }
+
+  .release-head h2 {
+    font-size: var(--text-xl);
+    margin: var(--space-3) 0 var(--space-1);
+  }
+
+  .release-head p {
+    margin: 0;
+    font-size: var(--text-sm);
+  }
+
+  .release-head,
+  .release-body {
+    min-width: 0;
+  }
+
+  .release-body :global(code) {
+    overflow-wrap: anywhere;
+  }
+
+  .release-body h3 {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    margin: 0 0 var(--space-2);
+  }
+
+  .release-body section + section {
+    margin-top: var(--space-4);
+  }
+
+  .release-body ul {
+    margin: 0;
+    padding-left: 1.2em;
+    list-style: circle;
+  }
+
+  .release-body li + li {
+    margin-top: var(--space-1);
+  }
+
+  .release-body ul ul {
+    margin-top: var(--space-1);
+    list-style: disc;
+    color: var(--color-text-muted);
+  }
+
+  .release-foot {
+    margin: var(--space-4) 0 0;
+    font-size: var(--text-sm);
+  }
+
+  .release-foot a:first-child {
+    font-weight: 600;
+  }
+</style>

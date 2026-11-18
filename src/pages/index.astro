@@ -3,52 +3,35 @@ import { darkScreen } from "../lib/screens";
 import { withBase } from "../lib/paths";
 import Base from "../layouts/Base.astro";
 import ScreenGallery from "../components/ScreenGallery.astro";
-import {
-  accounts,
-  appRelease,
-  different,
-  downloadSize,
-  downloads,
-  faqs,
-  homeScreens,
-  links,
-  sides,
-  spaces,
-  whatsNew,
-} from "../data/site";
-import { formatDay } from "../data/release.mjs";
+import Screen from "../components/Screen.astro";
+import { appRelease, downloads, homeScreens, screens } from "../data/site";
 
-const release = appRelease;
-const releaseDay = release ? formatDay(release.date) : null;
-const newest = release?.changes.slice(0, whatsNew.homeCount) ?? [];
-
-const highlights = [
-  "Free forever",
-  "Private by design",
-  "Works from your SMS",
-  "Open source",
-];
-
-const does = [
-  { title: "Spend today", body: "How much you can safely spend" },
-  { title: "Bills", body: "What's due, in good time" },
-  { title: "Leaks", body: "Where your money goes" },
-  { title: "Debts", body: "Your debt-free date" },
-  { title: "Savings", body: "Goals and a rainy day fund" },
-  { title: "Business", body: "Sales, stock and who owes you" },
-  { title: "Reports", body: "Receipts, invoices and reports" },
-  { title: "Tax", body: "Estimates for your business" },
-];
-
-const features = [
-  "Your money summary in a minute",
-  "What changed this month",
-  "Tap any figure to see why",
-  "Early warning before you run low",
-  "A payday plan",
-  "A money health score",
-  "A Fuliza tracker",
-  "Who owes who",
+// The four reasons to trust it, each with where to read more.
+const pillars = [
+  {
+    title: "Stays on your phone",
+    body: "Your records and every sum stay on your phone, and work without internet. Only you see your money.",
+    link: "What stays on your phone",
+    href: withBase("/security/#on-your-phone"),
+  },
+  {
+    title: "Free, with no ads",
+    body: "Every feature, for everyone. Paid for by small gifts, never by your data.",
+    link: "How gifts help",
+    href: withBase("/sponsor/"),
+  },
+  {
+    title: "Open source, and checkable",
+    body: "Anyone can read the code that handles their money, and rebuild the F-Droid build to compare it.",
+    link: "Verify the app",
+    href: withBase("/security/#verify"),
+  },
+  {
+    title: "Plain answers",
+    body: "Clear words, and one number first. Ask about your money in your own words.",
+    link: "What it does",
+    href: withBase("/features/"),
+  },
 ];
 
 const steps = [
@@ -56,8 +39,6 @@ const steps = [
   "The app reads those SMS on your phone",
   "Get your plan",
 ];
-const heroAlt =
-  "Pesa Clarity home screen showing safe to spend today, money left this month, the runway at this pace, what is left at month end, the financial health card and a bar to ask about your money";
 const heroDark = darkScreen("home");
 ---
 
@@ -69,8 +50,8 @@ const heroDark = darkScreen("home");
           Know where your <span class="accent">pesa</span> goes.
         </h1>
         <p class="lead">
-          Your M-Pesa and bank SMS, turned into a simple daily plan for you,
-          your home and your business. Free, private, and on your phone.
+          Your M-Pesa and bank SMS, turned into a simple daily plan. Free,
+          private, and on your phone.
         </p>
         <div class="button-row">
           <a
@@ -83,6 +64,11 @@ const heroDark = darkScreen("home");
             How it works
           </a>
         </div>
+        <p class="hero-meta muted" data-version={appRelease?.version}>
+          {appRelease ? `Version ${appRelease.version} · ` : ""}
+          <a href={withBase("/install/")}>Other ways to install</a>, including
+          F-Droid and iPhone
+        </p>
       </div>
 
       <figure class="showcase">
@@ -94,7 +80,7 @@ const heroDark = darkScreen("home");
           src={withBase("/screens/home.webp")}
           width="390"
           height="844"
-          alt={heroAlt}
+          alt={screens.home.alt}
           fetchpriority="high"
           loading={heroDark ? "lazy" : undefined}
           decoding={heroDark ? "async" : undefined}
@@ -105,7 +91,7 @@ const heroDark = darkScreen("home");
             src={withBase(`/screens/${heroDark}.webp`)}
             width="390"
             height="844"
-            alt={heroAlt}
+            alt={screens.home.alt}
             fetchpriority="high"
             loading="lazy"
             decoding="async"
@@ -113,106 +99,42 @@ const heroDark = darkScreen("home");
         )}
       </figure>
     </div>
-
-    <div class="container">
-      <ul class="highlights" role="list">
-        {highlights.map((h) => (
-          <li>{h}</li>
-        ))}
-      </ul>
-    </div>
   </section>
 
-  <section id="sides" class="section section-alt" aria-labelledby="sides-title">
+  <section class="section pillars-section" aria-labelledby="pillars-title">
     <div class="container">
-      <h2 id="sides-title" class="label">
-        {sides.title}
+      <h2 id="pillars-title" class="visually-hidden">
+        Why trust it
       </h2>
-      <ul class="sides" role="list">
-        {sides.items.map((side) => (
-          <li class="side">
-            <div class="side-copy">
-              <h3>{side.title}</h3>
-              <p>{side.body}</p>
-              <a
-                class="button button-secondary"
-                href={withBase(`/features/#${side.anchor}`)}
-              >
-                {side.link}
-              </a>
-            </div>
-            <div class="side-shot">
-              <img
-                class:list={[{ "screen-light": darkScreen(side.screen.file) }]}
-                src={withBase(`/screens/${side.screen.file}.webp`)}
-                width="390"
-                height="844"
-                alt={side.screen.alt}
-                loading="lazy"
-                decoding="async"
-              />
-              {darkScreen(side.screen.file) && (
-                <img
-                  class="screen-dark"
-                  src={withBase(
-                    `/screens/${darkScreen(side.screen.file)}.webp`,
-                  )}
-                  width="390"
-                  height="844"
-                  alt={side.screen.alt}
-                  loading="lazy"
-                  decoding="async"
-                />
-              )}
-            </div>
+      <ul class="cards cards-4 pillars" role="list">
+        {pillars.map((p) => (
+          <li class="card-item pillar">
+            <h3>{p.title}</h3>
+            <p>{p.body}</p>
+            <a href={p.href}>{p.link}</a>
           </li>
         ))}
       </ul>
     </div>
   </section>
 
-  <section id="what" class="section" aria-labelledby="what-title">
-    <div class="container">
-      <h2 id="what-title" class="label">
-        What it does
-      </h2>
-      <ul class="cards cards-4" role="list">
-        {does.map((d) => (
-          <li class="card-item">
-            <h3>{d.title}</h3>
-            <p>{d.body}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  <section
-    id="screens"
-    class="section section-alt"
-    aria-labelledby="screens-title"
-  >
+  <section id="screens" class="section" aria-labelledby="screens-title">
     <div class="container">
       <h2 id="screens-title" class="label">
-        Screens
+        See where it goes
       </h2>
       <ScreenGallery screens={homeScreens} label="Screens" />
-    </div>
-  </section>
-
-  <section id="features" class="section" aria-labelledby="features-title">
-    <div class="container">
-      <h2 id="features-title" class="label">
-        Features
-      </h2>
-      <ul class="cards cards-3" role="list">
-        {features.map((f) => (
-          <li class="card-item">
-            <h3>{f}</h3>
+      <ol id="how" class="steps" role="list" aria-label="How it works">
+        {steps.map((s, i) => (
+          <li>
+            <span class="step-n number" aria-hidden="true">
+              {i + 1}
+            </span>
+            <span>{s}</span>
           </li>
         ))}
-      </ul>
-      <div class="button-row after-cards">
+      </ol>
+      <div class="button-row">
         <a class="button button-secondary" href={withBase("/features/")}>
           See everything it does
         </a>
@@ -220,203 +142,26 @@ const heroDark = darkScreen("home");
     </div>
   </section>
 
-  <section
-    id="spaces"
-    class="section section-alt"
-    aria-labelledby="spaces-title"
-  >
+  <section id="business" class="section" aria-labelledby="business-title">
     <div class="container">
-      <h2 id="spaces-title" class="label">
-        A space for each part of life
-      </h2>
-      <ul class="cards cards-4" role="list">
-        {spaces.map((s) => (
-          <li class="card-item">
-            <h3>{s.title}</h3>
-            <p>{s.body}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  <section id="how" class="section section-alt" aria-labelledby="how-title">
-    <div class="container">
-      <h2 id="how-title" class="label">
-        How it works
-      </h2>
-      <ol class="cards cards-3 steps" role="list">
-        {steps.map((s, i) => (
-          <li class="card-item">
-            <span class="step-n number">{i + 1}</span>
-            <h3>{s}</h3>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
-
-  <section id="works-with" class="section" aria-labelledby="works-title">
-    <div class="container">
-      <h2 id="works-title" class="label">
-        Works with
-      </h2>
-      <ul class="cards cards-3" role="list">
-        {accounts.map((a) => (
-          <li class="card-item">
-            <h3>{a.name}</h3>
-            {a.note && <p>{a.note}</p>}
-          </li>
-        ))}
-      </ul>
-      <div class="button-row after-cards">
-        <a class="button button-secondary" href={links.parsers}>
-          Add your bank
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section id="why" class="section section-alt" aria-labelledby="why-title">
-    <div class="container">
-      <h2 id="why-title" class="label">
-        Why Pesa Clarity
-      </h2>
-      <ul class="cards cards-4" role="list">
-        {different.map((d) => (
-          <li class="card-item">
-            <h3>{d.title}</h3>
-            <p>{d.body}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  <section id="privacy" class="section" aria-labelledby="privacy-title">
-    <div class="container split">
-      <h2 id="privacy-title" class="label">
-        Privacy
-      </h2>
-      <div>
-        <p class="statement">
-          Your data stays on your phone. Our server keeps only your sign-in and
-          encrypted backups.
-        </p>
-        <a class="button button-secondary" href={withBase("/privacy/")}>
-          Privacy policy
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section
-    id="open-source"
-    class="section section-alt"
-    aria-labelledby="foss-title"
-  >
-    <div class="container split">
-      <h2 id="foss-title" class="label">
-        Open source
-      </h2>
-      <div>
-        <p class="statement">
-          The code is public. Star it, add your bank, or help build it.
-        </p>
-        <div class="button-row">
-          <a class="button button-primary" href={links.star}>
-            Star on GitHub
-          </a>
-          <a class="button button-secondary" href={links.parserContributing}>
-            Add your bank
-          </a>
-          <a class="button button-secondary" href={links.contribute}>
-            How to contribute
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="sponsor" class="section" aria-labelledby="sponsor-title">
-    <div class="container split">
-      <h2 id="sponsor-title" class="label">
-        Sponsor
-      </h2>
-      <div>
-        <p class="statement">
-          Free, and it stays free. Help us get it onto the App Store.
-        </p>
-        <p class="muted">
-          No ads, no investors, no selling data. Apple charges US$99 a year to
-          put it on the App Store, and Google charges US$25 once for Play. Gifts
-          pay for that and keep it running.
-        </p>
-        <div class="button-row">
-          <a class="button button-primary" href={withBase("/sponsor/")}>
-            Sponsor Pesa Clarity
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="faq" class="section" aria-labelledby="faq-title">
-    <div class="container split">
-      <h2 id="faq-title" class="label">
-        FAQ
-      </h2>
-      <div class="faq-list">
-        {faqs.map((f) => (
-          <details class="faq">
-            <summary>{f.q}</summary>
-            <p>{f.a}</p>
-          </details>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section id="download" class="section" aria-labelledby="download-title">
-    <div class="container">
-      <div class="cta">
-        <h2 id="download-title">Get the app.</h2>
-        <div class="button-row">
+      <div class="business">
+        <div class="business-copy">
+          <p class="eyebrow">For business too</p>
+          <h2 id="business-title">Your shop, on the same phone.</h2>
+          <p>
+            Sell from your phone, take cash, M-Pesa or credit, keep stock and
+            close the day. A business space keeps its money apart from yours.
+          </p>
           <a
-            class="button button-primary button-large"
-            href={downloads.android}
+            class="button button-secondary"
+            href={withBase("/features/#business")}
           >
-            Android
-          </a>
-          <a
-            class="button button-secondary button-large"
-            href={downloads.fdroid}
-          >
-            F-Droid build
+            Business features
           </a>
         </div>
-        <p class="muted" data-version={release?.version}>
-          {release
-            ? `Version ${release.version}${releaseDay ? `, ${releaseDay}` : ""}. `
-            : ""}
-          {downloads.testBuild ? "Test build, updated often. " : ""}
-          {downloadSize}. Open the file on your phone and allow installs when
-          asked. Older phone? Get the{" "}
-          <a href={downloads.android32}>version for older phones</a>.{" "}
-          <a href={withBase("/install/")}>How to install</a> ·{" "}
-          <a href={links.releases}>All releases</a>
-        </p>
-        {release && newest.length > 0 && (
-          <div class="cta-new">
-            <h3>{whatsNew.title(release.version)}</h3>
-            <ul>
-              {newest.map((change) => (
-                <li>{change}</li>
-              ))}
-            </ul>
-            <a href={withBase("/install/#whats-new")}>{whatsNew.more}</a>
-          </div>
-        )}
+        <div class="business-shot">
+          <Screen screen={screens.sell} />
+        </div>
       </div>
     </div>
   </section>
@@ -427,7 +172,7 @@ const heroDark = darkScreen("home");
   .hero {
     position: relative;
     overflow: hidden;
-    padding-block: var(--space-7) var(--space-6);
+    padding-block: var(--space-7);
     background:
       radial-gradient(
         48rem 32rem at 80% 0%,
@@ -473,6 +218,11 @@ const heroDark = darkScreen("home");
     margin-bottom: var(--space-6);
   }
 
+  .hero-meta {
+    margin: var(--space-5) 0 0;
+    font-size: var(--text-sm);
+  }
+
   .showcase {
     position: relative;
     margin: 0;
@@ -482,7 +232,7 @@ const heroDark = darkScreen("home");
 
   .hero-screen {
     position: relative;
-    width: min(100%, 22rem);
+    width: min(100%, 20rem);
     height: auto;
     border-radius: 2.75rem;
     border: 8px solid var(--color-device);
@@ -497,91 +247,67 @@ const heroDark = darkScreen("home");
     background: radial-gradient(circle, var(--color-subtle), transparent 65%);
   }
 
-  .highlights {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-4);
-    list-style: none;
-    margin: var(--space-8) 0 0;
-    padding: var(--space-5) var(--space-6);
+  /* Trust pillars */
+  .pillars-section {
     background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-large);
-    font-family: var(--font-display);
-    font-size: var(--text-lg);
+  }
+
+  .pillar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    background: var(--color-background);
+  }
+
+  .pillar::before {
+    content: "";
+    width: 2.25rem;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--color-brand);
+    margin-bottom: var(--space-4);
+  }
+
+  .pillar p {
+    flex: 1;
+    margin: 0;
+  }
+
+  .pillar a {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    min-height: var(--size-touch-target);
     font-weight: 600;
   }
 
-  @media (min-width: 52rem) {
-    .highlights {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .highlights li + li {
-      border-left: 1px solid var(--color-border);
-      padding-left: var(--space-5);
-    }
-  }
-
-  /* Personal and business, side by side */
-  .sides {
+  /* Steps under the screens */
+  .steps {
     display: grid;
-    gap: var(--space-5);
+    gap: var(--space-4) var(--space-6);
     list-style: none;
-    margin: 0;
+    margin: var(--space-7) 0 var(--space-5);
     padding: 0;
   }
 
   @media (min-width: 52rem) {
-    .sides {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .steps {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 
-  .side {
-    display: grid;
-    grid-template-rows: auto 1fr;
-    overflow: hidden;
-    background: var(--color-background);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-large);
-  }
-
-  .side-copy {
-    padding: var(--space-6) var(--space-6) var(--space-5);
-  }
-
-  .side-copy h3 {
-    font-size: var(--text-xl);
-    margin-bottom: var(--space-3);
-  }
-
-  .side-copy p {
-    color: var(--color-text-muted);
-    max-width: 30rem;
-    margin-bottom: var(--space-5);
-  }
-
-  /* The top of the screen, rising from the bottom of the card. */
-  .side-shot {
+  .steps li {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    height: clamp(14rem, 10rem + 12vw, 20rem);
-    overflow: hidden;
-    padding-inline: var(--space-5);
-  }
-
-  .side-shot img {
-    width: min(100%, 17rem);
-    height: auto;
-    border-radius: 2rem 2rem 0 0;
-    border: 6px solid var(--color-device);
-    border-bottom: 0;
-    box-shadow: 0 30px 60px -30px var(--color-shadow);
+    align-items: center;
+    gap: var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    line-height: 1.35;
   }
 
   .step-n {
+    flex: none;
     display: grid;
     place-items: center;
     width: 2.25rem;
@@ -590,74 +316,59 @@ const heroDark = darkScreen("home");
     background: var(--color-brand);
     color: var(--color-on-brand);
     font-weight: 700;
-    margin-bottom: var(--space-4);
+    font-size: var(--text-base);
   }
 
-  /* What's new, under the download buttons */
-  .cta-new {
-    flex-basis: 100%;
-    padding-top: var(--space-5);
-    border-top: 1px solid var(--color-border);
-  }
-
-  .cta-new h3 {
-    font-size: var(--text-lg);
-    margin-bottom: var(--space-3);
-  }
-
-  .cta-new ul {
-    margin: 0 0 var(--space-3);
-    padding-left: 1.2em;
-    color: var(--color-text-muted);
-  }
-
-  .cta-new li + li {
-    margin-top: var(--space-1);
-  }
-
-  /* FAQ */
-  .faq-list {
+  /* For business too */
+  .business {
     display: grid;
-    gap: var(--space-3);
-  }
-
-  .faq {
-    border-radius: var(--radius-card);
-    background: var(--color-surface);
+    gap: var(--space-6);
+    align-items: end;
+    padding: clamp(1.5rem, 1rem + 3vw, 3rem) clamp(1.5rem, 1rem + 3vw, 3rem) 0;
     border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+    background: var(--color-surface);
+    overflow: hidden;
   }
 
-  .faq summary {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--space-4);
-    padding: var(--space-4) var(--space-5);
-    font-weight: 600;
-    cursor: pointer;
-    list-style: none;
+  @media (min-width: 52rem) {
+    .business {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    }
   }
 
-  .faq summary::-webkit-details-marker {
-    display: none;
+  .business-copy {
+    align-self: center;
+    padding-bottom: clamp(1.5rem, 1rem + 3vw, 3rem);
   }
 
-  .faq summary::after {
-    content: "+";
-    flex: none;
-    font-size: 1.4rem;
-    font-weight: 400;
-    line-height: 1;
-    color: var(--color-brand-link);
+  .business-copy h2 {
+    font-size: var(--text-section);
+    letter-spacing: -0.03em;
+    line-height: 1.08;
   }
 
-  .faq[open] summary::after {
-    content: "−";
-  }
-
-  .faq p {
-    margin: 0;
-    padding: 0 var(--space-5) var(--space-5);
+  .business-copy p:not(.eyebrow) {
+    font-size: var(--text-lg);
     color: var(--color-text-muted);
+    max-width: 32rem;
+    margin-bottom: var(--space-5);
+  }
+
+  /* The top of the Sell screen, rising from the bottom of the card. */
+  .business-shot {
+    display: flex;
+    justify-content: center;
+    height: clamp(16rem, 12rem + 10vw, 22rem);
+    overflow: hidden;
+  }
+
+  .business-shot :global(img) {
+    width: min(100%, 16rem);
+    height: auto;
+    border-radius: 2rem 2rem 0 0;
+    border: 6px solid var(--color-device);
+    border-bottom: 0;
+    box-shadow: 0 30px 60px -30px var(--color-shadow);
   }
 </style>

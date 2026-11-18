@@ -1,0 +1,131 @@
+---
+import Article from "../../../layouts/Article.astro";
+import ContactBox from "../../../components/ContactBox.astro";
+import { withBase } from "../../../lib/paths";
+import { darkScreen } from "../../../lib/screens";
+import {
+  longDate,
+  minutesToRead,
+  tocOf,
+  withBaseHtml,
+} from "../../../lib/content";
+import { helpTopic } from "../../../data/help";
+import { links, screens, type Screen } from "../../../data/site";
+import {
+  articleUrl,
+  helpArticles,
+  helpNav,
+  partsOf,
+  type HelpArticle,
+} from "../../../lib/help";
+
+export async function getStaticPaths() {
+  const articles = await helpArticles();
+  return articles.map((article) => ({
+    params: { topic: partsOf(article).topic, article: partsOf(article).slug },
+    props: { article, articles },
+  }));
+}
+
+interface Props {
+  article: HelpArticle;
+  articles: HelpArticle[];
+}
+
+const { article, articles } = Astro.props;
+const { topic: topicId } = partsOf(article);
+const topic = helpTopic(topicId)!;
+const data = article.data;
+const rendered = article.rendered!;
+const siblings = articles.filter((a) => partsOf(a).topic === topicId);
+const at = siblings.findIndex((a) => a.id === article.id);
+const near = (a?: HelpArticle) =>
+  a ? { href: articleUrl(a), label: a.data.title } : undefined;
+
+// The lead is the first paragraph; the rest is the body.
+let html = withBaseHtml(rendered.html);
+const firstPara = html.match(/^\s*<p>[\s\S]*?<\/p>/)?.[0] ?? "";
+html = html.slice(firstPara.length);
+
+// An app screen, after the first steps.
+const screen = data.screen
+  ? (screens as Record<string, Screen>)[data.screen]
+  : undefined;
+if (screen) {
+  const dark = darkScreen(screen.file);
+  const img = (file: string, cls: string) =>
+    `<img class="${cls}" src="${withBase(`/screens/${file}.webp`)}" width="390" height="844" alt="${screen.alt}" loading="lazy" decoding="async">`;
+  const figure =
+    `<figure class="article-screen">` +
+    img(screen.file, dark ? "screen-light" : "") +
+    (dark ? img(dark, "screen-dark") : "") +
+    `<figcaption>${data.screenCaption ?? screen.name}</figcaption></figure>`;
+  html = html.replace("</ol>", `</ol>${figure}`);
+}
+
+const editUrl = `${links.webSource}/edit/main/src/content/help/${article.id}.md`;
+---
+
+<Article
+  title={data.title}
+  description={data.description}
+  navTitle="Help topics"
+  nav={helpNav(articles, topicId, article.id)}
+  crumbs={[
+    { href: withBase("/help/"), label: "Help" },
+    { href: withBase(`/help/${topicId}/`), label: topic.title },
+  ]}
+  toc={[
+    ...tocOf(rendered.metadata?.headings as never),
+    { slug: "still-stuck", text: "Still stuck?" },
+  ]}
+  meta={[
+    `${minutesToRead(article.body ?? "")} minute read`,
+    `Updated ${longDate(data.updated)}`,
+  ]}
+  prev={near(siblings[at - 1])}
+  next={near(siblings[at + 1])}
+  crumb={`Help › ${topic.title}`}
+  area="Help"
+>
+  <div slot="lead" class="lead" set:html={firstPara} />
+  <div class="prose-steps" set:html={html} />
+  <Fragment slot="end">
+    <h2 id="still-stuck" class="stuck">
+      Still stuck?
+    </h2>
+    <ContactBox />
+    <p class="updated">
+      <span>Updated {longDate(data.updated)}</span>
+      <a href={editUrl}>Edit this page on GitHub</a>
+    </p>
+  </Fragment>
+</Article>
+
+<style>
+  .lead :global(p) {
+    margin: 0;
+  }
+
+  .stuck {
+    font-size: var(--text-xl);
+  }
+
+  .updated {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
+    margin: var(--space-6) 0 0;
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-border);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .updated a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--size-touch-target);
+  }
+</style>

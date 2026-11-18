@@ -1,0 +1,94 @@
+---
+import Base from "../../layouts/Base.astro";
+import Search from "../../components/Search.astro";
+import { withBase } from "../../lib/paths";
+import { docSections } from "../../data/docs";
+import { docPages } from "../../lib/docs";
+import lock from "../../data/sources.lock.json";
+
+const pages = await docPages();
+const count = (id: string) => pages.filter((p) => p.data.section === id).length;
+---
+
+<Base
+  title="Developer documentation"
+  description="How Pesa Clarity works, and how to build on it: parser packs, rayo, the ML models, the server, the security model and reproducible builds."
+>
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="container">
+      <p class="eyebrow">Developers</p>
+      <h1 id="page-title">Developer documentation</h1>
+      <p class="lead">
+        How Pesa Clarity works, and how to build on it. Every page is written in
+        its own repository and copied here when the site is built.
+      </p>
+      <div class="docs-search">
+        <Search
+          id="docs-search"
+          label="Search docs"
+          placeholder="Search docs"
+          area="Docs"
+          size="small"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section sections" aria-labelledby="sections-title">
+    <div class="container">
+      <h2 id="sections-title" class="label">
+        Sections
+      </h2>
+      <ul class="cards cards-4" role="list">
+        {docSections.map((s) => (
+          <li>
+            <a class="link-card" href={withBase(`/docs/${s.id}/`)}>
+              <h3>{s.title}</h3>
+              <p>{s.body}</p>
+              <span class="tags">
+                {s.sources.map((src) => (
+                  <span class="tag tag-code">{src}</span>
+                ))}
+              </span>
+              <span class="link-card-foot">
+                {count(s.id)} {count(s.id) === 1 ? "page" : "pages"}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="muted pinned">
+        Copied from {Object.keys(lock.repos).length} repositories at pinned
+        commits. Each page links to its source and to where you can edit it.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .docs-search {
+    max-width: 40rem;
+    margin-top: var(--space-5);
+  }
+
+  .sections {
+    border-top: 0;
+  }
+
+  .sections li {
+    list-style: none;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    color: var(--color-text-muted);
+  }
+
+  .pinned {
+    margin: var(--space-6) 0 0;
+    font-size: var(--text-sm);
+  }
+</style>

@@ -1,0 +1,184 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Search from "../../components/Search.astro";
+import ContactBox from "../../components/ContactBox.astro";
+import { withBase } from "../../lib/paths";
+import { helpTopics } from "../../data/help";
+import { faqs } from "../../data/site";
+
+const articles = await getCollection("help");
+const count = (topic: string) =>
+  articles.filter((a) => a.id.startsWith(`${topic}/`)).length;
+---
+
+<Base
+  title="Help"
+  description="Plain answers about Pesa Clarity, from setting it up to fixing an amount."
+>
+  <section class="page-hero help-hero" aria-labelledby="page-title">
+    <div class="container center">
+      <p class="eyebrow">Help</p>
+      <h1 id="page-title">How can we help?</h1>
+      <p class="lead">
+        Plain answers about the app, from setting it up to fixing an amount.
+      </p>
+      <div class="hero-search">
+        <Search
+          id="help-search"
+          label="Search help"
+          placeholder='Search help, for example "wrong amount"'
+        />
+        <p class="search-note muted">
+          Search runs in your browser. Nothing you type leaves this page.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section topics" aria-labelledby="topics-title">
+    <div class="container">
+      <h2 id="topics-title" class="label">
+        Topics
+      </h2>
+      <ul class="cards cards-4" role="list">
+        {helpTopics.map((t) => {
+          const n = count(t.id);
+          return (
+            <li>
+              <a class="link-card" href={withBase(`/help/${t.id}/`)}>
+                <h3>{t.title}</h3>
+                <p>{t.body}</p>
+                <span class:list={["link-card-foot", { soon: n === 0 }]}>
+                  {n === 0
+                    ? "Articles coming"
+                    : `${n} ${n === 1 ? "article" : "articles"}`}
+                </span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+
+  <section
+    id="common-questions"
+    class="section section-alt"
+    aria-labelledby="faq-title"
+    data-pagefind-body
+    data-pagefind-meta="crumb:Help"
+    data-pagefind-filter="area:Help"
+  >
+    <div class="container split">
+      <h2 id="faq-title" class="label" data-pagefind-meta="title">
+        Common questions
+      </h2>
+      <div class="faq-list">
+        {faqs.map((f, i) => (
+          <details class="faq" open={i === 0}>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section" aria-labelledby="contact-title">
+    <div class="container">
+      <h2 id="contact-title" class="visually-hidden">
+        Contact us
+      </h2>
+      <ContactBox
+        title="Still stuck? Contact us"
+        body="Write to us and someone who builds the app will answer. Never send a real message or your PIN."
+        showAddress
+      />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .center {
+    text-align: center;
+  }
+
+  .center .lead {
+    margin-inline: auto;
+  }
+
+  .hero-search {
+    max-width: 40rem;
+    margin: var(--space-6) auto 0;
+  }
+
+  .search-note {
+    display: none;
+    margin: var(--space-3) 0 0;
+    font-size: var(--text-sm);
+  }
+
+  :global([data-theme-choice]) .search-note {
+    display: block;
+  }
+
+  .topics {
+    border-top: 0;
+  }
+
+  .topics li {
+    list-style: none;
+  }
+
+  .soon {
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+
+  .faq-list {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .faq {
+    border-radius: var(--radius-card);
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+  }
+
+  .faq summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    min-height: 3.5rem;
+    padding: var(--space-3) var(--space-5);
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq summary::after {
+    content: "+";
+    flex: none;
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--color-brand-link);
+  }
+
+  .faq[open] summary::after {
+    content: "−";
+  }
+
+  .faq p {
+    margin: 0;
+    padding: 0 var(--space-5) var(--space-5);
+    color: var(--color-text-muted);
+  }
+</style>

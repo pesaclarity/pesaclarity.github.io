@@ -5,3 +5,7 @@ package-lock.json
 public/brand/
 public/favicon.svg
 LICENSE
+# Copied from other repositories by tool/sync-sources.mjs; checked by hash.
+src/content/docs/
+src/data/changes/
+src/data/sources.lock.json

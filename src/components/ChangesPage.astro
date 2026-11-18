@@ -1,0 +1,120 @@
+---
+import Base from "../layouts/Base.astro";
+import ReleaseCard from "./ReleaseCard.astro";
+import { withBase } from "../lib/paths";
+import { products, type ProductRelease } from "../lib/changes";
+import { links } from "../data/site";
+
+/* /changes/ and /changes/<product>/: the filter is plain links, one page
+   per product, so it needs no script. */
+interface Props {
+  releases: readonly ProductRelease[];
+  /** The product shown, or none for all of them. */
+  current?: string;
+}
+
+const { releases, current } = Astro.props;
+const product = products.find((p) => p.id === current);
+const filters = [
+  { href: withBase("/changes/"), label: "All", on: !current },
+  ...products.map((p) => ({
+    href: withBase(`/changes/${p.id}/`),
+    label: p.label,
+    on: p.id === current,
+  })),
+];
+const title = product ? `What's new in ${product.label}` : "What's new";
+---
+
+<Base
+  title={product ? `${product.label} changes` : "Changes"}
+  description={
+    product
+      ? `Every release of Pesa Clarity's ${product.label}, newest first, from its changelog.`
+      : "Every release of each part of Pesa Clarity, newest first, from each repository's changelog."
+  }
+>
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="container">
+      <p class="eyebrow">Changes</p>
+      <h1 id="page-title">{title}</h1>
+      <p class="lead">
+        Every release of each part of Pesa Clarity, newest first, written from
+        each repository's changelog when it ships.
+      </p>
+      <nav aria-label="Products">
+        <ul class="filters" role="list">
+          {filters.map((f) => (
+            <li>
+              <a
+                class:list={["filter", { on: f.on }]}
+                href={f.href}
+                aria-current={f.on ? "page" : undefined}
+              >
+                {f.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  <section class="section releases" aria-label="Releases">
+    <div class="container release-list">
+      {releases.map((r) => (
+        <ReleaseCard release={r} short={!current} />
+      ))}
+      <p class="muted older">
+        Downloads for every app release are on{" "}
+        <a href={links.releases}>GitHub Releases</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    margin: var(--space-5) 0 0;
+    padding: 0;
+  }
+
+  .filter {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--size-touch-target);
+    padding-inline: var(--space-4);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .filter:hover {
+    border-color: var(--color-text-muted);
+  }
+
+  .filter.on {
+    background: var(--color-text);
+    border-color: var(--color-text);
+    color: var(--color-background);
+  }
+
+  .releases {
+    border-top: 0;
+  }
+
+  .release-list {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .older {
+    margin: var(--space-4) 0 0;
+  }
+</style>

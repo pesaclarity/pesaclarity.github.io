@@ -1,0 +1,301 @@
+{
+  "$comment": "What tool/sync-sources.mjs copies from the other repositories: the developer docs (src/content/docs/) and the changelogs (src/data/changes/). Each repository is read at the commit pinned in src/data/sources.lock.json; `--update` moves the pins to the newest commit of `ref`. See README, Docs and release notes.",
+  "owner": "pesaclarity",
+  "repos": {
+    "pesaclarity-app": { "ref": "main" },
+    "ujumbe-parsers": { "ref": "main" },
+    "rayo": { "ref": "main" },
+    "pesaclarity-ml": { "ref": "main" },
+    "pesaclarity-backend": { "ref": "main" },
+    ".github": { "ref": "main" },
+    "docs": { "ref": "main" }
+  },
+  "docs": [
+    {
+      "section": "app",
+      "slug": "repositories",
+      "title": "The repositories",
+      "repo": "docs",
+      "path": "REPOS.md"
+    },
+    {
+      "section": "app",
+      "slug": "performance-budget",
+      "title": "Performance budget",
+      "repo": "pesaclarity-app",
+      "path": "docs/performance-budget.md"
+    },
+    {
+      "section": "app",
+      "slug": "auto-categorise",
+      "title": "Categorise transactions automatically",
+      "repo": "pesaclarity-app",
+      "path": "docs/specs/0001-auto-categorise.md"
+    },
+    {
+      "section": "app",
+      "slug": "message-reader",
+      "title": "Read messages no rule matched",
+      "repo": "pesaclarity-app",
+      "path": "docs/specs/0004-message-reader.md"
+    },
+    {
+      "section": "app",
+      "slug": "runtime-overhead",
+      "title": "Runtime overhead",
+      "repo": "pesaclarity-app",
+      "path": "docs/specs/0002-runtime-overhead.md"
+    },
+    {
+      "section": "parser-packs",
+      "slug": "overview",
+      "title": "Overview",
+      "repo": "ujumbe-parsers",
+      "path": "README.md",
+      "omit": ["Adding an institution", "Signing packs", "Get involved"]
+    },
+    {
+      "section": "parser-packs",
+      "slug": "write-a-parser-pack",
+      "title": "Write a parser pack",
+      "repo": "ujumbe-parsers",
+      "path": "README.md",
+      "only": "Adding an institution"
+    },
+    {
+      "section": "parser-packs",
+      "slug": "signing-and-releases",
+      "title": "Signing and releases",
+      "repo": "ujumbe-parsers",
+      "path": "docs/RELEASING.md"
+    },
+    {
+      "section": "parser-packs",
+      "slug": "signing-packs",
+      "title": "Signing packs",
+      "repo": "ujumbe-parsers",
+      "path": "README.md",
+      "only": "Signing packs"
+    },
+    {
+      "section": "parser-packs",
+      "slug": "example-messages",
+      "title": "Example messages",
+      "repo": "ujumbe-parsers",
+      "path": "docs/MESSAGES.md"
+    },
+    {
+      "section": "parser-packs",
+      "slug": "contributing",
+      "title": "Contributing to the packs",
+      "repo": "ujumbe-parsers",
+      "path": "CONTRIBUTING.md"
+    },
+    {
+      "section": "rayo",
+      "slug": "overview",
+      "title": "Overview",
+      "repo": "rayo",
+      "path": "README.md"
+    },
+    {
+      "section": "rayo",
+      "slug": "ops",
+      "title": "Ops",
+      "repo": "rayo",
+      "path": "docs/OPS.md"
+    },
+    {
+      "section": "rayo",
+      "slug": "converting",
+      "title": "Converting a model",
+      "repo": "rayo",
+      "path": "docs/CONVERTING.md"
+    },
+    {
+      "section": "rayo",
+      "slug": "format",
+      "title": "Model format",
+      "repo": "rayo",
+      "path": "docs/FORMAT.md"
+    },
+    {
+      "section": "rayo",
+      "slug": "small-language-models",
+      "title": "Small language models",
+      "repo": "rayo",
+      "path": "docs/RUNNING-SLMS.md"
+    },
+    {
+      "section": "ml",
+      "slug": "overview",
+      "title": "Overview",
+      "repo": "pesaclarity-ml",
+      "path": "README.md"
+    },
+    {
+      "section": "ml",
+      "slug": "ask",
+      "title": "Ask models",
+      "repo": "pesaclarity-ml",
+      "path": "docs/ASK.md"
+    },
+    {
+      "section": "ml",
+      "slug": "message-reader",
+      "title": "Message reader",
+      "repo": "pesaclarity-ml",
+      "path": "docs/READER.md"
+    },
+    {
+      "section": "ml",
+      "slug": "features",
+      "title": "Feature pipeline",
+      "repo": "pesaclarity-ml",
+      "path": "docs/FEATURES.md"
+    },
+    {
+      "section": "ml",
+      "slug": "dp-sgd-review",
+      "title": "Differential privacy review",
+      "repo": "pesaclarity-ml",
+      "path": "docs/DP-SGD-REVIEW.md"
+    },
+    {
+      "section": "ml",
+      "slug": "privacy-audit",
+      "title": "Privacy audit",
+      "repo": "pesaclarity-ml",
+      "path": "docs/PRIVACY-AUDIT.md"
+    },
+    {
+      "section": "ml",
+      "slug": "model-weights",
+      "title": "Model weights",
+      "repo": "pesaclarity-ml",
+      "path": "MODEL-WEIGHTS.md"
+    },
+    {
+      "section": "server",
+      "slug": "overview",
+      "title": "Overview",
+      "repo": "pesaclarity-backend",
+      "path": "README.md"
+    },
+    {
+      "section": "server",
+      "slug": "deploying",
+      "title": "Deploying",
+      "repo": "pesaclarity-backend",
+      "path": "docs/deploying.md"
+    },
+    {
+      "section": "server",
+      "slug": "settings-on-cloud-run",
+      "title": "Settings on Cloud Run",
+      "repo": "pesaclarity-backend",
+      "path": "docs/specs/0001-settings-live-on-cloud-run.md"
+    },
+    {
+      "section": "server",
+      "slug": "settings-in-github",
+      "title": "Settings in GitHub",
+      "repo": "pesaclarity-backend",
+      "path": "docs/specs/0002-github-holds-settings.md"
+    },
+    {
+      "section": "security",
+      "slug": "security-policy",
+      "title": "Security policy",
+      "repo": ".github",
+      "path": "SECURITY.md"
+    },
+    {
+      "section": "security",
+      "slug": "pinned-certificate-authorities",
+      "title": "Pinned certificate authorities",
+      "repo": "docs",
+      "path": "decisions/0005-pin-certificate-authorities.md"
+    },
+    {
+      "section": "security",
+      "slug": "federated-learning",
+      "title": "Federated learning",
+      "repo": "docs",
+      "path": "spec/federated-learning.md"
+    },
+    {
+      "section": "verify",
+      "slug": "reproducible-builds",
+      "title": "Reproducible builds",
+      "repo": "pesaclarity-app",
+      "path": "docs/reproducible-builds.md"
+    },
+    {
+      "section": "verify",
+      "slug": "releasing",
+      "title": "How the app is released",
+      "repo": "pesaclarity-app",
+      "path": "RELEASING.md"
+    },
+    {
+      "section": "contribute",
+      "slug": "contributing",
+      "title": "Contributing",
+      "repo": ".github",
+      "path": "CONTRIBUTING.md"
+    },
+    {
+      "section": "contribute",
+      "slug": "code-of-conduct",
+      "title": "Code of conduct",
+      "repo": ".github",
+      "path": "CODE_OF_CONDUCT.md"
+    }
+  ],
+  "changes": [
+    {
+      "product": "app",
+      "label": "App",
+      "repo": "pesaclarity-app",
+      "path": "CHANGELOG.md"
+    },
+    {
+      "product": "parsers",
+      "label": "Parsers",
+      "repo": "ujumbe-parsers",
+      "path": "CHANGELOG.md"
+    },
+    {
+      "product": "rayo",
+      "label": "rayo",
+      "repo": "rayo",
+      "path": "CHANGELOG.md"
+    },
+    {
+      "product": "ml",
+      "label": "ML",
+      "repo": "pesaclarity-ml",
+      "path": "CHANGELOG.md"
+    },
+    {
+      "product": "server",
+      "label": "Server",
+      "repo": "pesaclarity-backend",
+      "path": "CHANGELOG.md"
+    }
+  ],
+  "dates": {
+    "$comment": "Release dates for versions whose changelog heading has none and whose tag is not on GitHub. ujumbe-parsers 0.1.0: the release commit on main (v0.1.0 was never pushed).",
+    "parsers@0.1.0": "2026-10-27"
+  },
+  "rewrite": {
+    "$comment": "Exact text replaced in the copied changelogs, so the site names no AI model. Each must still be found, or the sync fails.",
+    "rayo": [
+      [
+        "A SmolLM2-135M chat of 1000 tokens: 15 MB of its\n  own memory instead of 62 MB.",
+        "A 1000-token chat with a 135M-parameter model: 15 MB of its\n  own memory instead of 62 MB."
+      ]
+    ]
+  }
+}

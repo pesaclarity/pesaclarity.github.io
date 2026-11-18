@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import { withBase } from "../lib/paths";
 import {
   apks,
   appRelease,
@@ -193,6 +194,9 @@ const changes = release?.changes ?? [];
               <li>{change}</li>
             ))}
           </ul>
+          <p>
+            <a href={withBase("/changes/")}>Every release, of every part</a>
+          </p>
         </section>
       )}
 
