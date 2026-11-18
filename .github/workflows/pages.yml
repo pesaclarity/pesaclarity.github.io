@@ -22,7 +22,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       ASTRO_TELEMETRY_DISABLED: "1"
     steps:
@@ -52,7 +52,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       page_url: ${{ steps.deployment.outputs.page_url }}
     permissions:
@@ -67,7 +67,7 @@ jobs:
 
   verify:
     needs: deploy
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Check the live site
         env:
