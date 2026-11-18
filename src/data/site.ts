@@ -18,6 +18,21 @@ export const dpo = {
   email: "njugunahdann@gmail.com",
 } as const;
 
+/**
+ * Where people write for help: the one place the support address lives, so
+ * it can change without touching any page. For now it is the same inbox as
+ * the Data Protection Officer's; a dedicated support address is still to
+ * come.
+ */
+export const support = "njugunahdann@gmail.com";
+
+/** A mailto link to support, with an optional subject. */
+export function supportMail(subject?: string): string {
+  return subject
+    ? `mailto:${support}?subject=${encodeURIComponent(subject)}`
+    : `mailto:${support}`;
+}
+
 export const links = {
   github: org,
   releases: `${org}/pesaclarity-app/releases`,
@@ -37,6 +52,8 @@ export const links = {
   // Apps it installs are not "restricted", so Xiaomi phones let them read SMS.
   obtainium: "https://github.com/ImranR98/Obtainium/releases/latest",
   appSource: `${org}/pesaclarity-app`,
+  // The organisation's security policy, shared by every repository.
+  security: `${org}/.github/blob/main/SECURITY.md`,
   // The payment service's own terms, which cover a gift's payment.
   citapayTerms: "https://pay.citatech.cloud/legal/terms",
 } as const;

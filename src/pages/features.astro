@@ -4,6 +4,8 @@ import { withBase } from "../lib/paths";
 import Base from "../layouts/Base.astro";
 import ScreenGallery from "../components/ScreenGallery.astro";
 import {
+  accounts,
+  links,
   businessFeatures,
   businessScreens,
   currencies,
@@ -27,12 +29,41 @@ interface Group {
   title: string;
   items: readonly Item[];
   wide?: boolean;
+  link?: { href: string; label: string };
 }
 
 // After Personal, Business and Selling, alternating backgrounds as before.
 const groups: readonly Group[] = [
   { id: "look", title: "Your look", items: lookFeatures },
+  {
+    id: "works-with",
+    title: "Works with",
+    items: accounts.map((a) => ({ title: a.name, body: a.note ?? "" })),
+    link: { href: links.parsers, label: "Add your bank" },
+  },
   { id: "why", title: "Why Pesa Clarity", items: different, wide: true },
+];
+
+// What it does, in a word each, and the things people use most.
+const does: readonly Item[] = [
+  { title: "Spend today", body: "How much you can safely spend" },
+  { title: "Bills", body: "What's due, in good time" },
+  { title: "Leaks", body: "Where your money goes" },
+  { title: "Debts", body: "Your debt-free date" },
+  { title: "Savings", body: "Goals and a rainy day fund" },
+  { title: "Business", body: "Sales, stock and who owes you" },
+  { title: "Reports", body: "Receipts, invoices and reports" },
+  { title: "Tax", body: "Estimates for your business" },
+];
+const favourites = [
+  "Your money summary in a minute",
+  "What changed this month",
+  "Tap any figure to see why",
+  "Early warning before you run low",
+  "A payday plan",
+  "A money health score",
+  "A Fuliza tracker",
+  "Who owes who",
 ];
 
 const jumps = [
@@ -63,6 +94,28 @@ const jumps = [
           ))}
         </ul>
       </nav>
+    </div>
+  </section>
+
+  <section id="what" class="section" aria-labelledby="what-title">
+    <div class="container">
+      <h2 id="what-title" class="label">
+        What it does
+      </h2>
+      <ul class="cards cards-4" role="list">
+        {does.map((d) => (
+          <li class="card-item">
+            <h3>{d.title}</h3>
+            <p>{d.body}</p>
+          </li>
+        ))}
+      </ul>
+      <h3 class="sublabel favourites-title">Most used</h3>
+      <ul class="favourites" role="list">
+        {favourites.map((f) => (
+          <li>{f}</li>
+        ))}
+      </ul>
     </div>
   </section>
 
@@ -239,10 +292,17 @@ const jumps = [
           {g.items.map((item) => (
             <li class="card-item">
               <h3>{item.title}</h3>
-              <p>{item.body}</p>
+              {item.body && <p>{item.body}</p>}
             </li>
           ))}
         </ul>
+        {g.link && (
+          <div class="button-row after-cards">
+            <a class="button button-secondary" href={g.link.href}>
+              {g.link.label}
+            </a>
+          </div>
+        )}
       </div>
     </section>
   ))}
@@ -272,6 +332,23 @@ const jumps = [
 </Base>
 
 <style>
+  .favourites-title {
+    margin-top: var(--space-7);
+  }
+
+  .favourites {
+    display: grid;
+    gap: var(--space-2) var(--space-6);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+    margin: 0;
+    padding-left: 1.2em;
+    font-size: var(--text-lg);
+  }
+
+  .favourites li::marker {
+    color: var(--color-brand-link);
+  }
+
   .features-intro {
     padding-block: var(--space-7) var(--space-6);
   }

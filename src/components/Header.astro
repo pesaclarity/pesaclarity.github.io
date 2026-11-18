@@ -1,20 +1,17 @@
 ---
 import { withBase } from "../lib/paths";
 import Mark from "./Mark.astro";
+import ThemeSwitch from "./ThemeSwitch.astro";
 import { downloads } from "../data/site";
 
-interface Props {
-  onHome: boolean;
-}
-const { onHome } = Astro.props;
-const base = onHome ? "" : withBase("/");
 const nav = [
-  { href: `${base}#what`, label: "What it does" },
-  { href: `${base}#screens`, label: "Screens" },
   { href: withBase("/features/"), label: "Features" },
-  { href: `${base}#privacy`, label: "Privacy" },
-  { href: `${base}#faq`, label: "FAQ" },
+  { href: withBase("/help/"), label: "Help" },
+  { href: withBase("/docs/"), label: "Docs" },
+  { href: withBase("/security/"), label: "Security" },
 ];
+const path = Astro.url.pathname;
+const current = (href: string) => path === href || path.startsWith(href);
 ---
 
 <header class="site-header">
@@ -26,93 +23,59 @@ const nav = [
       </span>
     </a>
     <div class="header-end">
-      <nav aria-label="Main">
+      <nav class="nav-wide" aria-label="Main">
         <ul class="nav-list">
           {nav.map((item) => (
-            <li class="nav-section">
-              <a href={item.href}>{item.label}</a>
+            <li>
+              <a
+                class="nav-link"
+                href={item.href}
+                aria-current={current(item.href) ? "page" : undefined}
+              >
+                {item.label}
+              </a>
             </li>
           ))}
           <li>
             <a
-              class="button button-secondary nav-cta nav-sponsor"
+              class="button button-secondary nav-cta"
               href={withBase("/sponsor/")}
+              aria-current={current(withBase("/sponsor/")) ? "page" : undefined}
             >
               Sponsor
             </a>
           </li>
-          <li>
-            <a class="button button-primary nav-cta" href={downloads.android}>
-              Download
-            </a>
-          </li>
         </ul>
       </nav>
-      <!-- Shown only when the theme script runs (it sets data-theme-choice). -->
-      <button
-        type="button"
-        class="theme-switch"
-        data-theme-switch
-        aria-label="Theme: System. Change to Light"
-        title="Change to Light"
-      >
-        <svg
-          class="theme-icon theme-icon-system"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <circle
-            cx="12"
-            cy="12"
-            r="8.25"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.75"
-          />
-          <path d="M12 3.75a8.25 8.25 0 0 1 0 16.5z" fill="currentColor" />
-        </svg>
-        <svg
-          class="theme-icon theme-icon-light"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <circle
-            cx="12"
-            cy="12"
-            r="4.25"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.75"
-          />
-          <path
-            d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.75 1.75M16.95 16.95l1.75 1.75M5.3 18.7l1.75-1.75M16.95 7.05l1.75-1.75"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.75"
-            stroke-linecap="round"
-          />
-        </svg>
-        <svg
-          class="theme-icon theme-icon-dark"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <path
-            d="M20 14.5A8.25 8.25 0 0 1 9.5 4a8.25 8.25 0 1 0 10.5 10.5z"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.75"
-            stroke-linejoin="round"
-          />
-        </svg>
-        <span class="theme-name" data-theme-name aria-hidden="true">
-          System
-        </span>
-      </button>
-      <span class="visually-hidden" role="status" data-theme-status></span>
+      {/* On phones the same links sit behind Menu: a details element, so it
+          opens with no script. */}
+      <details class="menu">
+        <summary class="button button-secondary">Menu</summary>
+        <nav class="menu-panel" aria-label="Main">
+          <ul>
+            {nav.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  aria-current={current(item.href) ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+            <li>
+              <a href={withBase("/sponsor/")}>Sponsor</a>
+            </li>
+            <li>
+              <a href={withBase("/changes/")}>What's new</a>
+            </li>
+          </ul>
+        </nav>
+      </details>
+      <a class="button button-primary nav-cta" href={downloads.android}>
+        Download
+      </a>
+      <ThemeSwitch />
     </div>
   </div>
 </header>
@@ -155,6 +118,12 @@ const nav = [
     color: var(--color-brand-link);
   }
 
+  .header-end {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
   .nav-list {
     display: flex;
     align-items: center;
@@ -164,7 +133,7 @@ const nav = [
     padding: 0;
   }
 
-  .nav-section a {
+  .nav-link {
     display: inline-flex;
     align-items: center;
     min-height: var(--size-touch-target);
@@ -175,76 +144,86 @@ const nav = [
     border-radius: var(--radius-pill);
   }
 
-  .nav-section a:hover {
+  .nav-link:hover,
+  .nav-link[aria-current="page"] {
     background: var(--color-subtle);
   }
 
-  .header-end {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-  }
-
-  /* Without the theme script the switch could not work, so it stays hidden. */
-  .theme-switch {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-2);
-    min-width: var(--size-touch-target);
-    min-height: var(--size-touch-target);
-    padding: 0 var(--space-3);
-    border: 2px solid var(--color-border);
-    border-radius: var(--radius-pill);
-    background: transparent;
-    color: var(--color-text);
-    font: inherit;
-    font-weight: 500;
-    cursor: pointer;
-  }
-
-  :global([data-theme-choice]) .theme-switch {
-    display: inline-flex;
-  }
-
-  .theme-switch:hover {
-    border-color: var(--color-text-muted);
-  }
-
-  .theme-icon {
-    display: none;
-    width: 1.25rem;
-    height: 1.25rem;
-    flex: none;
-  }
-
-  :global([data-theme-choice="system"]) .theme-icon-system,
-  :global([data-theme-choice="light"]) .theme-icon-light,
-  :global([data-theme-choice="dark"]) .theme-icon-dark {
-    display: block;
-  }
-
   .nav-cta {
-    margin-left: var(--space-2);
     padding-inline: var(--space-4);
   }
 
-  @media (max-width: 64rem) {
-    .nav-section {
+  .nav-list .nav-cta {
+    margin-left: var(--space-3);
+  }
+
+  /* Menu, for narrow screens */
+  .menu {
+    position: relative;
+    display: none;
+  }
+
+  .menu summary {
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .menu[open] summary {
+    border-color: var(--color-text-muted);
+  }
+
+  .menu-panel {
+    position: absolute;
+    right: 0;
+    top: calc(100% + var(--space-2));
+    min-width: 14rem;
+    padding: var(--space-2);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    box-shadow: 0 20px 40px -24px var(--color-shadow);
+  }
+
+  .menu-panel ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .menu-panel a {
+    display: flex;
+    align-items: center;
+    min-height: var(--size-touch-target);
+    padding-inline: var(--space-4);
+    border-radius: var(--radius-small);
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .menu-panel a:hover,
+  .menu-panel a[aria-current="page"] {
+    background: var(--color-subtle);
+  }
+
+  @media (max-width: 62rem) {
+    .nav-wide {
       display: none;
+    }
+
+    .menu {
+      display: block;
     }
   }
 
-  /* Room for Sponsor and Download on a phone: the mark alone, and the
-     theme switch as its icon (its name is still in its label). */
+  /* Room for Menu and Download on a phone: the mark alone. */
   @media (max-width: 30rem) {
-    .wordmark,
-    .theme-name {
+    .wordmark {
       display: none;
-    }
-
-    .theme-switch {
-      padding: 0;
     }
   }
 </style>

@@ -22,6 +22,11 @@
  *   brand red #c8102e  on card  2.90:1, so in dark it is a fill only (white
  *                      on it 5.88:1); red text and red outlines on cards
  *                      use the link red (--color-brand-link) instead.
+ *
+ * Code colours (--code-*) keep the same palette: a darker brand red for
+ * keywords in light (#a50e26, 8.1:1 on white), a lighter one in dark
+ * (#ff6b83, 6.4:1 on #1c1c1c), green strings from the success text colours,
+ * and grey comments (#5c5c5c 6.7:1; #a3a3a3 6.8:1).
  */
 :root {
   color-scheme: light;
@@ -41,6 +46,19 @@
   --color-focus: #c8102e;
   --color-device: #404040;
   --color-shadow: rgb(0 0 0 / 0.4);
+
+  /* Code highlighting (Shiki's css-variables theme, astro.config.mjs). */
+  --code-foreground: #171717;
+  --code-background: #ffffff;
+  --code-token-keyword: #a50e26;
+  --code-token-constant: #171717;
+  --code-token-string: #2f7a5f;
+  --code-token-string-expression: #2f7a5f;
+  --code-token-comment: #5c5c5c;
+  --code-token-function: #171717;
+  --code-token-parameter: #171717;
+  --code-token-punctuation: #525252;
+  --code-token-link: #a50e26;
 
   /* The logo mark is never recoloured, so it keeps its own token. */
   --color-mark: #c8102e;
@@ -98,6 +116,18 @@
     --color-focus: #ff4d6a;
     --color-device: #404040;
     --color-shadow: rgb(0 0 0 / 0.6);
+
+    --code-foreground: #e0e0e0;
+    --code-background: #1c1c1c;
+    --code-token-keyword: #ff6b83;
+    --code-token-constant: #e0e0e0;
+    --code-token-string: #7fcfae;
+    --code-token-string-expression: #7fcfae;
+    --code-token-comment: #a3a3a3;
+    --code-token-function: #e0e0e0;
+    --code-token-parameter: #e0e0e0;
+    --code-token-punctuation: #a3a3a3;
+    --code-token-link: #ff6b83;
   }
 }
 
@@ -119,4 +149,16 @@
   --color-focus: #ff4d6a;
   --color-device: #404040;
   --color-shadow: rgb(0 0 0 / 0.6);
+
+  --code-foreground: #e0e0e0;
+  --code-background: #1c1c1c;
+  --code-token-keyword: #ff6b83;
+  --code-token-constant: #e0e0e0;
+  --code-token-string: #7fcfae;
+  --code-token-string-expression: #7fcfae;
+  --code-token-comment: #a3a3a3;
+  --code-token-function: #e0e0e0;
+  --code-token-parameter: #e0e0e0;
+  --code-token-punctuation: #a3a3a3;
+  --code-token-link: #ff6b83;
 }
