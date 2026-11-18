@@ -39,17 +39,38 @@ test("the sponsor page gives with CitaPay, or SPONSOR_URL when set", () => {
   assert.match(html, /US\$99 a year/);
 });
 
+// Pages copied from other repositories or their changelogs: their words are
+// theirs, so the checks on the site's own copy skip them.
+const mirrored = (name) => /^(docs|changes)\//.test(name);
+
 test("builds the expected pages", () => {
-  const names = pages.map((p) => p.name).sort();
-  assert.deepEqual(names, [
+  const names = new Set(pages.map((p) => p.name));
+  for (const name of [
     "404.html",
-    "features/index.html",
     "index.html",
+    "features/index.html",
     "install/index.html",
     "privacy/index.html",
     "sponsor/index.html",
     "terms/index.html",
-  ]);
+    "help/index.html",
+    "docs/index.html",
+    "changes/index.html",
+    "security/index.html",
+    // The parser-pack and rayo docs, end to end from their repositories.
+    "docs/parser-packs/write-a-parser-pack/index.html",
+    "docs/rayo/overview/index.html",
+    "changes/rayo/index.html",
+  ]) {
+    assert.ok(names.has(name), `${name} is missing`);
+  }
+  const docs = readdirSync(new URL("../src/content/docs/", import.meta.url), {
+    recursive: true,
+  }).filter((f) => String(f).endsWith(".md"));
+  for (const file of docs) {
+    const page = `docs/${String(file).replace(/\.md$/, "")}/index.html`;
+    assert.ok(names.has(page), `${page} is missing`);
+  }
 });
 
 for (const { name, html } of pages) {
@@ -74,13 +95,20 @@ for (const { name, html } of pages) {
     );
   });
 
-  test(`${name}: ships no JavaScript but the inline theme script`, () => {
+  test(`${name}: runs only the theme script, and search from this site`, () => {
     const scripts = [
       ...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi),
     ];
-    assert.equal(scripts.length, 1, "one script, the theme switch");
-    assert.equal(scripts[0][1], "", "the theme script is inline, with no src");
-    assert.match(scripts[0][2], /data-theme-switch/);
+    const inline = scripts.filter((s) => !/\ssrc=/.test(s[1]));
+    assert.equal(inline.length, 1, "one inline script, the theme switch");
+    assert.equal(inline[0][1], "", "the theme script has no attributes");
+    assert.match(inline[0][2], /data-theme-switch/);
+    // Any other script is the search, a file of this site.
+    for (const [, attrs, body] of scripts.filter((s) => /\ssrc=/.test(s[1]))) {
+      assert.match(attrs, new RegExp(`src="${base}/_astro/Search[^"]+\\.js"`));
+      assert.equal(body.trim(), "");
+    }
+    if (scripts.length > 1) assert.match(html, /data-search-input/);
     assert.doesNotMatch(html, /\son[a-z]+="/i);
   });
 
@@ -99,7 +127,7 @@ for (const { name, html } of pages) {
   });
 }
 
-test("the Content-Security-Policy allows the theme script by its hash", () => {
+test("the Content-Security-Policy allows the theme script and search", () => {
   const hashes = new Set(
     pages.map(({ html }) => {
       const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
@@ -108,17 +136,79 @@ test("the Content-Security-Policy allows the theme script by its hash", () => {
   );
   assert.equal(hashes.size, 1, "every page has the same theme script");
   const [hash] = hashes;
-  const netlify = readFileSync(new URL("../netlify.toml", import.meta.url));
-  assert.ok(
-    netlify.includes(`script-src 'sha256-${hash}'`),
-    `netlify.toml needs script-src 'sha256-${hash}'`,
+  const netlify = readFileSync(
+    new URL("../netlify.toml", import.meta.url),
+    "utf8",
   );
+  const csp = netlify.match(/Content-Security-Policy = "([^"]+)"/)?.[1];
+  assert.ok(csp, "netlify.toml sets a Content-Security-Policy");
+  const directives = Object.fromEntries(
+    csp.split(";").map((d) => {
+      const [name, ...values] = d.trim().split(/\s+/);
+      return [name, values];
+    }),
+  );
+  // Scripts: files of this site (search and Pagefind), WebAssembly for
+  // Pagefind's index, and the inline theme script by its hash. Nothing else:
+  // no 'unsafe-inline', no 'unsafe-eval', no other host.
+  assert.deepEqual(
+    [...directives["script-src"]].sort(),
+    ["'self'", "'wasm-unsafe-eval'", `'sha256-${hash}'`].sort(),
+    `netlify.toml needs script-src 'self' 'wasm-unsafe-eval' 'sha256-${hash}'`,
+  );
+  assert.deepEqual(directives["default-src"], ["'self'"]);
+  assert.equal(directives["connect-src"], undefined, "fetches stay on 'self'");
+  assert.deepEqual(directives["object-src"], ["'none'"]);
+});
+
+test("search: Pagefind's index is built, and help and docs are in it", () => {
+  for (const file of ["pagefind/pagefind.js", "pagefind/pagefind-entry.json"]) {
+    assert.ok(existsSync(join(dist, file)), `${file} is missing`);
+  }
+  const indexed = pages.filter((p) => /\sdata-pagefind-body/.test(p.html));
+  const names = indexed.map((p) => p.name);
+  assert.ok(names.includes("help/index.html"), "the common questions");
+  assert.ok(names.some((n) => /^help\/[^/]+\/[^/]+\/index\.html$/.test(n)));
+  assert.ok(names.includes("docs/parser-packs/write-a-parser-pack/index.html"));
+  // The script loads Pagefind from this site, never from another server.
+  const assets = join(dist, "_astro");
+  const search = readdirSync(assets).find((f) => /^Search.*\.js$/.test(f));
+  assert.ok(search, "the search script is built");
+  const js = readFileSync(join(assets, search), "utf8");
+  assert.match(js, /pagefind\/pagefind\.js/);
+  assert.doesNotMatch(js, /https?:\/\//);
+});
+
+test("the search box shows only when scripts run; the topics stand in", () => {
+  const help = pages.find((p) => p.name === "help/index.html").html;
+  assert.match(help, /data-search-input/);
+  // Every topic is a plain link, so help works with no script.
+  const topics = help.match(/href="[^"]*\/help\/[a-z-]+\/"/g) ?? [];
+  assert.ok(topics.length >= 8, "a link to each topic");
 });
 
 test("public pages carry no internal draft notes or doc paths", () => {
-  for (const { name, html } of pages) {
+  for (const { name, html } of pages.filter((p) => !mirrored(p.name))) {
     assert.doesNotMatch(html, /\bdraft\b|pending legal review/i, name);
     assert.doesNotMatch(html, /PRODUCT-SPEC/, name);
+  }
+});
+
+test("the support address is written once, in src/data/site.ts", () => {
+  const site = readFileSync(
+    new URL("../src/data/site.ts", import.meta.url),
+    "utf8",
+  );
+  const address = site.match(/export const support = "([^"]+)"/)?.[1];
+  assert.ok(address, "site.ts exports support");
+  const help = pages.find((p) => p.name === "help/index.html").html;
+  assert.ok(help.includes(`mailto:${address}`), "help links to it");
+  const src = new URL("../src/", import.meta.url).pathname;
+  for (const file of readdirSync(src, { recursive: true })) {
+    if (!/\.(astro|ts|mjs|md)$/.test(String(file))) continue;
+    if (String(file) === "data/site.ts") continue;
+    const text = readFileSync(join(src, String(file)), "utf8");
+    assert.ok(!text.includes(address), `${file} repeats the support address`);
   }
 });
 
@@ -133,14 +223,10 @@ test("sitemap lists the public pages and not the 404", () => {
   const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(
     (m) => new URL(m[1]).pathname,
   );
-  assert.deepEqual(locs.sort(), [
-    `${base}/`,
-    `${base}/features/`,
-    `${base}/install/`,
-    `${base}/privacy/`,
-    `${base}/sponsor/`,
-    `${base}/terms/`,
-  ]);
+  const expected = pages
+    .filter((p) => p.name !== "404.html")
+    .map((p) => `${base}/${p.name.replace(/index\.html$/, "")}`);
+  assert.deepEqual(locs.sort(), expected.sort());
   assert.match(
     readFileSync(join(dist, "robots.txt"), "utf8"),
     /Sitemap: https?:\/\/\S+\/sitemap-index\.xml/,
@@ -221,7 +307,7 @@ test("the install page offers every download", () => {
 });
 
 test("sizes come from the release, never typed by hand", () => {
-  for (const { name, html } of pages) {
+  for (const { name, html } of pages.filter((p) => !mirrored(p.name))) {
     assert.doesNotMatch(html, /\babout \d+\s*MB\b/i, name);
     for (const [size] of html.matchAll(/\b\d+(?:\.\d+)?\s*MB\b/g)) {
       assert.match(size, /^\d+\.\d MB$/, `${name}: ${size}`);
