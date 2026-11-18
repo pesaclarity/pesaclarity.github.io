@@ -1,4 +1,5 @@
 ---
+import { darkScreen } from "../lib/screens";
 import { withBase } from "../lib/paths";
 import type { Screen } from "../data/site";
 
@@ -23,6 +24,7 @@ const scrolls = screens.length > 4;
     {screens.map((s) => (
       <li>
         <img
+          class:list={[{ "screen-light": darkScreen(s.file) }]}
           src={withBase(`/screens/${s.file}.webp`)}
           width="390"
           height="844"
@@ -30,6 +32,17 @@ const scrolls = screens.length > 4;
           loading="lazy"
           decoding="async"
         />
+        {darkScreen(s.file) && (
+          <img
+            class="screen-dark"
+            src={withBase(`/screens/${darkScreen(s.file)}.webp`)}
+            width="390"
+            height="844"
+            alt={s.alt}
+            loading="lazy"
+            decoding="async"
+          />
+        )}
         <p>{s.name}</p>
       </li>
     ))}

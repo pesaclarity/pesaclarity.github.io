@@ -1,4 +1,5 @@
 ---
+import { darkScreen } from "../lib/screens";
 import { withBase } from "../lib/paths";
 import Base from "../layouts/Base.astro";
 import ScreenGallery from "../components/ScreenGallery.astro";
@@ -129,6 +130,7 @@ const jumps = [
         </ul>
         <figure class="selling-shot">
           <img
+            class:list={[{ "screen-light": darkScreen(screens.spaces.file) }]}
             src={withBase(`/screens/${screens.spaces.file}.webp`)}
             width="390"
             height="844"
@@ -136,6 +138,17 @@ const jumps = [
             loading="lazy"
             decoding="async"
           />
+          {darkScreen(screens.spaces.file) && (
+            <img
+              class="screen-dark"
+              src={withBase(`/screens/${darkScreen(screens.spaces.file)}.webp`)}
+              width="390"
+              height="844"
+              alt={screens.spaces.alt}
+              loading="lazy"
+              decoding="async"
+            />
+          )}
           <figcaption>{screens.spaces.name}</figcaption>
         </figure>
       </div>
@@ -186,6 +199,7 @@ const jumps = [
       </div>
       <figure class="selling-shot">
         <img
+          class:list={[{ "screen-light": darkScreen(screens.sellKeypad.file) }]}
           src={withBase(`/screens/${screens.sellKeypad.file}.webp`)}
           width="390"
           height="844"
@@ -193,6 +207,19 @@ const jumps = [
           loading="lazy"
           decoding="async"
         />
+        {darkScreen(screens.sellKeypad.file) && (
+          <img
+            class="screen-dark"
+            src={withBase(
+              `/screens/${darkScreen(screens.sellKeypad.file)}.webp`,
+            )}
+            width="390"
+            height="844"
+            alt={screens.sellKeypad.alt}
+            loading="lazy"
+            decoding="async"
+          />
+        )}
         <figcaption>{screens.sellKeypad.name}</figcaption>
       </figure>
     </div>

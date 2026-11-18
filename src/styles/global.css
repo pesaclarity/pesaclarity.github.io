@@ -355,3 +355,28 @@ main:focus {
 .nowrap {
   white-space: nowrap;
 }
+
+/* App screens with a dark version: show the one for the theme. The rules
+   match tokens.css. !important because pages style their screen images by
+   element, which would otherwise outrank these. */
+.screen-dark {
+  display: none !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .screen-light {
+    display: none !important;
+  }
+
+  :root:not([data-theme="light"]) .screen-dark {
+    display: block !important;
+  }
+}
+
+:root[data-theme="dark"] .screen-light {
+  display: none !important;
+}
+
+:root[data-theme="dark"] .screen-dark {
+  display: block !important;
+}
