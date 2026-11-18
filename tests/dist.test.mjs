@@ -1,7 +1,9 @@
-// Checks the built site in dist/ against the site's promises: no client JS,
-// nothing loaded from other servers, and the basics every page needs.
+// Checks the built site in dist/ against the site's promises: no client JS
+// beyond the inline theme switch, nothing loaded from other servers, and the
+// basics every page needs.
 // Run `npm run build` first.
 import { test } from "node:test";
+import { createHash } from "node:crypto";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, relative } from "node:path";
@@ -72,8 +74,13 @@ for (const { name, html } of pages) {
     );
   });
 
-  test(`${name}: ships no JavaScript`, () => {
-    assert.doesNotMatch(html, /<script\b/i);
+  test(`${name}: ships no JavaScript but the inline theme script`, () => {
+    const scripts = [
+      ...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi),
+    ];
+    assert.equal(scripts.length, 1, "one script, the theme switch");
+    assert.equal(scripts[0][1], "", "the theme script is inline, with no src");
+    assert.match(scripts[0][2], /data-theme-switch/);
     assert.doesNotMatch(html, /\son[a-z]+="/i);
   });
 
@@ -91,6 +98,22 @@ for (const { name, html } of pages) {
     assert.doesNotMatch(html, /fonts\.(googleapis|gstatic)\.com/);
   });
 }
+
+test("the Content-Security-Policy allows the theme script by its hash", () => {
+  const hashes = new Set(
+    pages.map(({ html }) => {
+      const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
+      return createHash("sha256").update(script).digest("base64");
+    }),
+  );
+  assert.equal(hashes.size, 1, "every page has the same theme script");
+  const [hash] = hashes;
+  const netlify = readFileSync(new URL("../netlify.toml", import.meta.url));
+  assert.ok(
+    netlify.includes(`script-src 'sha256-${hash}'`),
+    `netlify.toml needs script-src 'sha256-${hash}'`,
+  );
+});
 
 test("public pages carry no internal draft notes or doc paths", () => {
   for (const { name, html } of pages) {

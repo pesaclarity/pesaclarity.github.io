@@ -1,4 +1,5 @@
 ---
+import { darkScreen } from "../lib/screens";
 import Base from "../layouts/Base.astro";
 import { links, screens, sponsor, sponsorCosts } from "../data/site";
 import { withBase } from "../lib/paths";
@@ -65,6 +66,7 @@ import { withBase } from "../lib/paths";
       </div>
       <figure class="shot">
         <img
+          class:list={[{ "screen-light": darkScreen(screens.support.file) }]}
           src={withBase(`/screens/${screens.support.file}.webp`)}
           width="390"
           height="844"
@@ -72,6 +74,17 @@ import { withBase } from "../lib/paths";
           loading="lazy"
           decoding="async"
         />
+        {darkScreen(screens.support.file) && (
+          <img
+            class="screen-dark"
+            src={withBase(`/screens/${darkScreen(screens.support.file)}.webp`)}
+            width="390"
+            height="844"
+            alt={screens.support.alt}
+            loading="lazy"
+            decoding="async"
+          />
+        )}
         <figcaption>{screens.support.name}</figcaption>
       </figure>
     </section>
@@ -189,6 +202,6 @@ import { withBase } from "../lib/paths";
   .warning {
     padding: var(--space-3) var(--space-4);
     border-radius: 1rem;
-    background: color-mix(in srgb, var(--color-warning) 12%, transparent);
+    border: 1px solid var(--color-warning);
   }
 </style>

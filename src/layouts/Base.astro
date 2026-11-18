@@ -11,6 +11,7 @@ import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { site } from "../data/site";
+import { themeColours, themeScript } from "../lib/theme";
 
 interface Props {
   title?: string;
@@ -39,14 +40,15 @@ const onHome = Astro.url.pathname === withBase("/");
     <meta name="color-scheme" content="light dark" />
     <meta
       name="theme-color"
-      content="#FBF8F8"
+      content={themeColours.light}
       media="(prefers-color-scheme: light)"
     />
     <meta
       name="theme-color"
-      content="#1A1214"
+      content={themeColours.dark}
       media="(prefers-color-scheme: dark)"
     />
+    <script is:inline set:html={themeScript} />
     <meta name="referrer" content="no-referrer" />
     <link rel="icon" href={withBase("/favicon.svg")} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={withBase("/apple-touch-icon.png")} />

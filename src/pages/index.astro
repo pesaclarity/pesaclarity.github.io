@@ -1,4 +1,5 @@
 ---
+import { darkScreen } from "../lib/screens";
 import { withBase } from "../lib/paths";
 import Base from "../layouts/Base.astro";
 import ScreenGallery from "../components/ScreenGallery.astro";
@@ -55,6 +56,9 @@ const steps = [
   "The app reads those SMS on your phone",
   "Get your plan",
 ];
+const heroAlt =
+  "Pesa Clarity home screen showing safe to spend today, money left this month, the runway at this pace, what is left at month end, the financial health card and a bar to ask about your money";
+const heroDark = darkScreen("home");
 ---
 
 <Base>
@@ -83,14 +87,30 @@ const steps = [
 
       <figure class="showcase">
         <div class="glow" aria-hidden="true"></div>
+        {/* With a dark pair both are lazy, so only the shown one is fetched;
+            the hero is in view, so lazy still starts it at once. */}
         <img
-          class="hero-screen"
+          class:list={["hero-screen", { "screen-light": heroDark }]}
           src={withBase("/screens/home.webp")}
           width="390"
           height="844"
-          alt="Pesa Clarity home screen showing safe to spend today, money left this month, the runway at this pace, what is left at month end, the financial health card and a bar to ask about your money"
+          alt={heroAlt}
           fetchpriority="high"
+          loading={heroDark ? "lazy" : undefined}
+          decoding={heroDark ? "async" : undefined}
         />
+        {heroDark && (
+          <img
+            class="hero-screen screen-dark"
+            src={withBase(`/screens/${heroDark}.webp`)}
+            width="390"
+            height="844"
+            alt={heroAlt}
+            fetchpriority="high"
+            loading="lazy"
+            decoding="async"
+          />
+        )}
       </figure>
     </div>
 
@@ -123,6 +143,7 @@ const steps = [
             </div>
             <div class="side-shot">
               <img
+                class:list={[{ "screen-light": darkScreen(side.screen.file) }]}
                 src={withBase(`/screens/${side.screen.file}.webp`)}
                 width="390"
                 height="844"
@@ -130,6 +151,19 @@ const steps = [
                 loading="lazy"
                 decoding="async"
               />
+              {darkScreen(side.screen.file) && (
+                <img
+                  class="screen-dark"
+                  src={withBase(
+                    `/screens/${darkScreen(side.screen.file)}.webp`,
+                  )}
+                  width="390"
+                  height="844"
+                  alt={side.screen.alt}
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
             </div>
           </li>
         ))}
@@ -397,12 +431,12 @@ const steps = [
     background:
       radial-gradient(
         48rem 32rem at 80% 0%,
-        var(--color-brand-soft),
+        var(--color-subtle),
         transparent 70%
       ),
       radial-gradient(
         36rem 24rem at 0% 100%,
-        var(--color-brand-soft),
+        var(--color-subtle),
         transparent 70%
       ),
       var(--color-background);
@@ -452,7 +486,7 @@ const steps = [
     height: auto;
     border-radius: 2.75rem;
     border: 8px solid var(--color-device);
-    box-shadow: 0 50px 100px -40px rgb(58 47 51 / 0.45);
+    box-shadow: 0 50px 100px -40px var(--color-shadow);
   }
 
   .glow {
@@ -460,11 +494,7 @@ const steps = [
     width: min(30rem, 90%);
     aspect-ratio: 1;
     border-radius: 50%;
-    background: radial-gradient(
-      circle,
-      color-mix(in srgb, var(--color-brand) 22%, transparent),
-      transparent 65%
-    );
+    background: radial-gradient(circle, var(--color-subtle), transparent 65%);
   }
 
   .highlights {
@@ -548,7 +578,7 @@ const steps = [
     border-radius: 2rem 2rem 0 0;
     border: 6px solid var(--color-device);
     border-bottom: 0;
-    box-shadow: 0 30px 60px -30px rgb(58 47 51 / 0.4);
+    box-shadow: 0 30px 60px -30px var(--color-shadow);
   }
 
   .step-n {

@@ -81,7 +81,7 @@ a:hover {
 
 code {
   font-size: 0.92em;
-  background: var(--color-brand-soft);
+  background: var(--color-subtle);
   padding: 0.1em 0.35em;
   border-radius: 6px;
 }
@@ -339,7 +339,7 @@ main:focus {
   background:
     radial-gradient(
       40rem 20rem at 100% 0%,
-      var(--color-brand-soft),
+      var(--color-subtle),
       transparent 70%
     ),
     var(--color-surface);
@@ -354,4 +354,29 @@ main:focus {
 /* Keeps a name such as M-Pesa on one line. */
 .nowrap {
   white-space: nowrap;
+}
+
+/* App screens with a dark version: show the one for the theme. The rules
+   match tokens.css. !important because pages style their screen images by
+   element, which would otherwise outrank these. */
+.screen-dark {
+  display: none !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .screen-light {
+    display: none !important;
+  }
+
+  :root:not([data-theme="light"]) .screen-dark {
+    display: block !important;
+  }
+}
+
+:root[data-theme="dark"] .screen-light {
+  display: none !important;
+}
+
+:root[data-theme="dark"] .screen-dark {
+  display: block !important;
 }
