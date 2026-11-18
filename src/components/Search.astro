@@ -1,0 +1,355 @@
+---
+/*
+ * Search, with Pagefind. The index is built with the site (`pagefind --site
+ * dist` after `astro build`) and searched in the browser: what is typed
+ * never leaves the page. The box shows only when scripts run (the theme
+ * script marks <html>); without them the topic lists on the page stand in.
+ */
+interface Props {
+  /** A unique id for the box on its page. */
+  id: string;
+  label: string;
+  placeholder: string;
+  /** Only pages tagged with this area (data-pagefind-filter), if set. */
+  area?: string;
+  size?: "large" | "small";
+}
+
+const { id, label, placeholder, area, size = "large" } = Astro.props;
+---
+
+<div
+  class:list={["search", `search-${size}`]}
+  data-search
+  data-area={area}
+  role="search"
+>
+  <label class="visually-hidden" for={id}>
+    {label}
+  </label>
+  <div class="search-box">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle
+        cx="10.5"
+        cy="10.5"
+        r="6.75"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      ></circle>
+      <path
+        d="m15.5 15.5 5 5"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      ></path>
+    </svg>
+    <input
+      id={id}
+      type="search"
+      placeholder={placeholder}
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls={`${id}-results`}
+      aria-autocomplete="list"
+      data-search-input
+    />
+    <kbd aria-hidden="true">/</kbd>
+  </div>
+  <div class="search-panel" id={`${id}-results`} hidden data-search-panel>
+    <ul class="search-results" role="list" data-search-results></ul>
+    <p class="search-foot">
+      <span data-search-count role="status"></span>
+      <span>Esc to close</span>
+    </p>
+  </div>
+</div>
+
+<script>
+  type Result = {
+    url: string;
+    excerpt: string;
+    meta: { title?: string; crumb?: string };
+  };
+  type Pagefind = {
+    options: (o: object) => Promise<void>;
+    debouncedSearch: (
+      q: string,
+      o?: object,
+      ms?: number,
+    ) => Promise<{
+      results: { data: () => Promise<Result> }[];
+    } | null>;
+  };
+
+  const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
+  let loading: Promise<Pagefind> | undefined;
+  // Pagefind's script and index are files of this site, loaded on first use.
+  function pagefind(): Promise<Pagefind> {
+    loading ??= import(/* @vite-ignore */ `${base}/pagefind/pagefind.js`).then(
+      async (pf: Pagefind) => {
+        await pf.options({ baseUrl: `${base}/`, excerptLength: 22 });
+        return pf;
+      },
+    );
+    return loading;
+  }
+
+  const escape = (s: string) =>
+    s.replace(
+      /[&<>"']/g,
+      (c) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        })[c]!,
+    );
+
+  for (const root of document.querySelectorAll<HTMLElement>("[data-search]")) {
+    const input = root.querySelector<HTMLInputElement>("[data-search-input]")!;
+    const panel = root.querySelector<HTMLElement>("[data-search-panel]")!;
+    const list = root.querySelector<HTMLElement>("[data-search-results]")!;
+    const count = root.querySelector<HTMLElement>("[data-search-count]")!;
+    const area = root.dataset.area;
+
+    const close = () => {
+      panel.hidden = true;
+      input.setAttribute("aria-expanded", "false");
+    };
+    const open = () => {
+      panel.hidden = false;
+      input.setAttribute("aria-expanded", "true");
+    };
+    const links = () => [...list.querySelectorAll<HTMLAnchorElement>("a")];
+
+    async function run() {
+      const query = input.value.trim();
+      if (!query) {
+        list.replaceChildren();
+        close();
+        return;
+      }
+      const pf = await pagefind();
+      const search = await pf.debouncedSearch(
+        query,
+        area ? { filters: { area } } : {},
+        200,
+      );
+      if (!search || input.value.trim() !== query) return;
+      const results = await Promise.all(
+        search.results.slice(0, 6).map((r) => r.data()),
+      );
+      list.innerHTML = results
+        .map(
+          (r) =>
+            `<li><a href="${escape(r.url)}">` +
+            (r.meta.crumb
+              ? `<span class="search-crumb">${escape(r.meta.crumb)}</span>`
+              : "") +
+            `<span class="search-title">${escape(r.meta.title ?? r.url)}</span>` +
+            // Pagefind escapes the page text and marks the words with <mark>.
+            `<span class="search-excerpt">${r.excerpt}</span></a></li>`,
+        )
+        .join("");
+      const n = search.results.length;
+      count.textContent =
+        n === 0
+          ? "No results · searched on this device"
+          : `${n} ${n === 1 ? "result" : "results"} · searched on this device`;
+      open();
+    }
+
+    input.addEventListener("input", run);
+    input.addEventListener("focus", () => {
+      if (input.value.trim()) open();
+    });
+    root.addEventListener("keydown", (event) => {
+      const items = links();
+      const at = items.indexOf(document.activeElement as HTMLAnchorElement);
+      if (event.key === "Escape") {
+        close();
+        input.focus();
+      } else if (event.key === "ArrowDown" && items.length) {
+        event.preventDefault();
+        open();
+        items[Math.min(at + 1, items.length - 1)].focus();
+      } else if (event.key === "ArrowUp" && items.length) {
+        event.preventDefault();
+        if (at <= 0) input.focus();
+        else items[at - 1].focus();
+      }
+    });
+    root.addEventListener("focusout", (event) => {
+      if (!root.contains(event.relatedTarget as Node | null)) close();
+    });
+  }
+
+  // "/" jumps to the first search box, unless the visitor is typing.
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "/" || event.metaKey || event.ctrlKey || event.altKey)
+      return;
+    const target = event.target as HTMLElement;
+    if (target.closest("input, textarea, select, [contenteditable]")) return;
+    const input = document.querySelector<HTMLInputElement>(
+      "[data-search-input]",
+    );
+    if (!input) return;
+    event.preventDefault();
+    input.focus();
+  });
+</script>
+
+<style>
+  /* Hidden until scripts run; the theme script marks <html> when they do. */
+  .search {
+    display: none;
+    position: relative;
+    width: 100%;
+  }
+
+  :global([data-theme-choice]) .search {
+    display: block;
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 3.5rem;
+    padding: 0 var(--space-4) 0 var(--space-5);
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-pill);
+  }
+
+  .search-small .search-box {
+    min-height: var(--size-touch-target);
+    padding-left: var(--space-4);
+  }
+
+  .search-box:focus-within {
+    border-color: var(--color-text);
+  }
+
+  .search-box svg {
+    flex: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--color-text-muted);
+  }
+
+  input {
+    flex: 1;
+    min-width: 0;
+    min-height: var(--size-touch-target);
+    border: 0;
+    background: transparent;
+    color: var(--color-text);
+    font: inherit;
+    font-size: var(--text-lg);
+  }
+
+  .search-small input {
+    font-size: var(--text-base);
+  }
+
+  input::placeholder {
+    color: var(--color-text-muted);
+    opacity: 1;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  input::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  kbd {
+    flex: none;
+    display: grid;
+    place-items: center;
+    min-width: 1.6rem;
+    height: 1.8rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .search-panel {
+    position: absolute;
+    z-index: 15;
+    left: 0;
+    right: 0;
+    top: calc(100% + var(--space-2));
+    padding: var(--space-2);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    box-shadow: 0 30px 60px -30px var(--color-shadow);
+    text-align: left;
+  }
+
+  .search-panel[hidden] {
+    display: none;
+  }
+
+  .search-results {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .search-results :global(a) {
+    display: grid;
+    gap: 0.15rem;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-small);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .search-results :global(a:hover),
+  .search-results :global(a:focus-visible) {
+    background: var(--color-subtle);
+  }
+
+  .search-results :global(.search-crumb) {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .search-results :global(.search-title) {
+    font-weight: 600;
+  }
+
+  .search-results :global(.search-excerpt) {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .search-results :global(mark) {
+    background: none;
+    color: var(--color-brand-link);
+    font-weight: 600;
+  }
+
+  .search-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin: var(--space-2) 0 0;
+    padding: var(--space-3) var(--space-4) var(--space-2);
+    border-top: 1px solid var(--color-border);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+</style>

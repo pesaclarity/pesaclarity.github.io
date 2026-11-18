@@ -1,6 +1,7 @@
 /*
- * The site's only script: the colour theme switch. It runs inline in <head>,
- * before the page is drawn, so a chosen theme shows with no flash.
+ * The site's only inline script: the colour theme switch (search, the other
+ * script, is a file; see Search.astro). It runs inline in <head>, before the
+ * page is drawn, so a chosen theme shows with no flash.
  *
  * System (the default) follows the device. Light or Dark sets data-theme on
  * <html>, which tokens.css reads. The choice is kept in localStorage when the

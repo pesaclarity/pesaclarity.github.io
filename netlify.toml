@@ -8,7 +8,7 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'sha256-cvhbAv7DS8gcbilFoEyXDsI611rlR+Nu5UAzgqg/mKQ='; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    Content-Security-Policy = "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-cvhbAv7DS8gcbilFoEyXDsI611rlR+Nu5UAzgqg/mKQ='; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Content-Type-Options = "nosniff"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
