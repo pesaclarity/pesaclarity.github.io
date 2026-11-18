@@ -1,6 +1,6 @@
 # pesaclarity.github.io
 
-The public website for [Pesa Clarity](https://github.com/pesaclarity), a free, ad-free, open-source app for Android and iPhone that turns M-Pesa and bank messages into a daily plan, with all analysis on the phone. The site says what Pesa Clarity is, what it believes, exactly what stays on the phone, why it is open source, and how to join the beta or contribute. It has no app features, no accounts, no cookies, no analytics and no client-side JavaScript.
+The public website for [Pesa Clarity](https://github.com/pesaclarity), a free, ad-free, open-source app for Android and iPhone that turns M-Pesa and bank messages into a daily plan, with all analysis on the phone. The site says what Pesa Clarity is, what it believes, exactly what stays on the phone, why it is open source, and how to join the beta or contribute. It has no app features, no accounts, no cookies, no analytics and no client-side JavaScript beyond one small inline script for the colour theme switch (System, Light or Dark), kept in the browser.
 
 Codename **dirisha**, Swahili for "window": the project's window to the public.
 
@@ -15,14 +15,14 @@ npm ci
 npm run dev       # http://localhost:4321
 ```
 
-| Command                           | What it does                                                                                                                    |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `npm run dev`                     | Local dev server                                                                                                                |
-| `npm run build`                   | Static build into `dist/`                                                                                                       |
-| `npm run preview`                 | Serve `dist/` locally                                                                                                           |
-| `npm run check`                   | Type and template checks (`astro check`, TypeScript strict)                                                                     |
-| `npm run format` / `format:check` | Prettier, with the Astro plugin                                                                                                 |
-| `npm test`                        | Checks the built site: no JavaScript, nothing loaded from other servers, titles, Open Graph, sitemap. Run after `npm run build` |
+| Command                           | What it does                                                                                                                            |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run dev`                     | Local dev server                                                                                                                        |
+| `npm run build`                   | Static build into `dist/`                                                                                                               |
+| `npm run preview`                 | Serve `dist/` locally                                                                                                                   |
+| `npm run check`                   | Type and template checks (`astro check`, TypeScript strict)                                                                             |
+| `npm run format` / `format:check` | Prettier, with the Astro plugin                                                                                                         |
+| `npm test`                        | Checks the built site: only the theme script, nothing loaded from other servers, titles, Open Graph, sitemap. Run after `npm run build` |
 
 `tool/check` runs the format check, `astro check`, build and the tests; the git hooks run it for you (see CONTRIBUTING.md).
 
