@@ -1,0 +1,418 @@
+---
+/*
+ * A help article or a docs page: navigation on the left (a collapsible list
+ * on phones), the article, and "On this page" on wide screens.
+ */
+import Base from "./Base.astro";
+
+export interface NavItem {
+  label: string;
+  href: string;
+  current?: boolean;
+  children?: readonly NavItem[];
+}
+
+interface Props {
+  title: string;
+  description: string;
+  navTitle: string;
+  nav: readonly NavItem[];
+  crumbs: readonly { href: string; label: string }[];
+  toc: readonly { slug: string; text: string }[];
+  /** Short facts under the lead, such as the reading time. */
+  meta?: readonly string[];
+  prev?: { href: string; label: string };
+  next?: { href: string; label: string };
+  /** Pagefind: what the page is filed under, e.g. "Help › Reading". */
+  crumb: string;
+  area: string;
+}
+
+const {
+  title,
+  description,
+  navTitle,
+  nav,
+  crumbs,
+  toc,
+  meta = [],
+  prev,
+  next,
+  crumb,
+  area,
+} = Astro.props;
+
+const esc = (t: string) =>
+  t.replace(
+    /[&<>"]/g,
+    (c) => `&${{ "&": "amp", "<": "lt", ">": "gt", '"': "quot" }[c]};`,
+  );
+const link = (i: NavItem) =>
+  `<a href="${esc(i.href)}"${i.current ? ' aria-current="page"' : ""}>${esc(i.label)}</a>`;
+const tree = `<ul class="nav-tree">${nav
+  .map(
+    (i) =>
+      `<li>${link(i)}${
+        i.children?.length
+          ? `<ul>${i.children.map((c) => `<li>${link(c)}</li>`).join("")}</ul>`
+          : ""
+      }</li>`,
+  )
+  .join("")}</ul>`;
+---
+
+<Base title={title} description={description}>
+  <slot name="bar" />
+  <div class="container article-grid">
+    <aside class="article-nav">
+      {/* Phones get a list that opens; wide screens a list that is always
+          open. Only one shows, so only one is in the accessibility tree. */}
+      <details class="nav-fold">
+        <summary>{navTitle}</summary>
+        <nav aria-label={navTitle}>
+          <Fragment set:html={tree} />
+        </nav>
+      </details>
+      <nav class="nav-open" aria-labelledby="nav-title">
+        <h2 id="nav-title" class="nav-title">
+          {navTitle}
+        </h2>
+        <Fragment set:html={tree} />
+      </nav>
+    </aside>
+
+    <article
+      class="article"
+      data-pagefind-body
+      data-pagefind-meta={`crumb:${crumb}`}
+      data-pagefind-filter={`area:${area}`}
+    >
+      <nav aria-label="Breadcrumb" class="crumbs" data-pagefind-ignore>
+        <ol>
+          {crumbs.map((c) => (
+            <li>
+              <a href={c.href}>{c.label}</a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+      <h1 data-pagefind-meta="title">{title}</h1>
+      <slot name="lead" />
+      {meta.length > 0 && (
+        <p class="article-meta">
+          {meta.map((m) => (
+            <span>{m}</span>
+          ))}
+        </p>
+      )}
+      <div class="prose-body">
+        <slot />
+      </div>
+      <div class="article-end" data-pagefind-ignore>
+        <slot name="end" />
+        {(prev || next) && (
+          <nav class="prev-next" aria-label="More in this section">
+            {prev ? (
+              <a class="pn pn-prev" href={prev.href} rel="prev">
+                <span>Previous</span>
+                <strong>{prev.label}</strong>
+              </a>
+            ) : (
+              <span />
+            )}
+            {next && (
+              <a class="pn pn-next" href={next.href} rel="next">
+                <span>Next</span>
+                <strong>{next.label}</strong>
+              </a>
+            )}
+          </nav>
+        )}
+      </div>
+    </article>
+
+    {toc.length > 0 && (
+      <aside class="article-toc">
+        <nav aria-labelledby="toc-title">
+          <h2 id="toc-title">On this page</h2>
+          <ul>
+            {toc.map((h) => (
+              <li>
+                <a href={`#${h.slug}`}>{h.text}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+    )}
+  </div>
+</Base>
+
+<style>
+  .article-grid {
+    display: grid;
+    gap: var(--space-5) var(--space-7);
+    padding-block: var(--space-6) var(--space-8);
+  }
+
+  @media (min-width: 62rem) {
+    .article-grid {
+      grid-template-columns: 14rem minmax(0, 40rem);
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .article-grid {
+      grid-template-columns: 14rem minmax(0, 40rem) 12rem;
+      justify-content: space-between;
+    }
+  }
+
+  /* Left navigation */
+  .article-nav {
+    min-width: 0;
+  }
+
+  @media (min-width: 62rem) {
+    .article-nav {
+      position: sticky;
+      top: 6rem;
+      align-self: start;
+      max-height: calc(100vh - 7rem);
+      overflow-y: auto;
+    }
+  }
+
+  .nav-fold {
+    display: none;
+  }
+
+  .nav-title {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin: var(--space-3) 0 var(--space-2);
+  }
+
+  .nav-fold summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: var(--size-touch-target);
+    padding-inline: var(--space-4);
+    font-weight: 600;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .nav-fold summary::-webkit-details-marker {
+    display: none;
+  }
+
+  @media (max-width: 61.99rem) {
+    .nav-open {
+      display: none;
+    }
+
+    .nav-fold {
+      display: block;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+    }
+
+    .nav-fold summary::after {
+      content: "+";
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--color-brand-link);
+    }
+
+    .nav-fold[open] summary::after {
+      content: "−";
+    }
+
+    .nav-fold nav {
+      padding: 0 var(--space-2) var(--space-3);
+    }
+  }
+
+  .article-nav :global(.nav-tree),
+  .article-nav :global(.nav-tree ul) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .article-nav :global(.nav-tree ul) {
+    margin: var(--space-1) 0 var(--space-2) var(--space-4);
+    padding-left: 0;
+    border-left: 1px solid var(--color-border);
+  }
+
+  .article-nav :global(.nav-tree a) {
+    display: flex;
+    align-items: center;
+    min-height: var(--size-touch-target);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-small);
+    color: var(--color-text);
+    text-decoration: none;
+    line-height: 1.35;
+  }
+
+  .article-nav :global(.nav-tree ul a) {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    border-radius: 0 var(--radius-small) var(--radius-small) 0;
+  }
+
+  .article-nav :global(.nav-tree a:hover) {
+    background: var(--color-subtle);
+  }
+
+  .article-nav :global(.nav-tree a[aria-current="page"]) {
+    background: var(--color-subtle);
+    color: var(--color-text);
+    font-weight: 600;
+    box-shadow: inset 3px 0 0 var(--color-brand);
+  }
+
+  /* The article */
+  .article {
+    min-width: 0;
+  }
+
+  .crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-2);
+    list-style: none;
+    margin: 0 0 var(--space-3);
+    padding: 0;
+    font-size: var(--text-sm);
+  }
+
+  .crumbs li + li::before {
+    content: "›";
+    margin-right: var(--space-2);
+    color: var(--color-text-muted);
+  }
+
+  .crumbs a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--size-touch-target);
+    color: var(--color-text-muted);
+  }
+
+  h1 {
+    font-size: var(--text-2xl);
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+  }
+
+  .article :global(.lead) {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-5);
+  }
+
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-5);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-6);
+  }
+
+  .article-end {
+    margin-top: var(--space-7);
+  }
+
+  .prev-next {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+  }
+
+  @media (min-width: 40rem) {
+    .prev-next {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .pn {
+    display: grid;
+    gap: var(--space-1);
+    padding: var(--space-4) var(--space-5);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .pn:hover {
+    border-color: var(--color-text-muted);
+  }
+
+  .pn span {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .pn-next {
+    text-align: right;
+  }
+
+  /* On this page */
+  .article-toc {
+    display: none;
+  }
+
+  @media (min-width: 80rem) {
+    .article-toc {
+      display: block;
+      position: sticky;
+      top: 6rem;
+      align-self: start;
+    }
+  }
+
+  .article-toc h2 {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin: var(--space-3) 0 var(--space-3);
+  }
+
+  .article-toc ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 var(--space-3);
+    border-left: 1px solid var(--color-border);
+    font-size: var(--text-sm);
+  }
+
+  .article-toc a {
+    display: flex;
+    align-items: center;
+    min-height: var(--size-touch-target);
+    padding: var(--space-1) 0;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    line-height: 1.4;
+  }
+
+  .article-toc a:hover {
+    color: var(--color-text);
+    text-decoration: underline;
+  }
+</style>

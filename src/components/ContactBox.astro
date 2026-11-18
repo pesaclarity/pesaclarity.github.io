@@ -1,0 +1,30 @@
+---
+import { support, supportMail } from "../data/site";
+
+/* "Still stuck? Contact us", with the support address from site.ts. */
+interface Props {
+  title?: string;
+  body?: string;
+  /** Show the address on the button instead of "Email us". */
+  showAddress?: boolean;
+  level?: 2 | 3;
+}
+
+const {
+  title = "Contact us",
+  body = "Say which bank or wallet, and what the app showed.",
+  showAddress = false,
+  level = 3,
+} = Astro.props;
+const Heading = level === 2 ? "h2" : "h3";
+---
+
+<div class="contact-box">
+  <div>
+    <Heading>{title}</Heading>
+    <p>{body}</p>
+  </div>
+  <a class="button button-primary" href={supportMail("Pesa Clarity help")}>
+    {showAddress ? support : "Email us"}
+  </a>
+</div>
