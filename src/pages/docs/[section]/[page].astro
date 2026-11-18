@@ -1,0 +1,92 @@
+---
+import Article from "../../../layouts/Article.astro";
+import DocsBar from "../../../components/DocsBar.astro";
+import { withBase } from "../../../lib/paths";
+import { tocOf, withBaseHtml } from "../../../lib/content";
+import { docSection } from "../../../data/docs";
+import {
+  docPages,
+  docUrl,
+  docsNav,
+  slugOf,
+  sourceName,
+  type DocPage,
+} from "../../../lib/docs";
+
+export async function getStaticPaths() {
+  const pages = await docPages();
+  return pages.map((page) => ({
+    params: { section: page.data.section, page: slugOf(page) },
+    props: { page, pages },
+  }));
+}
+
+interface Props {
+  page: DocPage;
+  pages: DocPage[];
+}
+
+const { page, pages } = Astro.props;
+const data = page.data;
+const section = docSection(data.section)!;
+const siblings = pages.filter((p) => p.data.section === data.section);
+const at = siblings.findIndex((p) => p.id === page.id);
+const near = (p?: DocPage) =>
+  p ? { href: docUrl(p), label: p.data.title } : undefined;
+const rendered = page.rendered!;
+---
+
+<Article
+  title={data.title}
+  description={data.description || section.body}
+  navTitle="Docs"
+  nav={docsNav(pages, data.section, page.id)}
+  crumbs={[
+    { href: withBase("/docs/"), label: "Docs" },
+    {
+      href: withBase(`/docs/${section.id}/`),
+      label: section.short ?? section.title,
+    },
+  ]}
+  toc={tocOf(rendered.metadata?.headings as never)}
+  meta={[`From ${data.repo}`, `Commit ${data.commit.slice(0, 7)}`]}
+  prev={near(siblings[at - 1])}
+  next={near(siblings[at + 1])}
+  crumb={`Docs › ${section.short ?? section.title}`}
+  area="Docs"
+>
+  <DocsBar slot="bar" />
+  <div class="doc-body" set:html={withBaseHtml(rendered.html)} />
+  <p slot="end" class="source">
+    <span>
+      Source: <a href={data.source}>{sourceName(page)} on GitHub</a>
+    </span>
+    <a href={data.edit}>Edit this page</a>
+  </p>
+</Article>
+
+<style>
+  /* The page opens with its own first paragraph, set as the lead. */
+  .doc-body > :global(p:first-child) {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+  }
+
+  .source {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
+    margin: 0;
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-border);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .source a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--size-touch-target);
+  }
+</style>

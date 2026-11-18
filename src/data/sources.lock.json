@@ -1,0 +1,77 @@
+{
+  "$comment": "Written by tool/sync-sources.mjs. The commit each repository was copied from, and a SHA-256 of every file written.",
+  "repos": {
+    "pesaclarity-app": {
+      "ref": "main",
+      "commit": "b401ac205bc8a9bebebe5c52e983bb761f6901d8"
+    },
+    "ujumbe-parsers": {
+      "ref": "main",
+      "commit": "fcee5edcab37dd6c2c9a2a0d2f76231d0f57a263"
+    },
+    "rayo": {
+      "ref": "main",
+      "commit": "b7838f6648e8f100674d0e70412c092bb2c6bb6d"
+    },
+    "pesaclarity-ml": {
+      "ref": "main",
+      "commit": "3054046301641784dcae20e18d48950cf02a7836"
+    },
+    "pesaclarity-backend": {
+      "ref": "main",
+      "commit": "3445bce5dcaa114c14fa4e651fc820b8154a2825"
+    },
+    ".github": {
+      "ref": "main",
+      "commit": "26f5c711ade04a1b2e3685d4542c91be05eb8079"
+    },
+    "docs": {
+      "ref": "main",
+      "commit": "a112d96fa86118401190906c2ed79939ecd2d233"
+    }
+  },
+  "dates": {
+    "parsers@0.1.0": "2026-10-27"
+  },
+  "files": {
+    "src/content/docs/app/repositories.md": "26aeefc4bb8bead854214fadc11d2ad20fcd9661bce88a3af4a9cbe695e01ada",
+    "src/content/docs/app/performance-budget.md": "94d61811c01dfdb51a82ef5327a26f31db5e9ad504bb694303174b2628652704",
+    "src/content/docs/app/auto-categorise.md": "7ad94036f83fa6fdb3b1d2833d5c94f5a4098b7d98b659ae44c111349a49cda7",
+    "src/content/docs/app/message-reader.md": "952dc6ab3c99b26d963352acb0e2c3a7e48c57ce609f64debe8c36dd13d47dea",
+    "src/content/docs/app/runtime-overhead.md": "033b402335e3d413be76078ef98c723b5741280670e41206b0c07d113fc11e25",
+    "src/content/docs/parser-packs/overview.md": "13e82610fdb95a1b7127db7a4d1417e3ce231307925ee0fe0ffe6f6a696fc2cc",
+    "src/content/docs/parser-packs/write-a-parser-pack.md": "8542f05424e9b1a734e15816e3727d8d59c6233b3fd9381593873ce389effb15",
+    "src/content/docs/parser-packs/signing-and-releases.md": "70430d7bd2c2ec8431a4a85e63d7080f33cb3198e26520b55f83170d56dc8096",
+    "src/content/docs/parser-packs/signing-packs.md": "4072dc4e096e6e83ef3d461d3abb1b5c768131677ac0e0888e5548484c417e80",
+    "src/content/docs/parser-packs/example-messages.md": "e64fdebb7aae15b4b79ed47a208b575aff4e24ef06566e3651147d4d34986ba6",
+    "src/content/docs/parser-packs/contributing.md": "78e5f9858db56e7b2ab1c848f2ec6f900b5eba905f123b79c230e8a8cea30a5e",
+    "src/content/docs/rayo/overview.md": "928e46b00291ae935f83291670702d593015195f1bb7ddc7b81e6de18e0848c8",
+    "src/content/docs/rayo/ops.md": "2b2fef88a28a0852ccb0b628472d5a36d6b45d331195c75c2e2e864031c8a7c0",
+    "src/content/docs/rayo/converting.md": "6ed4ba261a11dfa602f4c51f600384645f3d206746bf4a36f024e60e6219f06b",
+    "src/content/docs/rayo/format.md": "baff8a509810cf76836071b4d535dbcb74c59ea890d0860040a310b46ffeb05e",
+    "src/content/docs/rayo/small-language-models.md": "349db6d12d6336ba5f58af656d89f5c8138e61cca1e5a66307025fe3497e03e1",
+    "src/content/docs/ml/overview.md": "42e4d3a8112999063ca3242cb11e5e9853588c9122d52caeae9294e8dabcb06c",
+    "src/content/docs/ml/ask.md": "4fe7114e27f6b3f7fbb4731fde1b00c46830e9ba35eecb9ed9904085a3eaa2ee",
+    "src/content/docs/ml/message-reader.md": "b9bf1d62e8fc38b1081ed8f490154d6b38d5af875656f0d5ce5fc0f6e298c108",
+    "src/content/docs/ml/features.md": "91e887e46395ec918c4f52efcad250c007c7b059fe5780aee6b27755503ea12e",
+    "src/content/docs/ml/dp-sgd-review.md": "f48a9c2396d5d8f9fe8809f8a067cc3dd933fc31e1cdd76135b8c831b6584d73",
+    "src/content/docs/ml/privacy-audit.md": "439cbf108e8d254517ff44e5060ed8c2aa833f705e4db0a648d416490e9b9037",
+    "src/content/docs/ml/model-weights.md": "06c7c455859f26de892f1d277c06d01063643cb54d0cc74fccbffea154e0bc9e",
+    "src/content/docs/server/overview.md": "f41888c3b56dce9e48ae9544d4fcf9b3aa3ca24b059d3fc8c34e683a4f9eda92",
+    "src/content/docs/server/deploying.md": "25752ba13fe7c6447ed2a08d7719ce4115bd8f60772eb3eb2419bfd2dd7c085c",
+    "src/content/docs/server/settings-on-cloud-run.md": "28d050dc0bc16cebe25014e0851f163219bcbc59f22811a55d9aaf07ae010a07",
+    "src/content/docs/server/settings-in-github.md": "af106726ea0cf9c71c5ffcd2124c0715dac7601fbe86b4d8a6925d5e8923c6b1",
+    "src/content/docs/security/security-policy.md": "88b629c7068adb65380d203b5177f98d74539d9d91152604b269fe2d1c8089a8",
+    "src/content/docs/security/pinned-certificate-authorities.md": "214fa525b129d17a63c3be4414901eb3f5c91c1bf08c904dc6889c5bfe2ae40c",
+    "src/content/docs/security/federated-learning.md": "d0994b11f5ad4607ee5dec134e86c834aa579d86c43227d2acb355fc23db97a1",
+    "src/content/docs/verify/reproducible-builds.md": "e5fd5c8fca5486a067bacf9f708f0b7db3d338b072890845858c66f2011708a4",
+    "src/content/docs/verify/releasing.md": "94ade9c10c76492320744c77cc564029e709e6909a3782923114c1cc074bee26",
+    "src/content/docs/contribute/contributing.md": "8316fa9376eec134bf9330e343eb9d7a9d126fe6d6670bdcd968871959b23ab1",
+    "src/content/docs/contribute/code-of-conduct.md": "e3db06259e4ef8e68f1168161920c0c0988ed10b5c96dc09151b87c9c8e76c1d",
+    "src/data/changes/app.md": "03c6334073ec38c1af3fd0c9ac0705b7db9c09214c1235ceef0c710c65ecc0a6",
+    "src/data/changes/parsers.md": "6b5399ab5d16376942ab6a1d276df96deb0215eef5f0bc4306a24ae536599561",
+    "src/data/changes/rayo.md": "104f0825acc67d63422f3f98e97e962d80d89efc3415146c668adf0276276ed7",
+    "src/data/changes/ml.md": "b1970d566b107dd4cc3abd1c7f41032d01b59b26b1b4e7703296986e225f04b9",
+    "src/data/changes/server.md": "5783a519fe2b4d8744d97cb8bc3d2cc25e4c92f0a61a22ae13f9aee7d8bacad1"
+  }
+}

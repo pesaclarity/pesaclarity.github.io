@@ -1,0 +1,66 @@
+name: Docs and release notes
+
+# Copies the developer docs and the changelogs from the other repositories
+# (tool/sources.json) into src/content/docs/ and src/data/changes/, moving
+# each pin in src/data/sources.lock.json to the newest commit of its branch.
+# Opens or updates one pull request, only when something changed; nothing is
+# merged on its own. Runs weekly, by hand, or when another repository sends
+# `sources-updated` after a release.
+on:
+  schedule:
+    - cron: "17 5 * * 1"
+  workflow_dispatch:
+  repository_dispatch:
+    types: [sources-updated]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sources
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Copy docs and changelogs
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+
+      - name: Copy at the newest commits
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node tool/sync-sources.mjs --update
+
+      # The copies must still build and pass the site's checks.
+      - name: Build and test
+        env:
+          ASTRO_TELEMETRY_DISABLED: "1"
+        run: |
+          npm run build
+          npm test
+
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          branch: content/sources
+          add-paths: |
+            src/content/docs/**
+            src/data/changes/**
+            src/data/sources.lock.json
+          commit-message: "content: docs and release notes from the other repositories"
+          title: "content: docs and release notes from the other repositories"
+          body: |
+            The developer docs and changelogs, copied by `tool/sync-sources.mjs` at the commits now pinned in `src/data/sources.lock.json`. The site built and its tests passed with them.
+
+            Check /docs/ and /changes/ before merging: the words come from each repository, and a changelog line that names an AI model needs a `rewrite` in `tool/sources.json` (the tests fail until it has one).
+          delete-branch: true
