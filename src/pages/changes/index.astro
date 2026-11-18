@@ -1,0 +1,6 @@
+---
+import ChangesPage from "../../components/ChangesPage.astro";
+import { allReleases } from "../../lib/changes";
+---
+
+<ChangesPage releases={allReleases()} />

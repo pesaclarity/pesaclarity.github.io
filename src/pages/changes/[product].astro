@@ -1,0 +1,12 @@
+---
+import ChangesPage from "../../components/ChangesPage.astro";
+import { products, releasesOf } from "../../lib/changes";
+
+export function getStaticPaths() {
+  return products.map((p) => ({ params: { product: p.id } }));
+}
+
+const { product } = Astro.params;
+---
+
+<ChangesPage releases={releasesOf(product)} current={product} />
