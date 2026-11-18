@@ -13,7 +13,7 @@
  */
 
 /** The browser bar colour for each theme: the page background. */
-export const themeColours = { light: "#f5f5f5", dark: "#0a0a0a" } as const;
+export const themeColours = { light: "#f5f5f5", dark: "#121212" } as const;
 
 export const themeScript = `(function () {
   var root = document.documentElement;
