@@ -38,6 +38,7 @@ src/components/      header, footer, logo mark
 src/layouts/Base.astro  page shell: SEO and Open Graph meta, fonts, skip link
 src/pages/           index (landing), features, install, sponsor, privacy, terms, 404, robots.txt
 tests/               checks on the built output
+tool/app-screens.*   turns the app's screenshots into public/screens/ (below)
 ```
 
 Design follows [BRAND.md](https://github.com/pesaclarity/docs/blob/main/BRAND.md) and `brand/tokens.json`. Fonts are self-hosted from `@fontsource`; nothing is fetched from a font CDN. Dark mode follows `prefers-color-scheme`.
@@ -47,6 +48,21 @@ Design follows [BRAND.md](https://github.com/pesaclarity/docs/blob/main/BRAND.md
 `SITE_URL` sets the absolute URL used for canonical links, Open Graph and the sitemap. The domain is not decided yet, so it defaults to `https://pesaclarity.github.io`. See `.env.example`.
 
 The download buttons point to the app's APKs on GitHub Releases (`downloads` in `src/data/site.ts`). They use the `test-build` pre-release until the first full release; set `APP_RELEASE_TAG` at build time to a tag such as `v0.2.0`, or `latest`, to change that. When it builds, the site reads that release from the GitHub API and shows its version and date under the buttons (`src/data/release.mjs`); with no network it shows none. The app's APK workflow triggers a rebuild (`repository_dispatch` of type `app-build`) after each build it publishes.
+
+## App screens
+
+The screens in `public/screens/` come from the app itself. The app's `Screenshots` workflow draws them from its own widgets with made-up records (pesaclarity-app README, Screenshots), light and dark, 1170 × 2532, and keeps them with a `manifest.json` on a rolling pre-release: [`screenshots`](https://github.com/pesaclarity/pesaclarity-app/releases/tag/screenshots) for its `dev` branch and [`screenshots-main`](https://github.com/pesaclarity/pesaclarity-app/releases/tag/screenshots-main) for `main`. When a screen changes it sends this repository a `repository_dispatch` of type `screenshots-updated`.
+
+`.github/workflows/app-screens.yml` then downloads the light PNGs and the manifest, and `tool/app-screens.mjs` checks each against its SHA-256 and writes it as a 780 × 1688 WebP (quality 82, as before) under the name `tool/app-screens.json` gives it. Only files whose bytes change are written, and the workflow opens or updates one pull request, `content: app screenshots from <commit>`, on the `content/app-screenshots` branch. Nothing is merged on its own: check the images, and the alt text in `src/data/site.ts` when a screen shows something new. A screen the app no longer draws keeps its current image, with a warning. The site uses the light theme only.
+
+Run it by hand from Actions › App screens › Run workflow (choose the release), or locally:
+
+```sh
+gh release download screenshots --repo pesaclarity/pesaclarity-app --dir /tmp/app-screens --pattern manifest.json --pattern '*-light.png'
+node tool/app-screens.mjs /tmp/app-screens
+```
+
+The workflow uses its own `GITHUB_TOKEN`, so Settings › Actions › General must allow GitHub Actions to create pull requests. The app's dispatch needs its `WEB_DISPATCH_TOKEN` (a fine-grained token for this repository with Contents read and write), the same one its APK workflow uses. `tests/app-screens.test.mjs` checks that every screen the site shows has a mapping.
 
 ## Deploying
 

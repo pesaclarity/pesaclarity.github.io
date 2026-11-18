@@ -1,0 +1,28 @@
+{
+  "theme": "light",
+  "width": 780,
+  "height": 1688,
+  "quality": 82,
+  "screens": {
+    "accounts": "accounts",
+    "activity": "activity",
+    "close-day": "close-day",
+    "currencies": "currencies",
+    "debts": "debts",
+    "goals": "goals",
+    "home": "home",
+    "insights": "insights",
+    "money": "money",
+    "pay": "pay",
+    "people": "people",
+    "plan": "plan",
+    "receipt": "receipt",
+    "sell-keypad": "sell-keypad",
+    "sell": "sell",
+    "spaces": "spaces",
+    "stock": "stock",
+    "support": "support",
+    "tax": "tax",
+    "today": "today"
+  }
+}

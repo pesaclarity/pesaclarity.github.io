@@ -487,8 +487,9 @@ export interface Screen {
 /**
  * Every app screen the site shows: the app's own screens, filled with
  * made-up records.
- * All are 780 × 1688 WebP (390 × 844 at 2x). Regenerate them when the app
- * changes.
+ * All are 780 × 1688 WebP (390 × 844 at 2x), refreshed from the app's
+ * screenshots by a pull request when a screen changes (README, App screens;
+ * file names mapped in tool/app-screens.json).
  */
 export const screens = {
   home: {
