@@ -3,9 +3,10 @@ name: App screens
 # Refreshes public/screens/ from the app's screenshots. The app's Screenshots
 # workflow draws them from its own widgets with made-up records, puts them on
 # a rolling pre-release (`screenshots` for dev, `screenshots-main` for main)
-# and sends `screenshots-updated` here when a screen changed. This turns the
-# light ones into the site's WebP files (tool/app-screens.mjs) and opens or
-# updates one pull request, only when the bytes changed.
+# and sends `screenshots-updated` here when a screen changed. This turns them
+# into the site's WebP files (tool/app-screens.mjs): <name>.webp for light and
+# <name>-dark.webp for dark mode. It opens or updates one pull request, only
+# when the bytes changed.
 on:
   repository_dispatch:
     types: [screenshots-updated]
@@ -54,7 +55,7 @@ jobs:
           esac
           gh release download "$TAG" --repo pesaclarity/pesaclarity-app \
             --dir "$RUNNER_TEMP/app-screens" \
-            --pattern manifest.json --pattern '*-light.png'
+            --pattern manifest.json --pattern "*.png"
 
       - name: Make the WebP screens
         id: screens
@@ -67,7 +68,7 @@ jobs:
           commit-message: "content: app screenshots from ${{ steps.screens.outputs.commit }}"
           title: "content: app screenshots from ${{ steps.screens.outputs.commit }}"
           body: |
-            The site's app screens, redrawn by the app's Screenshots workflow from pesaclarity-app at ${{ steps.screens.outputs.commit }} and converted by `tool/app-screens.mjs` (780 × 1688 WebP, light theme). ${{ steps.screens.outputs.changed }} files changed.
+            The site's app screens, redrawn by the app's Screenshots workflow from pesaclarity-app at ${{ steps.screens.outputs.commit }} and converted by `tool/app-screens.mjs` (780 × 1688 WebP, `<name>.webp` light and `<name>-dark.webp` dark). ${{ steps.screens.outputs.changed }} files changed.
 
             Made-up records only. Check the images, and the alt text in `src/data/site.ts` if a screen now shows something different, before merging.
           delete-branch: true

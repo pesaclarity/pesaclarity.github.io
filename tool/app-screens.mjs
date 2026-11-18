@@ -6,7 +6,9 @@
 // <dir> holds manifest.json and the PNGs from the app's tool/screenshots.sh
 // (the `screenshots` or `screenshots-main` release of pesaclarity-app).
 // tool/app-screens.json maps each app screen to its file in public/screens/
-// and sets the size and WebP quality. A file is only rewritten when its
+// and sets the size and WebP quality. Each screen is written once per theme:
+// `<file>.webp` for light and `<file>-dark.webp` for dark (the suffixes are
+// in `themes`), which the site shows when it is in dark mode. A file is only rewritten when its
 // bytes change; screens the app did not draw keep their current image.
 // Prints what changed, and `changed=<count>` and `commit=<sha>` to
 // $GITHUB_OUTPUT when it is set.
@@ -36,10 +38,10 @@ if (manifest.version !== 1 || !Array.isArray(manifest.screens)) {
   process.exit(1);
 }
 
-/** The app's PNG for `name` in the site's theme, checked against its hash. */
-function source(name) {
+/** The app's PNG for `name` in `theme`, checked against its hash. */
+function source(name, theme) {
   const entry = manifest.screens.find(
-    (s) => s.name === name && s.theme === config.theme,
+    (s) => s.name === name && s.theme === theme,
   );
   if (!entry) return null;
   if (!/^[a-z0-9-]+\.png$/.test(entry.file)) {
@@ -56,30 +58,30 @@ function source(name) {
 
 const changed = [];
 const missing = [];
-for (const [name, file] of Object.entries(config.screens)) {
-  const png = source(name);
-  if (!png) {
-    missing.push(name);
-    continue;
+for (const [theme, suffix] of Object.entries(config.themes)) {
+  for (const [name, file] of Object.entries(config.screens)) {
+    const png = source(name, theme);
+    if (!png) {
+      missing.push(`${theme} ${name}`);
+      continue;
+    }
+    const webp = await sharp(png)
+      .resize(config.width, config.height, { kernel: "lanczos3" })
+      .flatten({ background: theme === "dark" ? "#000000" : "#ffffff" })
+      .webp({ quality: config.quality, effort: 6 })
+      .toBuffer();
+    const target = join(root, "public/screens", `${file}${suffix}.webp`);
+    if (existsSync(target) && readFileSync(target).equals(webp)) continue;
+    writeFileSync(target, webp);
+    changed.push(`${file}${suffix}.webp`);
   }
-  const webp = await sharp(png)
-    .resize(config.width, config.height, { kernel: "lanczos3" })
-    .flatten({ background: "#ffffff" })
-    .webp({ quality: config.quality, effort: 6 })
-    .toBuffer();
-  const target = join(root, "public/screens", `${file}.webp`);
-  if (existsSync(target) && readFileSync(target).equals(webp)) continue;
-  writeFileSync(target, webp);
-  changed.push(`${file}.webp`);
 }
 
 const commit = /^[0-9a-f]{40}$/.test(manifest.commit ?? "")
   ? manifest.commit
   : "";
 for (const name of missing) {
-  console.warn(
-    `warning: the app drew no ${config.theme} ${name}; kept the current image`,
-  );
+  console.warn(`warning: the app drew no ${name}; kept the current image`);
 }
 console.log(
   changed.length

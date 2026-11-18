@@ -13,7 +13,7 @@ const mapped = new Set(Object.values(config.screens));
 test("every WebP in public/screens comes from an app screenshot", () => {
   const files = readdirSync(new URL("public/screens/", root))
     .filter((f) => f.endsWith(".webp"))
-    .map((f) => f.replace(/\.webp$/, ""));
+    .map((f) => f.replace(/(-dark)?\.webp$/, ""));
   for (const file of files)
     assert.ok(mapped.has(file), `${file}.webp is not in tool/app-screens.json`);
 });
@@ -26,8 +26,16 @@ test("every screen in src/data/site.ts is mapped", () => {
     assert.ok(mapped.has(file), `${file} is not in tool/app-screens.json`);
 });
 
-test("the screens keep the site's size", () => {
+test("the screens keep the site's size, light and dark", () => {
   assert.equal(config.width, 780);
   assert.equal(config.height, 1688);
-  assert.equal(config.theme, "light");
+  assert.deepEqual(config.themes, { light: "", dark: "-dark" });
+});
+
+test("every light screen has its dark one", () => {
+  const files = new Set(readdirSync(new URL("public/screens/", root)));
+  for (const file of mapped) {
+    if (files.has(`${file}.webp`))
+      assert.ok(files.has(`${file}-dark.webp`), `${file}-dark.webp is missing`);
+  }
 });

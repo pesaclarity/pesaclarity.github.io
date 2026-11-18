@@ -1,5 +1,8 @@
 {
-  "theme": "light",
+  "themes": {
+    "light": "",
+    "dark": "-dark"
+  },
   "width": 780,
   "height": 1688,
   "quality": 82,

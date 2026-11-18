@@ -30,7 +30,7 @@ npm run dev       # http://localhost:4321
 
 ```
 public/              favicon, touch icon, Open Graph image, logo SVGs (from pesaclarity/docs)
-public/screens/      app screens, 780 × 1688 WebP, listed in src/data/site.ts
+public/screens/      app screens, 780 × 1688 WebP (<name>-dark.webp for dark mode), listed in src/data/site.ts
 src/styles/tokens.css  every design token (colours light and dark, type, radii, sizes)
 src/styles/global.css  base styles and shared classes
 src/data/site.ts     links, feature lists, screens and FAQ
@@ -53,12 +53,12 @@ The download buttons point to the app's APKs on GitHub Releases (`downloads` in 
 
 The screens in `public/screens/` come from the app itself. The app's `Screenshots` workflow draws them from its own widgets with made-up records (pesaclarity-app README, Screenshots), light and dark, 1170 × 2532, and keeps them with a `manifest.json` on a rolling pre-release: [`screenshots`](https://github.com/pesaclarity/pesaclarity-app/releases/tag/screenshots) for its `dev` branch and [`screenshots-main`](https://github.com/pesaclarity/pesaclarity-app/releases/tag/screenshots-main) for `main`. When a screen changes it sends this repository a `repository_dispatch` of type `screenshots-updated`.
 
-`.github/workflows/app-screens.yml` then downloads the light PNGs and the manifest, and `tool/app-screens.mjs` checks each against its SHA-256 and writes it as a 780 × 1688 WebP (quality 82, as before) under the name `tool/app-screens.json` gives it. Only files whose bytes change are written, and the workflow opens or updates one pull request, `content: app screenshots from <commit>`, on the `content/app-screenshots` branch. Nothing is merged on its own: check the images, and the alt text in `src/data/site.ts` when a screen shows something new. A screen the app no longer draws keeps its current image, with a warning. The site uses the light theme only.
+`.github/workflows/app-screens.yml` then downloads the PNGs and the manifest, and `tool/app-screens.mjs` checks each against its SHA-256 and writes it as a 780 × 1688 WebP (quality 82, as before) under the name `tool/app-screens.json` gives it: `<name>.webp` for the light theme and `<name>-dark.webp` for the dark one, which the site shows in dark mode. Only files whose bytes change are written, and the workflow opens or updates one pull request, `content: app screenshots from <commit>`, on the `content/app-screenshots` branch. Nothing is merged on its own: check the images, and the alt text in `src/data/site.ts` when a screen shows something new. A screen the app no longer draws keeps its current image, with a warning.
 
 Run it by hand from Actions › App screens › Run workflow (choose the release), or locally:
 
 ```sh
-gh release download screenshots --repo pesaclarity/pesaclarity-app --dir /tmp/app-screens --pattern manifest.json --pattern '*-light.png'
+gh release download screenshots --repo pesaclarity/pesaclarity-app --dir /tmp/app-screens --pattern manifest.json --pattern '*.png'
 node tool/app-screens.mjs /tmp/app-screens
 ```
 
