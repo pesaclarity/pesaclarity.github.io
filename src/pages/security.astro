@@ -7,7 +7,7 @@ import { links } from "../data/site";
 // the developer docs; each section links where it comes from. Change them
 // together.
 const canSee = [
-  "Your sign-in: your account id, the email or Google account you sign in with, and when you signed up, in and out",
+  "Your sign-in: your account id, the email or Google account you sign in with, stored only as a keyed hash and never the address itself, and when you signed up, in and out",
   "Your encrypted backups, as files it cannot open, if you use our vault. It keeps your latest 10",
   "Model updates to the categoriser, clipped, noised and combined with other people's, if Help improve the app is on",
   "Once a day, the app's version, which build it is and the platform, when it asks for updates. No account, device or install id",
@@ -24,7 +24,7 @@ const threats = [
   {
     when: "If your phone is lost",
     title: "Locked records",
-    body: "The database is encrypted, its key held by the phone's secure hardware. With app lock on, it opens only after you unlock the app.",
+    body: "The database is encrypted, its key held by the phone's secure hardware. With app lock on, its key is released only after you unlock the app. Without app lock, it is released when the app opens.",
   },
   {
     when: "If our server is breached",
@@ -96,8 +96,9 @@ const threats = [
           <p class="muted">
             They sit in an encrypted database. Its key is held by your phone's
             secure hardware. With app lock on, the key is released only after
-            you unlock the app with your PIN, fingerprint or Face ID. Once a
-            message is read, its text is deleted.
+            you unlock the app with your PIN, fingerprint or Face ID. Without
+            app lock, it is released when the app opens. Once a message is read,
+            its text is deleted.
           </p>
           <p class="source muted">
             From the privacy policy:{" "}

@@ -71,8 +71,9 @@ const updated = "18 November 2026";
       </ul>
       <p>
         All of this sits in an encrypted database. The key is held by your
-        phone's secure hardware and released only after you unlock the app with
-        your PIN, fingerprint or Face ID.
+        phone's secure hardware. With app lock on, it is released only after you
+        unlock the app with your PIN, fingerprint or Face ID. Without app lock,
+        it is released when the app opens.
       </p>
 
       <h2>Ask</h2>
@@ -111,10 +112,11 @@ const updated = "18 November 2026";
         <dt>Sign-in</dt>
         <dd>
           Your account id, the email or Google account you sign in with, and
-          when you signed up, in and out. One-time sign-in codes are deleted
-          within a day of expiring, and sign-in records after 90 days. You can
-          also use the app without an account; it then contacts our server only
-          for the update check.
+          when you signed up, in and out. Our server stores your email or Google
+          account only as a keyed hash, never the address itself. One-time
+          sign-in codes are deleted within a day of expiring, and sign-in
+          records after 90 days. You can also use the app without an account; it
+          then contacts our server only for the update check.
         </dd>
         <dt>Encrypted backups</dt>
         <dd>
@@ -243,10 +245,10 @@ const updated = "18 November 2026";
         This site sets no cookies, runs no analytics and loads nothing from
         other servers. Fonts are served from this site. If you choose a light or
         dark theme, your browser keeps that choice on your device; it is never
-        sent to us. A script applies that choice. Search on the help and docs
-        pages also runs in your browser, from an index served by this site: what
-        you type is never sent anywhere. The web host may keep standard request
-        logs, such as IP address and time, for security.
+        sent to us. The site runs two small scripts: one switches the theme, and
+        one searches the site in your browser. Nothing you type is sent
+        anywhere. The web host may keep standard request logs, such as IP
+        address and time, for security.
       </p>
 
       <h2>Changes</h2>
