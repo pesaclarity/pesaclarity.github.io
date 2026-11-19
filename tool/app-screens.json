@@ -9,6 +9,8 @@
   "screens": {
     "accounts": "accounts",
     "activity": "activity",
+    "ask": "ask",
+    "ask-conversations": "ask-conversations",
     "close-day": "close-day",
     "currencies": "currencies",
     "debts": "debts",
@@ -20,8 +22,8 @@
     "people": "people",
     "plan": "plan",
     "receipt": "receipt",
-    "sell-keypad": "sell-keypad",
     "sell": "sell",
+    "sell-keypad": "sell-keypad",
     "spaces": "spaces",
     "stock": "stock",
     "support": "support",

@@ -539,6 +539,16 @@ export const screens = {
     name: "Insights",
     alt: "Insights screen with what changed this month, such as food up on last month with a link to ask about it, and spending by category",
   },
+  ask: {
+    file: "ask",
+    name: "Ask",
+    alt: "Ask screen with the question how much did I spend on food last month, the answer KES 13,805 for Food in October 2026 across 10 payments, down 400 on September, the payee Green Basket Grocers, suggestions to compare with September, and Food and October under Asking about",
+  },
+  askConversations: {
+    file: "ask-conversations",
+    name: "Ask conversations",
+    alt: "Ask's Conversations screen with a search box and saved conversations under Today, This week and Earlier, such as Food last month, Fare this month and Debts left to pay, and a New conversation button",
+  },
   accounts: {
     file: "accounts",
     name: "My accounts",
