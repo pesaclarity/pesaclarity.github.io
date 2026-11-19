@@ -13,12 +13,12 @@ export const helpTopics: readonly HelpTopic[] = [
   {
     id: "getting-started",
     title: "Getting started",
-    body: "Install the app, pick your accounts and get your first plan.",
+    body: "Setting up, which download to pick, finding your way and currencies.",
   },
   {
     id: "reading-messages",
     title: "Reading your messages",
-    body: "Which banks and wallets it reads, and Messages to check.",
+    body: "Which messages it reads, iPhone, statements and Messages to check.",
   },
   {
     id: "ask",

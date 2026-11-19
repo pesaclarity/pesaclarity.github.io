@@ -1,7 +1,7 @@
 ---
 title: "Check a message the app is still learning"
 description: "When a bank or wallet words a message in a way the app has not seen, it waits in Messages to check. Check it once, fix anything the app got wrong, and it reads the next one like it on its own."
-order: 1
+order: 2
 updated: 2026-11-18
 ---
 
