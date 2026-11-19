@@ -5,6 +5,7 @@ import Base from "../layouts/Base.astro";
 import ScreenGallery from "../components/ScreenGallery.astro";
 import Screen from "../components/Screen.astro";
 import { appRelease, downloads, homeScreens, screens } from "../data/site";
+import { goals, notEndorsed } from "../data/impact";
 
 // The four reasons to trust it, each with where to read more.
 const pillars = [
@@ -125,6 +126,49 @@ const heroDark = darkScreen("home");
           differential privacy review
         </a>{" "}
         of the training code.
+      </p>
+    </div>
+  </section>
+
+  <section id="why" class="section" aria-labelledby="why-title">
+    <div class="container">
+      <div class="why">
+        <div class="why-copy">
+          <p class="eyebrow">Why it exists</p>
+          <h2 id="why-title">Clear money, for everyone.</h2>
+          <p>
+            In Kenya, money moves through M-Pesa and bank SMS with no clear
+            picture, and a small business needs proper books. Pesa Clarity turns
+            those messages into a plan and simple books, on your phone and for
+            free.
+          </p>
+          <a class="button button-secondary" href={withBase("/impact/")}>
+            The problem and the goals
+          </a>
+        </div>
+        <ul
+          class="why-goals"
+          role="list"
+          aria-label="UN goals it aims to contribute to"
+        >
+          {goals.map((g) => (
+            <li>
+              <span class={`sdg sdg-${g.n}`} aria-hidden="true">
+                {g.n}
+              </span>
+              <span>
+                <strong>
+                  Goal {g.n}: {g.goal}
+                </strong>
+                <span class="muted">Target {g.target}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <p class="why-note muted">
+        Pesa Clarity aims to contribute to these UN Sustainable Development
+        Goals. {notEndorsed}
       </p>
     </div>
   </section>
@@ -387,5 +431,61 @@ const heroDark = darkScreen("home");
     border: 6px solid var(--color-device);
     border-bottom: 0;
     box-shadow: 0 30px 60px -30px var(--color-shadow);
+  }
+  /* Why it exists */
+  .why {
+    display: grid;
+    gap: var(--space-6);
+    align-items: center;
+  }
+
+  @media (min-width: 52rem) {
+    .why {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    }
+  }
+
+  .why-copy h2 {
+    font-size: var(--text-section);
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+  }
+
+  .why-copy p:not(.eyebrow) {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    max-width: 34rem;
+    margin-bottom: var(--space-5);
+  }
+
+  .why-goals {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+    background: var(--color-surface);
+  }
+
+  .why-goals li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .why-goals li:first-child {
+    border-top: 0;
+  }
+
+  .why-goals .muted {
+    display: block;
+  }
+
+  .why-note {
+    margin: var(--space-5) 0 0;
+    max-width: 48rem;
+    font-size: var(--text-sm);
   }
 </style>
