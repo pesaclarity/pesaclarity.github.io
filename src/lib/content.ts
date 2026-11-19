@@ -8,11 +8,32 @@ export function withBaseHtml(html: string): string {
   );
 }
 
-/** Second-level headings, for "On this page". */
+export interface TocItem {
+  slug: string;
+  text: string;
+  /** Third-level headings under it, when asked for. */
+  children?: TocItem[];
+}
+
+/**
+ * Second-level headings, for "On this page"; with `depth` 3, each with the
+ * third-level headings under it (an API reference's functions).
+ */
 export function tocOf(
   headings: readonly { depth: number; slug: string; text: string }[] = [],
-) {
-  return headings.filter((h) => h.depth === 2);
+  depth: 2 | 3 = 2,
+): TocItem[] {
+  const out: TocItem[] = [];
+  for (const h of headings) {
+    if (h.depth === 2) out.push({ slug: h.slug, text: h.text });
+    else if (h.depth === 3 && depth === 3 && out.length) {
+      (out[out.length - 1].children ??= []).push({
+        slug: h.slug,
+        text: h.text,
+      });
+    }
+  }
+  return out;
 }
 
 /** About how long a page takes to read, at 200 words a minute. */
