@@ -57,6 +57,7 @@ test("builds the expected pages", () => {
     "docs/index.html",
     "changes/index.html",
     "security/index.html",
+    "impact/index.html",
     // The parser-pack and rayo docs, end to end from their repositories.
     "docs/parser-packs/write-a-parser-pack/index.html",
     "docs/rayo/overview/index.html",
@@ -340,5 +341,29 @@ test("sizes come from the release, never typed by hand", () => {
     for (const [size] of html.matchAll(/\b\d+(?:\.\d+)?\s*MB\b/g)) {
       assert.match(size, /^\d+\.\d MB$/, `${name}: ${size}`);
     }
+  }
+});
+
+test("Why it exists: linked from home and every footer, with honest goals", () => {
+  const impact = pages.find((p) => p.name === "impact/index.html");
+  assert.ok(impact, "impact/index.html is built");
+  const link = `href="${base}/impact/"`;
+  const home = pages.find((p) => p.name === "index.html").html;
+  assert.ok(home.includes(link), "the home page links to it");
+  assert.match(home, /id="why"/, "the home page has the Why it exists section");
+  for (const { name, html } of pages) {
+    const footer = html.match(/<footer\b[\s\S]*<\/footer>/)?.[0] ?? "";
+    assert.ok(footer.includes(link), `${name}: the footer links to it`);
+  }
+  for (const html of [impact.html, home]) {
+    assert.match(html, /not endorsed by or affiliated with the United Nations/);
+    assert.match(html, /aims to contribute to/);
+    assert.doesNotMatch(html, /\bachieves\b/);
+  }
+  for (const n of [1, 8, 10]) {
+    assert.ok(
+      impact.html.includes(`href="https://sdgs.un.org/goals/goal${n}"`),
+      `goal ${n} cites its page on sdgs.un.org`,
+    );
   }
 });
