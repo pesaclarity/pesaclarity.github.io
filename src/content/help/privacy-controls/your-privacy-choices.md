@@ -14,7 +14,7 @@ Your transactions, payees and debts stay on your phone. Three switches decide wh
 
 ## The three choices
 
-- **Help improve the app**: on unless you switch it off. Your phone may send clipped, noised updates to the categoriser, combined with other people's before we can see them. Never your transactions.
+- **Help improve the app**: on unless you switch it off. Today it only lets the app learn from the categories you confirm, on your phone, so its suggestions get better. The app does not send any training updates. If sending them is ever added, it will be opt-in, and the privacy policy will change first.
 - **Contribute to licensed models**: off unless you switch it on. Pattern-only models, privacy-protected.
 - **Send crash reports**: off unless you switch it on. Anonymous, with no financial details.
 
