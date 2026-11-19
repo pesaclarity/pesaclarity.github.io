@@ -257,6 +257,34 @@ test("internal links stay under the base path", () => {
   }
 });
 
+test("every internal link finds a page", () => {
+  const names = new Set(pages.map((p) => p.name));
+  for (const { name, html } of pages) {
+    for (const [, href] of html.matchAll(/<a\b[^>]*\shref="([^"#]+)/g)) {
+      if (/^(https?:|mailto:)/.test(href)) continue;
+      const path = href.slice(base.length).replace(/^\//, "");
+      if (!path.endsWith("/") && path !== "") continue; // files such as feeds
+      assert.ok(
+        names.has(`${path}index.html`),
+        `${name}: ${href} points at no page`,
+      );
+    }
+  }
+});
+
+test("every help topic has articles", () => {
+  const help = pages.find((p) => p.name === "help/index.html").html;
+  assert.doesNotMatch(help, /Articles coming/);
+  const topics = new Set(
+    pages
+      .map((p) => p.name.match(/^help\/([^/]+)\/[^/]+\/index\.html$/)?.[1])
+      .filter(Boolean),
+  );
+  for (const [, topic] of help.matchAll(/href="[^"]*\/help\/([a-z-]+)\/"/g)) {
+    assert.ok(topics.has(topic), `help topic ${topic} has no article`);
+  }
+});
+
 test("every image has alt text and is in the build", () => {
   for (const { name, html } of pages) {
     for (const [tag] of html.matchAll(/<img\b[^>]*>/g)) {
