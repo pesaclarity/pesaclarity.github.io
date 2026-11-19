@@ -567,7 +567,7 @@ export const screens = {
   support: {
     file: "support",
     name: "Support Pesa Clarity",
-    alt: "Support screen in the F-Droid app: free and it stays free, an amount drop-down set to 200, a Give 200 with M-Pesa button, what it costs, your gifts and Don't ask me again",
+    alt: "Support screen in the F-Droid build: free and it stays free, an amount drop-down set to 200, a Give 200 with M-Pesa button, what it costs, your gifts and Don't ask me again",
   },
   sellKeypad: {
     file: "sell-keypad",
@@ -708,7 +708,7 @@ export const faqs: readonly Faq[] = [
   },
   {
     q: "Which download?",
-    a: "Android has Google sign-in. F-Droid has no Google services.",
+    a: "The Android build has Google sign-in. The F-Droid build has no Google services.",
   },
 ];
 

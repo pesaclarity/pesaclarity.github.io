@@ -115,6 +115,17 @@ const heroDark = darkScreen("home");
           </li>
         ))}
       </ul>
+      <p class="pillars-more muted">
+        Read further: <a href={withBase("/docs/rayo/")}>rayo</a>, the small
+        runtime that runs Ask on the phone; the{" "}
+        <a href={withBase("/docs/security/")}>security docs</a>; the{" "}
+        <a href={withBase("/docs/ml/privacy-audit/")}>privacy audit</a> every
+        model must pass before it leaves the server; and the{" "}
+        <a href={withBase("/docs/ml/dp-sgd-review/")}>
+          differential privacy review
+        </a>{" "}
+        of the training code.
+      </p>
     </div>
   </section>
 
@@ -271,6 +282,12 @@ const heroDark = darkScreen("home");
   .pillar p {
     flex: 1;
     margin: 0;
+  }
+
+  .pillars-more {
+    margin: var(--space-6) 0 0;
+    max-width: 48rem;
+    font-size: var(--text-sm);
   }
 
   .pillar a {
