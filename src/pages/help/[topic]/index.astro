@@ -34,7 +34,7 @@ const articles = (await helpArticles()).filter(
   </section>
 
   <section class="section topic" aria-labelledby="articles-title">
-    <div class="container narrow">
+    <div class="container">
       <h2 id="articles-title" class="visually-hidden">
         Articles
       </h2>
@@ -74,16 +74,13 @@ const articles = (await helpArticles()).filter(
 
   .topic {
     border-top: 0;
-  }
-
-  .narrow {
-    max-width: 52rem;
-    margin-inline: 0;
+    padding-block-start: var(--space-7);
   }
 
   .article-list {
     display: grid;
-    gap: var(--space-3);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+    gap: var(--space-4);
     list-style: none;
     margin: 0;
     padding: 0;

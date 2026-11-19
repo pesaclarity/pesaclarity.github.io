@@ -1,0 +1,307 @@
+---
+import { withBase } from "../lib/paths";
+import Base from "../layouts/Base.astro";
+import { links, support, supportMail } from "../data/site";
+import {
+  contributorRepos,
+  contributors,
+  counted,
+  formatDate,
+  initials,
+} from "../data/contributors";
+
+const totals = [
+  { n: contributors.length, label: "contributors" },
+  {
+    n: contributors.reduce((a, p) => a + p.commits, 0).toLocaleString("en-KE"),
+    label: "commits",
+  },
+  {
+    n: contributors.reduce((a, p) => a + p.prs, 0).toLocaleString("en-KE"),
+    label: "pull requests merged",
+  },
+  { n: contributorRepos.length, label: "repositories" },
+];
+---
+
+<Base
+  title="Contributors"
+  description="The people who build Pesa Clarity, and how to reach them."
+>
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="container">
+      <p class="eyebrow">Contributors</p>
+      <h1 id="page-title">Built in the open.</h1>
+      <p class="lead">
+        Pesa Clarity is made by the people below, across its{" "}
+        {contributorRepos.length} repositories on GitHub. The numbers are
+        counted from GitHub each time the site is built, and leave out bots.
+      </p>
+      <p class="muted small-note">Counted {formatDate(counted)}.</p>
+    </div>
+  </section>
+
+  <section class="section totals-section" aria-label="Totals">
+    <div class="container">
+      <ul class="totals" role="list">
+        {totals.map((t) => (
+          <li>
+            <span class="total-n number">{t.n}</span>
+            <span class="muted">{t.label}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="people-title">
+    <div class="container">
+      <h2 id="people-title" class="label">
+        Who builds it
+      </h2>
+      <ul class="cards cards-3" role="list">
+        {contributors.map((p) => (
+          <li class="card-item person">
+            <div class="who">
+              {p.avatar ? (
+                <img
+                  class="avatar"
+                  src={withBase(p.avatar)}
+                  width="48"
+                  height="48"
+                  alt={`GitHub picture of ${p.name ?? p.login}`}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <span class="avatar initials" aria-hidden="true">
+                  {initials(p)}
+                </span>
+              )}
+              <div>
+                <h3>{p.name ?? p.login}</h3>
+                <a href={`https://github.com/${p.login}`}>@{p.login}</a>
+              </div>
+            </div>
+            <dl class="stats">
+              <div>
+                <dt>Commits</dt>
+                <dd class="number">{p.commits.toLocaleString("en-KE")}</dd>
+              </div>
+              <div>
+                <dt>PRs merged</dt>
+                <dd class="number">{p.prs.toLocaleString("en-KE")}</dd>
+              </div>
+              <div>
+                <dt>Repos</dt>
+                <dd class="number">{p.repos.length}</dd>
+              </div>
+            </dl>
+            <ul class="repos" role="list" aria-label="Repositories">
+              {p.repos.map((r) => (
+                <li class="tag">{r}</li>
+              ))}
+            </ul>
+            <p class="dates">
+              First <span class="number">{formatDate(p.first)}</span> · Latest{" "}
+              <span class="number">{formatDate(p.latest)}</span>
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="counted-title">
+    <div class="container split">
+      <h2 id="counted-title" class="label">
+        How it is counted
+      </h2>
+      <div class="prose">
+        <ul>
+          <li>Commits on each repository's main branch, by GitHub account.</li>
+          <li>Pull requests merged, by who opened them.</li>
+          <li>
+            First and latest: the day of each person's first and newest commit
+            or merged pull request.
+          </li>
+          <li>
+            Bots are left out: dependabot, release-please, github-actions,
+            renovate, coding agents, and any account ending in [bot]. So are
+            commits GitHub cannot match to an account.
+          </li>
+          <li>
+            Only the GitHub name, account and picture are shown. Email addresses
+            are never collected or published.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section
+    id="contact"
+    class="section section-alt"
+    aria-labelledby="contact-title"
+  >
+    <div class="container">
+      <h2 id="contact-title" class="label">
+        Get in touch
+      </h2>
+      <ul class="cards cards-3" role="list">
+        <li class="card-item contact">
+          <h3>Help with the app</h3>
+          <p>
+            Something wrong, or a question? Write to us and a person answers.
+          </p>
+          <a
+            class="button button-primary"
+            href={supportMail("Pesa Clarity help")}
+          >
+            {support}
+          </a>
+        </li>
+        <li class="card-item contact">
+          <h3>Report a problem</h3>
+          <p>
+            A bug, a bank it reads wrongly, or an idea. Open an issue on GitHub,
+            in public.
+          </p>
+          <a class="button button-secondary" href={links.appIssues}>
+            App issues
+          </a>
+        </li>
+        <li class="card-item contact">
+          <h3>Help build it</h3>
+          <p>
+            Code, a parser for your bank, or a fix to this site. Start with the
+            guide.
+          </p>
+          <a
+            class="button button-secondary"
+            href={withBase("/docs/contribute/")}
+          >
+            How to contribute
+          </a>
+        </li>
+      </ul>
+      <p class="muted small-note contact-note">
+        Security problems go to the{" "}
+        <a href={withBase("/security/#report")}>private report</a>, never an
+        issue. Problems with this website:{" "}
+        <a href={`${links.webSource}/issues`}>website issues</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .small-note {
+    font-size: var(--text-sm);
+    margin: 0;
+  }
+  .contact-note {
+    margin-top: var(--space-5);
+  }
+  .totals-section {
+    border-top: 0;
+    padding-block: var(--space-6);
+  }
+  .totals {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  @media (min-width: 52rem) {
+    .totals {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .totals li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .total-n {
+    font-size: var(--text-number);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .person {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .who {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .who h3 {
+    margin: 0;
+  }
+  .who a {
+    font-size: var(--text-sm);
+  }
+  .avatar {
+    flex: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+  }
+  .initials {
+    display: grid;
+    place-items: center;
+    background: var(--color-subtle);
+    color: var(--color-text);
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin: 0;
+    padding-block: var(--space-3);
+    border-block: 1px solid var(--color-border);
+  }
+  .stats dt {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+  .stats dd {
+    margin: 0;
+    font-size: var(--text-xl);
+    font-weight: 600;
+  }
+  .repos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .dates {
+    margin: 0;
+    font-size: var(--text-sm);
+  }
+  .contact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .contact p {
+    flex: 1;
+  }
+  .contact .button {
+    align-self: flex-start;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+</style>

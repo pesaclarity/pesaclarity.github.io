@@ -567,7 +567,7 @@ export const screens = {
   support: {
     file: "support",
     name: "Support Pesa Clarity",
-    alt: "Support screen in the F-Droid app: free and it stays free, an amount drop-down set to 200, a Give 200 with M-Pesa button, what it costs, your gifts and Don't ask me again",
+    alt: "Support screen in the F-Droid build: free and it stays free, an amount drop-down set to 200, a Give 200 with M-Pesa button, what it costs, your gifts and Don't ask me again",
   },
   sellKeypad: {
     file: "sell-keypad",
@@ -688,8 +688,12 @@ export const faqs: readonly Faq[] = [
   { q: "Does it need my PIN?", a: "It reads only your SMS." },
   { q: "Who sees my money?", a: "Only you." },
   {
+    q: "Is it on Google Play or the App Store?",
+    a: "Not on Google Play or the App Store yet. Publishing there costs money, and sponsorship pays for it, so the app can reach more people safely. Until then, download it from this site.",
+  },
+  {
     q: "iPhone?",
-    a: "A test build installs with SideStore or AltStore, signed with your own Apple ID. The App Store comes later, and sponsoring helps pay its fee.",
+    a: "A test build installs with SideStore or AltStore, signed with your own Apple ID, until the app is on the App Store.",
   },
   { q: "When can I start?", a: "Today. Download it for Android." },
   {
@@ -708,7 +712,7 @@ export const faqs: readonly Faq[] = [
   },
   {
     q: "Which download?",
-    a: "Android has Google sign-in. F-Droid has no Google services.",
+    a: "The Android build has Google sign-in. The F-Droid build has no Google services.",
   },
 ];
 
@@ -730,11 +734,11 @@ export const sponsor = {
 export const sponsorCosts: readonly Item[] = [
   {
     title: "Getting on the App Store",
-    body: "Apple charges US$99 a year to list an app. That puts Pesa Clarity on every iPhone, with updates from the App Store.",
+    body: "Apple's developer account costs US$99 a year, and the price varies by region. That puts Pesa Clarity on every iPhone, with updates from the App Store.",
   },
   {
     title: "Getting on Google Play",
-    body: "Google charges US$25, once. Then Android users get the app and its updates from Play instead of installing a file.",
+    body: "Google charges a fee for a developer account. Then Android users get the app and its updates from Play instead of installing a file.",
   },
   {
     title: "Keeping it running",

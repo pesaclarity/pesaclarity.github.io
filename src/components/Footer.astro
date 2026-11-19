@@ -19,7 +19,8 @@ const groups = [
     links: [
       { href: withBase("/help/"), label: "Help" },
       { href: withBase("/help/getting-started/"), label: "Getting started" },
-      { href: supportMail("Pesa Clarity help"), label: "Contact us" },
+      { href: supportMail("Pesa Clarity help"), label: "Email support" },
+      { href: links.appIssues, label: "Report a problem" },
       { href: withBase("/security/"), label: "Security" },
     ],
   },
@@ -27,6 +28,7 @@ const groups = [
     title: "Developers",
     links: [
       { href: withBase("/docs/"), label: "Docs" },
+      { href: withBase("/contributors/"), label: "Contributors" },
       { href: links.github, label: "GitHub" },
       { href: links.webSource, label: "Website source" },
     ],
