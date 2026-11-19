@@ -6,6 +6,11 @@
 //   node tool/sync-sources.mjs            fetch at the pinned commits again
 //   node tool/sync-sources.mjs --update   move each pin to the newest commit
 //                                         of its branch, then fetch
+//   node tool/sync-sources.mjs --update rayo,docs
+//                                         move only those repositories' pins
+//   node tool/sync-sources.mjs --pin rayo=COMMIT
+//                                         pin a repository to one commit, such
+//                                         as a pull request's, to preview it
 //
 // What is copied is listed in tool/sources.json. The pins, and a SHA-256 of
 // every file written, are in src/data/sources.lock.json. Docs land in
@@ -31,7 +36,30 @@ const config = JSON.parse(
 const lockPath = join(root, "src/data/sources.lock.json");
 const docsDir = join(root, "src/content/docs");
 const changesDir = join(root, "src/data/changes");
-const update = process.argv.includes("--update");
+const args = process.argv.slice(2);
+const optionValue = (name) => {
+  const i = args.indexOf(name);
+  const next = args[i + 1];
+  return i >= 0 && next && !next.startsWith("--") ? next : undefined;
+};
+const update = args.includes("--update");
+// --update REPO,REPO: only those; --update alone: every repository.
+const updateOnly = optionValue("--update")?.split(",");
+const pins = Object.fromEntries(
+  (optionValue("--pin") ?? "")
+    .split(",")
+    .filter(Boolean)
+    .map((p) => p.split("=")),
+);
+for (const [repo, commit] of Object.entries(pins)) {
+  if (!config.repos[repo] || !/^[0-9a-f]{40}$/.test(commit ?? "")) {
+    throw new Error(`--pin ${repo}=${commit}: a repository and a full commit`);
+  }
+}
+for (const repo of updateOnly ?? []) {
+  if (!config.repos[repo])
+    throw new Error(`--update ${repo}: no such repository`);
+}
 
 let lock = { repos: {} };
 try {
@@ -233,7 +261,9 @@ function yamlString(value) {
 const commits = {};
 for (const repo of Object.keys(config.repos)) {
   const pinned = lock.repos[repo]?.commit;
-  commits[repo] = update || !pinned ? await resolveCommit(repo) : pinned;
+  const move = update && (!updateOnly || updateOnly.includes(repo));
+  commits[repo] =
+    pins[repo] ?? (move || !pinned ? await resolveCommit(repo) : pinned);
 }
 
 // Every copied page, by repository and path, so links between them stay
