@@ -86,6 +86,10 @@ The developer docs at `/docs/` and the release notes at `/changes/` come from ea
 
 A version with no date in its changelog heading takes the date of its tag on GitHub; `dates` in `tool/sources.json` fills in versions with no tag on GitHub.
 
+## Contributors
+
+`/contributors/` lists who has contributed to the organisation's eight repositories: commits on each default branch, merged pull requests, repositories, and first and latest contribution, by GitHub account. `npm run contributors` (`node tool/contributors.mjs`) reads them from the GitHub API into `src/data/contributors.json` and saves each GitHub picture to `public/contributors/` (people without one get initials). It reads no email addresses and leaves out bots: `[bot]` accounts, dependabot, release-please, github-actions, renovate and coding agents. The Pages workflow runs it before every build, on push and daily, with its own `GITHUB_TOKEN`; if GitHub cannot be reached it keeps the committed file, so commit a fresh run now and then. `tests/contributors.test.mjs` checks the file holds no email address and no bot, and that the page renders.
+
 ## Search
 
 Search on the help and docs pages uses [Pagefind](https://pagefind.app). `npm run build` runs `pagefind --site dist` after Astro, which indexes the parts of pages marked `data-pagefind-body` (help articles, the common questions, the security page and the docs) into `dist/pagefind/`. In the browser, `src/components/Search.astro` loads that index from this site when someone types; nothing typed leaves the page. Pagefind runs WebAssembly, so the Content-Security-Policy in `netlify.toml` allows `script-src 'self' 'wasm-unsafe-eval'` plus the theme script's hash, and `tests/dist.test.mjs` checks exactly that. Without scripts the search box stays hidden and the topic and section lists stand in.
