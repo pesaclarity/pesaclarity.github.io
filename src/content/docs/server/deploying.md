@@ -2,7 +2,7 @@
 title: "Deploying"
 description: "How the server runs in production, and the commands to set it up and look after it. Everything here runs from a terminal with gcloud, gh and jq, plus a few clicks in the Cloud Run and GitHub consoles."
 section: "server"
-order: 24
+order: 34
 repo: "pesaclarity-backend"
 path: "docs/deploying.md"
 commit: "3445bce5dcaa114c14fa4e651fc820b8154a2825"

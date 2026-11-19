@@ -2,7 +2,7 @@
 title: "Overview"
 description: "Akili is the machine learning side of Pesa Clarity, the free, ad-free app for Android and iPhone that turns M-Pesa and bank SMS into a daily plan."
 section: "ml"
-order: 16
+order: 26
 repo: "pesaclarity-ml"
 path: "README.md"
 commit: "3054046301641784dcae20e18d48950cf02a7836"

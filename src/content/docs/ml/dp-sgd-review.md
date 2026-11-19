@@ -2,7 +2,7 @@
 title: "Differential privacy review"
 description: "Review of the custom DP-SGD code against the privacy accountant's assumptions, the track thresholds and the state of maintained DP libraries."
 section: "ml"
-order: 20
+order: 30
 repo: "pesaclarity-ml"
 path: "docs/DP-SGD-REVIEW.md"
 commit: "3054046301641784dcae20e18d48950cf02a7836"

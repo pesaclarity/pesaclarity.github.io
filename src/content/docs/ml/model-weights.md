@@ -2,7 +2,7 @@
 title: "Model weights"
 description: "The code in this repository is licensed under AGPL-3.0 (see LICENSE). Trained model weights are licensed separately, by track."
 section: "ml"
-order: 22
+order: 32
 repo: "pesaclarity-ml"
 path: "MODEL-WEIGHTS.md"
 commit: "3054046301641784dcae20e18d48950cf02a7836"

@@ -2,7 +2,7 @@
 title: "Privacy audit"
 description: "Before any model leaves the server, the spec requires that \"a membership-inference audit passes\". This page says what the audit does, how to run it and how to read its numbers."
 section: "ml"
-order: 21
+order: 31
 repo: "pesaclarity-ml"
 path: "docs/PRIVACY-AUDIT.md"
 commit: "3054046301641784dcae20e18d48950cf02a7836"

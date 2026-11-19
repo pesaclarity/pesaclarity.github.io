@@ -2,7 +2,7 @@
 title: "Code of conduct"
 description: "We as members, contributors, and leaders pledge to make participation in our community a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex…"
 section: "contribute"
-order: 33
+order: 43
 repo: ".github"
 path: "CODE_OF_CONDUCT.md"
 commit: "26f5c711ade04a1b2e3685d4542c91be05eb8079"

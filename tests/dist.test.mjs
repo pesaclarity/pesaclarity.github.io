@@ -1,6 +1,7 @@
 // Checks the built site in dist/ against the site's promises: no client JS
-// beyond the inline theme switch, nothing loaded from other servers, and the
-// basics every page needs.
+// beyond the inline theme switch and this site's own script files (search,
+// and the docs' copy buttons and tabs), nothing loaded from other servers,
+// and the basics every page needs.
 // Run `npm run build` first.
 import { test } from "node:test";
 import { createHash } from "node:crypto";
@@ -96,7 +97,7 @@ for (const { name, html } of pages) {
     );
   });
 
-  test(`${name}: runs only the theme script, and search from this site`, () => {
+  test(`${name}: runs only the theme script, and search and docs from this site`, () => {
     const scripts = [
       ...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi),
     ];
@@ -104,12 +105,17 @@ for (const { name, html } of pages) {
     assert.equal(inline.length, 1, "one inline script, the theme switch");
     assert.equal(inline[0][1], "", "the theme script has no attributes");
     assert.match(inline[0][2], /data-theme-switch/);
-    // Any other script is the search, a file of this site.
+    // Any other script is the search or the docs' controls, files of this
+    // site, each on the pages that use it.
     for (const [, attrs, body] of scripts.filter((s) => /\ssrc=/.test(s[1]))) {
-      assert.match(attrs, new RegExp(`src="${base}/_astro/Search[^"]+\\.js"`));
+      assert.match(
+        attrs,
+        new RegExp(`src="${base}/_astro/(Search|DocBody)[^"]+\\.js"`),
+      );
       assert.equal(body.trim(), "");
+      if (/DocBody/.test(attrs)) assert.match(name, /^docs\/[^/]+\/[^/]+\//);
+      else assert.match(html, /data-search-input/);
     }
-    if (scripts.length > 1) assert.match(html, /data-search-input/);
     assert.doesNotMatch(html, /\son[a-z]+="/i);
   });
 
@@ -127,6 +133,30 @@ for (const { name, html } of pages) {
     assert.doesNotMatch(html, /fonts\.(googleapis|gstatic)\.com/);
   });
 }
+
+test("the docs have tabs, framed code, callouts and heading links", () => {
+  const start = pages.find(
+    (p) => p.name === "docs/rayo/getting-started/index.html",
+  )?.html;
+  assert.ok(start, "the rayo getting-started page is built");
+  assert.match(start, /role="tablist"[^>]*hidden/);
+  for (const tab of [">C<", ">Dart<", ">Python<"])
+    assert.ok(start.includes(tab), tab);
+  assert.match(start, /class="code-copy" data-copy hidden>Copy</);
+  assert.match(start, /class="callout callout-note"/);
+  assert.match(start, /class="heading-anchor" href="#c"/);
+  assert.match(start, />Edit on GitHub</);
+  const api = pages.find((p) => p.name === "docs/rayo/c-api/index.html")?.html;
+  assert.ok(api, "the C API reference is built");
+  assert.match(api, /<h3 id="rayo_model_load">/);
+  assert.match(api, /href="#rayo_model_load"/, "listed under On this page");
+  const body =
+    start.match(
+      /<div class="doc-body">([\s\S]*?)<\/div>\s*<div class="article-end"/,
+    )?.[1] ?? "";
+  // (Its own script is a file, after it: no inline script, no handler.)
+  assert.doesNotMatch(body, /<script\b(?![^>]*\ssrc=)|\son[a-z]+="/i);
+});
 
 test("the Content-Security-Policy allows the theme script and search", () => {
   const hashes = new Set(

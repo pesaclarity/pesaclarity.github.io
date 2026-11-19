@@ -28,12 +28,14 @@ export function parseChangelog(markdown) {
       const head = h2[1];
       const link =
         /^\[v?([^\]]+)\]\(([^)]+)\)\s*(?:\((\d{4}-\d{2}-\d{2})\))?/.exec(head);
-      const plain = /^v?(\d+\.\d+\.\d+)\s*(?:\((\d{4}-\d{2}-\d{2})\))?/.exec(
-        head,
-      );
+      // "0.1.0 (2026-11-19)", "0.1.0 - 2026-11-19" or "0.1.0".
+      const plain =
+        /^v?(\d+\.\d+\.\d+)\s*(?:\((\d{4}-\d{2}-\d{2})\)|[-–—]\s*(\d{4}-\d{2}-\d{2}))?/.exec(
+          head,
+        );
       release = {
         version: link?.[1] ?? plain?.[1] ?? null,
-        date: link?.[3] ?? plain?.[2] ?? null,
+        date: link?.[3] ?? plain?.[2] ?? plain?.[3] ?? null,
         compare: link?.[2] ?? null,
         groups: [],
       };

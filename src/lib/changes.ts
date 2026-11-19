@@ -46,6 +46,8 @@ export function allReleases(): ProductRelease[] {
   for (const product of products) {
     const text = files[`../data/changes/${product.id}.md`] ?? "";
     for (const r of parseChangelog(text)) {
+      // An empty "Unreleased" heading, kept on top for the next changes.
+      if (r.version === null && changeCount(r) === 0) continue;
       out.push({
         ...r,
         product,

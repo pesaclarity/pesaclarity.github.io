@@ -2,7 +2,7 @@
 title: "Settings in GitHub"
 description: "Builds on 0001. The Cloud Run service still holds the running settings, and deploys (Cloud Run's auto-deploy trigger on main) still only swap the image."
 section: "server"
-order: 26
+order: 36
 repo: "pesaclarity-backend"
 path: "docs/specs/0002-github-holds-settings.md"
 commit: "3445bce5dcaa114c14fa4e651fc820b8154a2825"

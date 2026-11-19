@@ -2,7 +2,7 @@
 title: "Security policy"
 description: "Pesa Clarity handles people's financial messages, so we take reports seriously."
 section: "security"
-order: 27
+order: 37
 repo: ".github"
 path: "SECURITY.md"
 commit: "26f5c711ade04a1b2e3685d4542c91be05eb8079"

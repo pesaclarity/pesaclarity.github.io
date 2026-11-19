@@ -2,7 +2,7 @@
 title: "Pinned certificate authorities"
 description: "Date: 2026-10-27 · Status: Accepted"
 section: "security"
-order: 28
+order: 38
 repo: "docs"
 path: "decisions/0005-pin-certificate-authorities.md"
 commit: "a112d96fa86118401190906c2ed79939ecd2d233"

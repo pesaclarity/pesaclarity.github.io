@@ -2,7 +2,7 @@
 title: "Contributing"
 description: "Thanks for helping. This guide applies to every repository in the organisation; a repo's own CONTRIBUTING.md adds setup and checks specific to it."
 section: "contribute"
-order: 32
+order: 42
 repo: ".github"
 path: "CONTRIBUTING.md"
 commit: "26f5c711ade04a1b2e3685d4542c91be05eb8079"

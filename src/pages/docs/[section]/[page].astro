@@ -1,8 +1,9 @@
 ---
 import Article from "../../../layouts/Article.astro";
 import DocsBar from "../../../components/DocsBar.astro";
+import DocBody from "../../../components/DocBody.astro";
 import { withBase } from "../../../lib/paths";
-import { tocOf, withBaseHtml } from "../../../lib/content";
+import { tocOf } from "../../../lib/content";
 import { docSection } from "../../../data/docs";
 import {
   docPages,
@@ -48,20 +49,21 @@ const rendered = page.rendered!;
       label: section.short ?? section.title,
     },
   ]}
-  toc={tocOf(rendered.metadata?.headings as never)}
+  toc={tocOf(rendered.metadata?.headings as never, 3)}
   meta={[`From ${data.repo}`, `Commit ${data.commit.slice(0, 7)}`]}
+  edit={{ href: data.edit, label: "Edit on GitHub" }}
   prev={near(siblings[at - 1])}
   next={near(siblings[at + 1])}
   crumb={`Docs › ${section.short ?? section.title}`}
   area="Docs"
 >
   <DocsBar slot="bar" />
-  <div class="doc-body" set:html={withBaseHtml(rendered.html)} />
+  <DocBody html={rendered.html} />
   <p slot="end" class="source">
     <span>
       Source: <a href={data.source}>{sourceName(page)} on GitHub</a>
     </span>
-    <a href={data.edit}>Edit this page</a>
+    <a href={data.edit}>Edit on GitHub</a>
   </p>
 </Article>
 
