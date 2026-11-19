@@ -1,0 +1,24 @@
+---
+/*
+ * A synced docs page's body, made richer when the site is built: framed code
+ * blocks with copy buttons, code in several languages as tabs, GitHub-style
+ * callouts and a link on every heading (src/lib/docs-html.mjs). The buttons
+ * work through src/scripts/docs.ts, a file of this site; without scripts the
+ * page reads the same, with every code block shown.
+ */
+import { enhanceDocHtml } from "../lib/docs-html.mjs";
+import { withBaseHtml } from "../lib/content";
+
+interface Props {
+  /** The Markdown's rendered HTML. */
+  html: string;
+}
+
+const { html } = Astro.props;
+---
+
+<div class="doc-body" set:html={enhanceDocHtml(withBaseHtml(html))} />
+
+<script>
+  import "../scripts/docs";
+</script>
