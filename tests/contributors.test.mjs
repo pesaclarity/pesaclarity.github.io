@@ -85,6 +85,6 @@ test("the footer links to the contributors page and GitHub issues", () => {
   assert.match(home, /<a href="[^"]*\/contributors\/"[^>]*>Contributors<\/a>/);
   assert.match(
     home,
-    /<a href="https:\/\/github\.com\/pesaclarity\/pesaclarity-app\/issues"[^>]*>Report a problem<\/a>/,
+    /<a href="https:\/\/github\.com\/pesaclarity\/pesaclarity-app\/issues"[^>]*>Issues<\/a>/,
   );
 });
