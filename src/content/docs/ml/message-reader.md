@@ -2,7 +2,7 @@
 title: "Message reader"
 description: "The message reader suggests the fields of a bank or wallet message that no parser rule matched: amount, payee, date, time, balance, reference and fee, and whether it is money out, money in or not a transaction."
 section: "ml"
-order: 18
+order: 28
 repo: "pesaclarity-ml"
 path: "docs/READER.md"
 commit: "3054046301641784dcae20e18d48950cf02a7836"

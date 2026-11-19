@@ -2,11 +2,11 @@
 title: "Model format"
 description: "A rayo model is a plain-weights file (PCWT, version 1), the format pesaclarity-ml writes for the app's models (pesaclarity-ml docs/WEIGHTS.md), whose JSON header also holds a graph: the ops that run the tensors."
 section: "rayo"
-order: 14
+order: 19
 repo: "rayo"
 path: "docs/FORMAT.md"
-commit: "b7838f6648e8f100674d0e70412c092bb2c6bb6d"
-source: "https://github.com/pesaclarity/rayo/blob/b7838f6648e8f100674d0e70412c092bb2c6bb6d/docs/FORMAT.md"
+commit: "1e536df33c3d0a50b180b7431be52ed9838ebff2"
+source: "https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/FORMAT.md"
 edit: "https://github.com/pesaclarity/rayo/edit/main/docs/FORMAT.md"
 ---
 A rayo model is a **plain-weights file** (PCWT, version 1), the format pesaclarity-ml writes
@@ -22,7 +22,12 @@ TFLite or ONNX model ([CONVERTING.md](/docs/rayo/converting/)).
 
 All little-endian; the tensor data starts on a 4-byte boundary. rayo checks every size and
 offset against the file before it uses them, and refuses what does not fit rather than
-guessing.
+guessing; the limits of `include/rayo/config.h` bound the header, the counts and what a
+session plans ([SECURITY.md](/docs/rayo/security/#limits)). Strings in the header are UTF-8.
+
+A file is signed as a whole, outside it: a 64-byte Ed25519 signature (RFC 8032) of all its
+bytes, conventionally `model.weights.sig`, checked with `rayo_verify` or
+`rayo_model_options.integrity` before rayo reads the file ([SECURITY.md](/docs/rayo/security/#requiring-signed-models)).
 
 ## Header fields rayo reads
 

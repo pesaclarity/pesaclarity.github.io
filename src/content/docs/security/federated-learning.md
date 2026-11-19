@@ -2,7 +2,7 @@
 title: "Federated learning"
 description: "Start when at least 300 opted-in installs are active weekly. Until then the server part stays undeployed."
 section: "security"
-order: 29
+order: 39
 repo: "docs"
 path: "spec/federated-learning.md"
 commit: "a112d96fa86118401190906c2ed79939ecd2d233"

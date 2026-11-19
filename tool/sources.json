@@ -100,10 +100,31 @@
     },
     {
       "section": "rayo",
-      "slug": "ops",
-      "title": "Ops",
+      "slug": "getting-started",
+      "title": "Getting started",
       "repo": "rayo",
-      "path": "docs/OPS.md"
+      "path": "docs/GETTING-STARTED.md"
+    },
+    {
+      "section": "rayo",
+      "slug": "concepts",
+      "title": "Concepts",
+      "repo": "rayo",
+      "path": "docs/CONCEPTS.md"
+    },
+    {
+      "section": "rayo",
+      "slug": "c-api",
+      "title": "C API reference",
+      "repo": "rayo",
+      "path": "docs/API-C.md"
+    },
+    {
+      "section": "rayo",
+      "slug": "dart-api",
+      "title": "Dart API reference",
+      "repo": "rayo",
+      "path": "docs/API-DART.md"
     },
     {
       "section": "rayo",
@@ -114,6 +135,20 @@
     },
     {
       "section": "rayo",
+      "slug": "small-language-models",
+      "title": "Small language models",
+      "repo": "rayo",
+      "path": "docs/RUNNING-SLMS.md"
+    },
+    {
+      "section": "rayo",
+      "slug": "ops",
+      "title": "Ops",
+      "repo": "rayo",
+      "path": "docs/OPS.md"
+    },
+    {
+      "section": "rayo",
       "slug": "format",
       "title": "Model format",
       "repo": "rayo",
@@ -121,10 +156,45 @@
     },
     {
       "section": "rayo",
-      "slug": "small-language-models",
-      "title": "Small language models",
+      "slug": "performance",
+      "title": "Performance and benchmarks",
       "repo": "rayo",
-      "path": "docs/RUNNING-SLMS.md"
+      "path": "docs/PERFORMANCE.md"
+    },
+    {
+      "section": "rayo",
+      "slug": "security",
+      "title": "Security",
+      "repo": "rayo",
+      "path": "docs/SECURITY.md"
+    },
+    {
+      "section": "rayo",
+      "slug": "licensing",
+      "title": "Licensing and embedding",
+      "repo": "rayo",
+      "path": "docs/LICENSING.md"
+    },
+    {
+      "section": "rayo",
+      "slug": "troubleshooting",
+      "title": "Troubleshooting",
+      "repo": "rayo",
+      "path": "docs/TROUBLESHOOTING.md"
+    },
+    {
+      "section": "rayo",
+      "slug": "faq",
+      "title": "FAQ",
+      "repo": "rayo",
+      "path": "docs/FAQ.md"
+    },
+    {
+      "section": "rayo",
+      "slug": "roadmap",
+      "title": "Roadmap",
+      "repo": "rayo",
+      "path": "docs/ROADMAP.md"
     },
     {
       "section": "ml",

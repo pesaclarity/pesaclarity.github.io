@@ -2,7 +2,7 @@
 title: "Reproducible builds"
 description: "The spec asks that anyone can confirm a published APK matches this source. F-Droid can then ship our signed APK after rebuilding it and comparing. This page lists what that needs and what currently stands in the way."
 section: "verify"
-order: 30
+order: 40
 repo: "pesaclarity-app"
 path: "docs/reproducible-builds.md"
 commit: "b401ac205bc8a9bebebe5c52e983bb761f6901d8"

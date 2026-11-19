@@ -2,7 +2,7 @@
 title: "How the app is released"
 description: "How a release of the app is built, signed and published. Nothing here has been submitted to a store yet; the checklists at the end track what is still to do."
 section: "verify"
-order: 31
+order: 41
 repo: "pesaclarity-app"
 path: "RELEASING.md"
 commit: "b401ac205bc8a9bebebe5c52e983bb761f6901d8"

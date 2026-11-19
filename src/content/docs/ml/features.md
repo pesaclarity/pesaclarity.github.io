@@ -2,7 +2,7 @@
 title: "Feature pipeline"
 description: "This is the contract between the Python training code (src/akili/features.py) and the app, which computes the same model input in Dart on the phone."
 section: "ml"
-order: 19
+order: 29
 repo: "pesaclarity-ml"
 path: "docs/FEATURES.md"
 commit: "3054046301641784dcae20e18d48950cf02a7836"

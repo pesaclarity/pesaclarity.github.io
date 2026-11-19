@@ -2,7 +2,7 @@
 title: "Settings on Cloud Run"
 description: "The server's settings (NGOME env vars and Secret Manager references) live in a local, git-ignored cloud-run.env.yaml plus a CLOUDRUNSECRETS string."
 section: "server"
-order: 25
+order: 35
 repo: "pesaclarity-backend"
 path: "docs/specs/0001-settings-live-on-cloud-run.md"
 commit: "3445bce5dcaa114c14fa4e651fc820b8154a2825"

@@ -2,7 +2,7 @@
 title: "Ask models"
 description: "Ask lets people ask questions about their own money in plain words (\"how much did I spend on food last month?\", \"nimetumia pesa ngapi kwa fare wiki hii\", \"what sells best?\")."
 section: "ml"
-order: 17
+order: 27
 repo: "pesaclarity-ml"
 path: "docs/ASK.md"
 commit: "3054046301641784dcae20e18d48950cf02a7836"

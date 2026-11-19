@@ -30,7 +30,7 @@ export const docSections: readonly DocSection[] = [
   {
     id: "rayo",
     title: "rayo",
-    body: "The small on-device runtime: its ops, the model converter and format, and running small language models in little memory.",
+    body: "The small on-device runtime in plain C, for C, Dart and Flutter: getting started, the C and Dart API references, the converter and format, small language models, performance and licensing.",
     sources: ["rayo/docs"],
   },
   {

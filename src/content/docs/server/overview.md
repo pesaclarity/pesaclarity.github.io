@@ -2,7 +2,7 @@
 title: "Overview"
 description: "The server for Pesa Clarity, the free, ad-free app for Android and iPhone that turns M-Pesa and bank messages into a daily plan. All analysis runs on the phone, so this server never sees a transaction."
 section: "server"
-order: 23
+order: 33
 repo: "pesaclarity-backend"
 path: "README.md"
 commit: "3445bce5dcaa114c14fa4e651fc820b8154a2825"
