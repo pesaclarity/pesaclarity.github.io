@@ -1,5 +1,5 @@
 // The problem Pesa Clarity solves and the UN Sustainable Development Goals it
-// aims to contribute to, for the "Why it exists" page and the home page.
+// aims to contribute to, for the Impact page and the home page.
 //
 // The problem restates pesaclarity/docs: spec/PRODUCT-SPEC.md (problem and
 // users, principles), spec/income-for-everyone.md and spec/business-money.md.

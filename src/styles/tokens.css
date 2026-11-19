@@ -65,7 +65,7 @@
   --color-on-mark: #ffffff;
 
   /* UN Sustainable Development Goal colours, as sdgs.un.org shows each goal,
-     for the goal number chips on the "Why it exists" page and home only.
+     for the goal number chips on the Impact page and home only.
      White on each: goal 1 4.5:1, goal 8 7.5:1, goal 10 4.6:1. The same in
      light and dark, like the logo mark. */
   --color-sdg-1: #e5233d;

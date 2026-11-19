@@ -344,13 +344,13 @@ test("sizes come from the release, never typed by hand", () => {
   }
 });
 
-test("Why it exists: linked from home and every footer, with honest goals", () => {
+test("Impact: linked from home and every footer, with honest goals", () => {
   const impact = pages.find((p) => p.name === "impact/index.html");
   assert.ok(impact, "impact/index.html is built");
   const link = `href="${base}/impact/"`;
   const home = pages.find((p) => p.name === "index.html").html;
   assert.ok(home.includes(link), "the home page links to it");
-  assert.match(home, /id="why"/, "the home page has the Why it exists section");
+  assert.match(home, /id="why"/, "the home page has the Impact section");
   for (const { name, html } of pages) {
     const footer = html.match(/<footer\b[\s\S]*<\/footer>/)?.[0] ?? "";
     assert.ok(footer.includes(link), `${name}: the footer links to it`);
