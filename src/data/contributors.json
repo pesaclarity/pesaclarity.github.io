@@ -1,0 +1,44 @@
+{
+  "counted": "2026-11-19",
+  "repos": [
+    "app",
+    "backend",
+    "ml",
+    "docs",
+    "website",
+    "rayo",
+    "ujumbe-parsers",
+    ".github"
+  ],
+  "contributors": [
+    {
+      "login": "Dan-njuguna",
+      "name": null,
+      "commits": 798,
+      "prs": 528,
+      "repos": [
+        "app",
+        "backend",
+        "ml",
+        "docs",
+        "website",
+        "rayo",
+        "ujumbe-parsers",
+        ".github"
+      ],
+      "first": "2026-10-26",
+      "latest": "2026-11-19",
+      "avatar": "/contributors/dan-njuguna.jpg"
+    },
+    {
+      "login": "mevolkan",
+      "name": null,
+      "commits": 2,
+      "prs": 1,
+      "repos": ["ujumbe-parsers"],
+      "first": "2026-11-03",
+      "latest": "2026-11-16",
+      "avatar": "/contributors/mevolkan.jpg"
+    }
+  ]
+}

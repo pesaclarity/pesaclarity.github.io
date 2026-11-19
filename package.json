@@ -16,7 +16,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "node --test \"tests/*.test.mjs\"",
-    "sync": "node tool/sync-sources.mjs"
+    "sync": "node tool/sync-sources.mjs",
+    "contributors": "node tool/contributors.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
