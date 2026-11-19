@@ -5,8 +5,8 @@ section: "rayo"
 order: 20
 repo: "rayo"
 path: "docs/PERFORMANCE.md"
-commit: "1e536df33c3d0a50b180b7431be52ed9838ebff2"
-source: "https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/PERFORMANCE.md"
+commit: "a1eb966e976eba144c1098dd352a81de02812449"
+source: "https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/PERFORMANCE.md"
 edit: "https://github.com/pesaclarity/rayo/edit/main/docs/PERFORMANCE.md"
 ---
 Every number rayo publishes says what it was measured on. This page lists the sources, the
@@ -38,10 +38,10 @@ model's while the text means nothing.
 
 | Program | Measures |
 | --- | --- |
-| [`tools/slm_bench.c`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/tools/slm_bench.c) | a decoder: model load time, prompt (prefill) and decode tokens a second, peak private, mapped-file and resident memory; `--runs N` for medians, `--json FILE` for a report |
-| [`examples/ask/ask_reader_check.c`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/examples/ask/ask_reader_check.c) | the Ask reader: per question, load and session times, memory, time per op |
-| [`examples/ask/ask_writer_bench.c`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/examples/ask/ask_writer_bench.c) | the Ask writer: per reply and per step, with the key/value cache |
-| [`examples/chat/chat.c`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/examples/chat/chat.c) | a real chat: prints prompt and reply speeds and the memory on the way out |
+| [`tools/slm_bench.c`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/tools/slm_bench.c) | a decoder: model load time, prompt (prefill) and decode tokens a second, peak private, mapped-file and resident memory; `--runs N` for medians, `--json FILE` for a report |
+| [`examples/ask/ask_reader_check.c`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/examples/ask/ask_reader_check.c) | the Ask reader: per question, load and session times, memory, time per op |
+| [`examples/ask/ask_writer_bench.c`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/examples/ask/ask_writer_bench.c) | the Ask writer: per reply and per step, with the key/value cache |
+| [`examples/chat/chat.c`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/examples/chat/chat.c) | a real chat: prints prompt and reply speeds and the memory on the way out |
 | `tool/ci/bench_run.sh` | the README table's numbers on this computer (JSON) |
 | `tool/ci/bench_compare.sh BASE_SHA` | a branch against its base, on this computer |
 

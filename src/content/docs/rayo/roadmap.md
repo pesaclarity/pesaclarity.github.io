@@ -5,8 +5,8 @@ section: "rayo"
 order: 25
 repo: "rayo"
 path: "docs/ROADMAP.md"
-commit: "1e536df33c3d0a50b180b7431be52ed9838ebff2"
-source: "https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/ROADMAP.md"
+commit: "a1eb966e976eba144c1098dd352a81de02812449"
+source: "https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/ROADMAP.md"
 edit: "https://github.com/pesaclarity/rayo/edit/main/docs/ROADMAP.md"
 ---
 What is planned after v0.1.0. Nothing here is promised by a date; issues and pull requests

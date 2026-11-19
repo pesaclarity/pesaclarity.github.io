@@ -5,8 +5,8 @@ section: "rayo"
 order: 18
 repo: "rayo"
 path: "docs/OPS.md"
-commit: "1e536df33c3d0a50b180b7431be52ed9838ebff2"
-source: "https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/OPS.md"
+commit: "a1eb966e976eba144c1098dd352a81de02812449"
+source: "https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/OPS.md"
 edit: "https://github.com/pesaclarity/rayo/edit/main/docs/OPS.md"
 ---
 Every op a graph can name (docs/FORMAT.md), with its inputs, attributes, output, and what it

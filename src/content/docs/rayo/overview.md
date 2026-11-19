@@ -5,8 +5,8 @@ section: "rayo"
 order: 11
 repo: "rayo"
 path: "README.md"
-commit: "1e536df33c3d0a50b180b7431be52ed9838ebff2"
-source: "https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/README.md"
+commit: "a1eb966e976eba144c1098dd352a81de02812449"
+source: "https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/README.md"
 edit: "https://github.com/pesaclarity/rayo/edit/main/README.md"
 ---
 On-device inference in plain C89 (ANSI C), for C, Dart and Flutter. A general runtime for
@@ -15,7 +15,7 @@ or ONNX model by `rayo-convert` (docs/CONVERTING.md), with ops of your own when 
 enough. Pesa Clarity's question reader and reply writer run on it, on the phone,
 offline, in the Play and the F-Droid builds alike; nothing in the library is specific to them.
 
-**Docs:** the [developer guide](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/README.md) ([on the web](https://pesaclarity.github.io/docs/rayo/)):
+**Docs:** the [developer guide](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/README.md) ([on the web](https://pesaclarity.github.io/docs/rayo/)):
 [getting started](/docs/rayo/getting-started/), [concepts](/docs/rayo/concepts/), the
 [C](/docs/rayo/c-api/) and [Dart](/docs/rayo/dart-api/) API references, [converting
 models](/docs/rayo/converting/), [performance](/docs/rayo/performance/), [security](/docs/rayo/security/),
@@ -27,7 +27,7 @@ models](/docs/rayo/converting/), [performance](/docs/rayo/performance/), [securi
 ## Quickstart (C)
 
 Load a model, make a session, set the input, run it, read the output:
-[`examples/c/quickstart.c`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/examples/c/quickstart.c), built and checked in CI. It runs the
+[`examples/c/quickstart.c`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/examples/c/quickstart.c), built and checked in CI. It runs the
 3 KB classifier in `examples/classifier` on three token ids.
 
 ```c
@@ -176,8 +176,8 @@ dependencies:
 ```
 
 The build hook compiles the C library for the app's target (Android, iOS, macOS, Linux) while
-it builds; it needs Dart 3.10 or Flutter 3.38 or later. [`example/example.dart`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/example/example.dart)
-runs a model from the command line, and [`examples/flutter_chat`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/examples/flutter_chat) is a
+it builds; it needs Dart 3.10 or Flutter 3.38 or later. [`example/example.dart`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/example/example.dart)
+runs a model from the command line, and [`examples/flutter_chat`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/examples/flutter_chat) is a
 minimal Flutter app that maps a language model and runs one prompt in a background isolate.
 
 ```dart
@@ -216,7 +216,7 @@ them.
 ## Embedding rayo
 
 rayo is licensed **AGPL-3.0-only with the rayo Linking Exception**
-([`LICENSE`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/LICENSE), [`LICENSE-EXCEPTION`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/LICENSE-EXCEPTION); SPDX:
+([`LICENSE`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/LICENSE), [`LICENSE-EXCEPTION`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/LICENSE-EXCEPTION); SPDX:
 `AGPL-3.0-only WITH AdditionRef-rayo-linking-exception-1.0`). The exception lets an app link
 or embed rayo and be distributed **under any licence**, as long as rayo in it is
 **unmodified**, or changed only through its **public API** (its headers and `package:rayo`,
@@ -427,7 +427,7 @@ not contract by default). No kernel calls an FMA intrinsic or `fma()`: the SIMD 
 multiply and add as separate steps, in the order the generic C does.
 
 `tool/ci/builds.sh` (in CI and `tool/check`) checks it: it builds
-[`tests/builds/outputs.c`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/tests/builds/outputs.c) with `gcc -O2` and with
+[`tests/builds/outputs.c`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/tests/builds/outputs.c) with `gcc -O2` and with
 `clang -O3 -mavx2 -mfma` (`clang -O3` on ARM) and compares every output of every test model
 and the Ask models, with each kernel set, bit for bit.
 
@@ -462,7 +462,7 @@ tool/check   # what CI runs and this computer can: lint, C tests, sanitisers, An
 
 ## CI
 
-[`.github/workflows/ci.yml`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/.github/workflows/ci.yml) runs on every pull request and push to
+[`.github/workflows/ci.yml`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/.github/workflows/ci.yml) runs on every pull request and push to
 `main` (Linux jobs on `ubuntu-24.04`, macOS and iOS on `macos-15`, Windows on `windows-2025`): lint (format, C89 with gcc and clang, the same floats from a gcc and a clang build), the C tests on Linux x86_64 (gcc and clang;
 generic, SSE4.1 and AVX2 builds, each kernel set, AVX-VNNI where the runner has it), under
 ASan, LSan and UBSan, natively on Linux arm64 (NEON, and SDOT where the CPU has it), on
@@ -483,8 +483,8 @@ To protect `main`, require these checks: `lint`, `convert`, `linux-x86_64 (gcc)`
 conversation in the Linux, arm64, armv7 and macOS jobs (`tool/ci/chat.sh`).
 
 Commits follow [Conventional Commits](https://www.conventionalcommits.org/); the changelog is
-written from them. Pushing a `vX.Y.Z` tag runs [`release.yml`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/.github/workflows/release.yml),
-which builds the release's assets; [docs/RELEASING.md](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/RELEASING.md) has the steps.
+written from them. Pushing a `vX.Y.Z` tag runs [`release.yml`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/.github/workflows/release.yml),
+which builds the release's assets; [docs/RELEASING.md](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/RELEASING.md) has the steps.
 
 ## Licence
 

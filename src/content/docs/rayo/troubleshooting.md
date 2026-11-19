@@ -5,8 +5,8 @@ section: "rayo"
 order: 23
 repo: "rayo"
 path: "docs/TROUBLESHOOTING.md"
-commit: "1e536df33c3d0a50b180b7431be52ed9838ebff2"
-source: "https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/TROUBLESHOOTING.md"
+commit: "a1eb966e976eba144c1098dd352a81de02812449"
+source: "https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/TROUBLESHOOTING.md"
 edit: "https://github.com/pesaclarity/rayo/edit/main/docs/TROUBLESHOOTING.md"
 ---
 What goes wrong most often, what rayo says when it does, and what to do. Every failure comes

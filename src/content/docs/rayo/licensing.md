@@ -5,8 +5,8 @@ section: "rayo"
 order: 22
 repo: "rayo"
 path: "docs/LICENSING.md"
-commit: "1e536df33c3d0a50b180b7431be52ed9838ebff2"
-source: "https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/LICENSING.md"
+commit: "a1eb966e976eba144c1098dd352a81de02812449"
+source: "https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/LICENSING.md"
 edit: "https://github.com/pesaclarity/rayo/edit/main/docs/LICENSING.md"
 ---
 rayo is free software under the **GNU Affero General Public License v3.0 only**, with an
@@ -14,7 +14,7 @@ additional permission, the **rayo Linking Exception**, that lets apps embed it u
 licence. This page explains what that means for an app, platform by platform.
 
 > [!WARNING]
-> The linking exception ([`LICENSE-EXCEPTION`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/LICENSE-EXCEPTION)) is a **draft**, written
+> The linking exception ([`LICENSE-EXCEPTION`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/LICENSE-EXCEPTION)) is a **draft**, written
 > for the copyright holders to have reviewed by a lawyer before v0.1.0 is tagged. Until that
 > review is done and the draft notice is removed, read it as a statement of intent. This page
 > is an explanation, not legal advice.

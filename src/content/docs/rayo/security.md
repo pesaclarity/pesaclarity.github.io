@@ -5,8 +5,8 @@ section: "rayo"
 order: 21
 repo: "rayo"
 path: "docs/SECURITY.md"
-commit: "1e536df33c3d0a50b180b7431be52ed9838ebff2"
-source: "https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/SECURITY.md"
+commit: "a1eb966e976eba144c1098dd352a81de02812449"
+source: "https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/SECURITY.md"
 edit: "https://github.com/pesaclarity/rayo/edit/main/docs/SECURITY.md"
 ---
 rayo runs model files and text it did not write: models bundled with an app now, models

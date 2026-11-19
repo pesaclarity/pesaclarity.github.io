@@ -5,8 +5,8 @@ section: "rayo"
 order: 24
 repo: "rayo"
 path: "docs/FAQ.md"
-commit: "1e536df33c3d0a50b180b7431be52ed9838ebff2"
-source: "https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/FAQ.md"
+commit: "a1eb966e976eba144c1098dd352a81de02812449"
+source: "https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/FAQ.md"
 edit: "https://github.com/pesaclarity/rayo/edit/main/docs/FAQ.md"
 ---
 ## What is rayo for?
@@ -32,7 +32,7 @@ build for now ([Roadmap](/docs/rayo/roadmap/)).
 
 Any graph of its 41 ops ([OPS.md](/docs/rayo/ops/)), converted by rayo-convert from TFLite, ONNX or a
 Hugging Face Llama-style decoder (SmolLM2, Qwen2.5 and others), or written by hand
-([`examples/classifier`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/examples/classifier)). An op it lacks can be added by the program
+([`examples/classifier`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/examples/classifier)). An op it lacks can be added by the program
 ([OPS.md](/docs/rayo/ops/#ops-of-your-own)).
 
 ## Why C89?

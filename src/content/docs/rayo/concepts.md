@@ -5,8 +5,8 @@ section: "rayo"
 order: 13
 repo: "rayo"
 path: "docs/CONCEPTS.md"
-commit: "1e536df33c3d0a50b180b7431be52ed9838ebff2"
-source: "https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/CONCEPTS.md"
+commit: "a1eb966e976eba144c1098dd352a81de02812449"
+source: "https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/CONCEPTS.md"
 edit: "https://github.com/pesaclarity/rayo/edit/main/docs/CONCEPTS.md"
 ---
 rayo has few moving parts: a **model** (a file's weights and graph), **sessions** that run
@@ -79,8 +79,8 @@ outputs then differ from float32's by the rounding of the keys and values.
 
 ## Language models: tokeniser, sampler, generator
 
-For text, rayo adds three objects ([`rayo/text.h`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/include/rayo/text.h),
-[`rayo/generate.h`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/include/rayo/generate.h)):
+For text, rayo adds three objects ([`rayo/text.h`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/include/rayo/text.h),
+[`rayo/generate.h`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/include/rayo/generate.h)):
 
 - A **tokeniser** turns UTF-8 text into token ids and ids back into bytes. It reads the
   `tokenizer.json` of a Hugging Face model (byte-level BPE, SentencePiece-style BPE with
@@ -112,7 +112,7 @@ its quantisation), the `graph` (inputs, nodes, outputs, symbols, states, a memor
 optional `metadata` object and an optional tokeniser table. Tensors are aligned to
 `RAYO_ALIGN` (64 bytes) so the SIMD kernels read them where they are, from the mapped file.
 [FORMAT.md](/docs/rayo/format/) has every field; `tool/pcwt.py` writes one with NumPy alone, as
-[`examples/classifier`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/examples/classifier) does by hand.
+[`examples/classifier`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/examples/classifier) does by hand.
 
 ## Quantisation
 
@@ -219,7 +219,7 @@ tokeniser, session, model.
 
 ## Compile-time options
 
-[`include/rayo/config.h`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/include/rayo/config.h) holds rayo's compile-time options, each
+[`include/rayo/config.h`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/include/rayo/config.h) holds rayo's compile-time options, each
 with its default: the most dimensions a tensor may have (`RAYO_MAX_RANK`, 4, which the Dart
 bindings assume), the alignment (`RAYO_ALIGN`, 64), and the limits on what one file or text
 may make rayo allocate or compute (`RAYO_MAX_HEADER_BYTES`, `RAYO_MAX_TENSORS`,

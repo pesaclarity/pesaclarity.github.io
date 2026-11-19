@@ -5,8 +5,8 @@ section: "rayo"
 order: 12
 repo: "rayo"
 path: "docs/GETTING-STARTED.md"
-commit: "1e536df33c3d0a50b180b7431be52ed9838ebff2"
-source: "https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/GETTING-STARTED.md"
+commit: "a1eb966e976eba144c1098dd352a81de02812449"
+source: "https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/GETTING-STARTED.md"
 edit: "https://github.com/pesaclarity/rayo/edit/main/docs/GETTING-STARTED.md"
 ---
 rayo runs a model file on the CPU, on the device, with nothing downloaded at run time. This
@@ -75,7 +75,7 @@ model.close()
 ## C
 
 The whole C API a program needs is five calls: load a model, make a session, set the
-input, run, read the output. This is [`examples/c/quickstart.c`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/examples/c/quickstart.c),
+input, run, read the output. This is [`examples/c/quickstart.c`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/examples/c/quickstart.c),
 built and checked against NumPy in CI:
 
 ```c
@@ -196,7 +196,7 @@ dart run example/example.dart examples/classifier/classifier.weights 4 17 9
 
 In a Flutter app, run models off the UI isolate: `runInIsolate(session, task)` for a session,
 or `Isolate.run` around a whole generation, as
-[`examples/flutter_chat`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/examples/flutter_chat) does:
+[`examples/flutter_chat`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/examples/flutter_chat) does:
 
 ```dart
 final reply = await Isolate.run(() {

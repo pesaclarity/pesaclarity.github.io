@@ -5,8 +5,8 @@ section: "rayo"
 order: 19
 repo: "rayo"
 path: "docs/FORMAT.md"
-commit: "1e536df33c3d0a50b180b7431be52ed9838ebff2"
-source: "https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/FORMAT.md"
+commit: "a1eb966e976eba144c1098dd352a81de02812449"
+source: "https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/FORMAT.md"
 edit: "https://github.com/pesaclarity/rayo/edit/main/docs/FORMAT.md"
 ---
 A rayo model is a **plain-weights file** (PCWT, version 1), the format pesaclarity-ml writes

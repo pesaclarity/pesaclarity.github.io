@@ -5,8 +5,8 @@ section: "rayo"
 order: 17
 repo: "rayo"
 path: "docs/RUNNING-SLMS.md"
-commit: "1e536df33c3d0a50b180b7431be52ed9838ebff2"
-source: "https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/RUNNING-SLMS.md"
+commit: "a1eb966e976eba144c1098dd352a81de02812449"
+source: "https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/RUNNING-SLMS.md"
 edit: "https://github.com/pesaclarity/rayo/edit/main/docs/RUNNING-SLMS.md"
 ---
 rayo runs decoder-only language models of about 100M to 1.5B parameters on the CPU, offline:

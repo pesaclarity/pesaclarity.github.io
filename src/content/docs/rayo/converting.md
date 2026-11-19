@@ -5,8 +5,8 @@ section: "rayo"
 order: 16
 repo: "rayo"
 path: "docs/CONVERTING.md"
-commit: "1e536df33c3d0a50b180b7431be52ed9838ebff2"
-source: "https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/CONVERTING.md"
+commit: "a1eb966e976eba144c1098dd352a81de02812449"
+source: "https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/CONVERTING.md"
 edit: "https://github.com/pesaclarity/rayo/edit/main/docs/CONVERTING.md"
 ---
 `rayo-convert` reads a TFLite model (or an ONNX one) and writes a rayo model: a PCWT file
@@ -18,7 +18,7 @@ cannot run, naming each op, its index in the source and why.
 It also converts a Hugging Face decoder-only **language model** (a directory with
 `config.json`, `*.safetensors` and `tokenizer.json`): see [Language models](#language-models).
 
-It is Python, outside the C library, in [`convert/`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/convert). It needs NumPy alone for
+It is Python, outside the C library, in [`convert/`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/convert). It needs NumPy alone for
 language models; the `tflite` package (the flatbuffers code generated from TFLite's schema)
 for TFLite files, `onnx` for ONNX, and `jinja2` to write a language model's chat template.
 Never TensorFlow or torch.

@@ -5,8 +5,8 @@ section: "rayo"
 order: 14
 repo: "rayo"
 path: "docs/API-C.md"
-commit: "1e536df33c3d0a50b180b7431be52ed9838ebff2"
-source: "https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md"
+commit: "a1eb966e976eba144c1098dd352a81de02812449"
+source: "https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md"
 edit: "https://github.com/pesaclarity/rayo/edit/main/docs/API-C.md"
 ---
 Every public function and type of rayo's C API, with its declaration as the headers give it.
@@ -18,8 +18,8 @@ Include the umbrella header, which includes all of them:
 
 The rules that hold for every function, so they are not repeated below:
 
-- A function that can fail returns a [`rayo_status`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_status) and takes an optional
-  [`rayo_message *msg`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_message) last; on failure the message says why. Pass `NULL` to
+- A function that can fail returns a [`rayo_status`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_status) and takes an optional
+  [`rayo_message *msg`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_message) last; on failure the message says why. Pass `NULL` to
   skip it.
 - `*_create` and `*_load` give the caller a new object, freed with the matching `*_destroy`.
   Every destroy function accepts `NULL`.
@@ -136,7 +136,7 @@ typedef struct rayo_tensor_view {
 
 A tensor the caller reads or writes in place. The memory belongs to the session or model it
 came from and stays valid until that object is destroyed (a session's output: until its next
-run). `shape` is the current one, after [`rayo_session_bind`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_session_bind). Cast
+run). `shape` is the current one, after [`rayo_session_bind`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_session_bind). Cast
 `data` to `rayo_f32 *` or `rayo_i32 *` by `dtype`.
 
 ## Models: `rayo/model.h`
@@ -172,7 +172,7 @@ RAYO_API rayo_status rayo_model_create(const void *data, size_t size, rayo_model
 
 Reads a model from the `size` bytes at `data`. rayo copies the bytes it needs: the caller may
 free `data` as soon as this returns. On success `*out` is a new model the caller frees with
-[`rayo_model_destroy`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_model_destroy). The bytes are untrusted: every size and offset is
+[`rayo_model_destroy`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_model_destroy). The bytes are untrusted: every size and offset is
 checked.
 
 ### `rayo_model_create_with`
@@ -183,7 +183,7 @@ RAYO_API rayo_status rayo_model_create_with(const void *data, size_t size,
                                             rayo_message *msg);
 ```
 
-[`rayo_model_create`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_model_create) with `options` (`NULL`: the defaults): ops of your
+[`rayo_model_create`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_model_create) with `options` (`NULL`: the defaults): ops of your
 own, or an integrity check.
 
 ### `rayo_model_options`
@@ -200,10 +200,10 @@ typedef struct rayo_model_options {
 
 | Field | |
 | --- | --- |
-| `ops`, `op_count` | ops of the program's own ([`rayo_custom_op`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_custom_op)) the graph may name, besides the built-in ones; their names must differ from those. The ops must stay valid while the model lives. |
+| `ops`, `op_count` | ops of the program's own ([`rayo_custom_op`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_custom_op)) the graph may name, besides the built-in ones; their names must differ from those. The ops must stay valid while the model lives. |
 | `read_file` | `rayo_model_load` only: `1` reads the file into memory of rayo's instead of mapping it. |
-| `access` | `rayo_model_load` only: a [`rayo_access`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_access) hint for the mapped file. |
-| `integrity` | what the file must match ([`rayo_integrity`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_integrity)), checked before rayo reads any of it: a mismatch is `RAYO_ERR_INTEGRITY`. `NULL`: no check. |
+| `access` | `rayo_model_load` only: a [`rayo_access`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_access) hint for the mapped file. |
+| `integrity` | what the file must match ([`rayo_integrity`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_integrity)), checked before rayo reads any of it: a mismatch is `RAYO_ERR_INTEGRITY`. `NULL`: no check. |
 
 ```c
 rayo_model_options o;
@@ -297,7 +297,7 @@ The same for output `index`.
 RAYO_API void rayo_model_memory(const rayo_model *model, rayo_memory_info *out);
 ```
 
-What the model holds, in bytes ([`rayo_memory_info`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_memory_info)): its file (copied or
+What the model holds, in bytes ([`rayo_memory_info`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_memory_info)): its file (copied or
 mapped) and packed weights in `weights`, the graph and tables in `overhead`.
 
 ### `rayo_memory_info`
@@ -348,8 +348,8 @@ RAYO_API rayo_status rayo_session_create(const rayo_model *model, rayo_session *
 ```
 
 A session plans all of its memory when it is created, for the largest sizes the graph
-allows: [`rayo_session_run`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_session_run) allocates nothing. On success `*out` is a new
-session the caller owns and frees with [`rayo_session_destroy`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_session_destroy), before
+allows: [`rayo_session_run`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_session_run) allocates nothing. On success `*out` is a new
+session the caller owns and frees with [`rayo_session_destroy`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_session_destroy), before
 the model. One session runs on one thread at a time; separate sessions may run at once.
 
 ### `rayo_session_create_with`
@@ -360,7 +360,7 @@ RAYO_API rayo_status rayo_session_create_with(const rayo_model *model,
                                               rayo_session **out, rayo_message *msg);
 ```
 
-[`rayo_session_create`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_session_create) with `options` (`NULL`: the defaults): threads,
+[`rayo_session_create`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_session_create) with `options` (`NULL`: the defaults): threads,
 an int8 key/value cache, and lower limits for size symbols and states.
 
 ```c
@@ -394,10 +394,10 @@ typedef struct rayo_session_options {
 
 | Field | |
 | --- | --- |
-| `threads` | the threads a run uses, the caller's included: `0` or `1` for one (the default), `-1` for [`rayo_cpu_fast_cores()`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_cpu_fast_cores). The results are the same, bit for bit, with any number: work is split by output, never within a sum. |
-| `cache` | `RAYO_CACHE_FLOAT32` (0) or `RAYO_CACHE_INT8` ([`rayo_cache_type`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_cache_type)). |
+| `threads` | the threads a run uses, the caller's included: `0` or `1` for one (the default), `-1` for [`rayo_cpu_fast_cores()`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_cpu_fast_cores). The results are the same, bit for bit, with any number: work is split by output, never within a sum. |
+| `cache` | `RAYO_CACHE_FLOAT32` (0) or `RAYO_CACHE_INT8` ([`rayo_cache_type`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_cache_type)). |
 | `state_rows` | at most this many rows (the first dimension) in each state, such as a cache's tokens: 0 for the graph's sizes. With it, give `limits` that keep the symbols within the rows (a decoder's `P + T` at most `state_rows`). |
-| `limits`, `limit_count` | lower limits of size symbols ([`rayo_symbol_limit`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_symbol_limit)); `NULL`: none. |
+| `limits`, `limit_count` | lower limits of size symbols ([`rayo_symbol_limit`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_symbol_limit)); `NULL`: none. |
 
 ### `rayo_symbol_limit`
 
@@ -505,7 +505,7 @@ The threads the session runs on.
 RAYO_API void rayo_session_memory(const rayo_session *session, rayo_memory_info *out);
 ```
 
-What the session holds ([`rayo_memory_info`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_memory_info)): `arena` (its activations,
+What the session holds ([`rayo_memory_info`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_memory_info)): `arena` (its activations,
 states and scratch) and `states` (of `arena`, the states in full).
 
 ### `rayo_cpu_fast_cores`
@@ -664,7 +664,7 @@ RAYO_API rayo_status rayo_sampler_create(rayo_i32 vocab, const rayo_sampler_opti
 ```
 
 A sampler for logits of `vocab` values. It holds all its working memory:
-[`rayo_sampler_next`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_sampler_next) allocates nothing.
+[`rayo_sampler_next`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_sampler_next) allocates nothing.
 
 ### `rayo_sampler_destroy`
 
@@ -713,7 +713,7 @@ while (rayo_generator_next(g, &token, &msg) == RAYO_OK && token >= 0) {
 rayo_generator_destroy(g);
 ```
 
-[`examples/chat/chat.c`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/examples/chat/chat.c) is a whole chat program on this API.
+[`examples/chat/chat.c`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/examples/chat/chat.c) is a whole chat program on this API.
 
 ### `rayo_generator_options`
 
@@ -730,7 +730,7 @@ typedef struct rayo_generator_options {
 
 | Field | |
 | --- | --- |
-| `sampling` | [`rayo_sampler_options`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_sampler_options); zeros: greedy. |
+| `sampling` | [`rayo_sampler_options`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_sampler_options); zeros: greedy. |
 | `threads` | as `rayo_session_options`: 0 or 1 for one, -1 for the fast cores. |
 | `max_tokens` | per reply: 0 for no limit but the context. |
 | `context` | the most tokens the conversation holds, at most the model's (its converter's `--context`): 0 for `RAYO_GENERATOR_CONTEXT` (1024) or the model's, whichever is less. The key/value cache is sized for this, not for the model's longest. |
@@ -765,7 +765,7 @@ RAYO_API rayo_status rayo_generator_chat(rayo_generator *generator, const char *
 ```
 
 Adds a user's turn (and, before the first, an optional `system` text) in the model's own chat
-template, and runs it through the model. Then call [`rayo_generator_next`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_generator_next)
+template, and runs it through the model. Then call [`rayo_generator_next`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_generator_next)
 for the reply. `RAYO_ERR_UNSUPPORTED` when the model has no chat template (or its template
 takes no system text); `RAYO_ERR_SHAPE` when the context is full.
 
@@ -837,7 +837,7 @@ The session's threads, for reports.
 RAYO_API const char *rayo_generator_kernels(const rayo_generator *generator);
 ```
 
-The session's kernels, for reports, as [`rayo_session_kernels`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_session_kernels).
+The session's kernels, for reports, as [`rayo_session_kernels`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_session_kernels).
 
 ## Integrity: `rayo/verify.h`, `rayo/sha256.h`
 
@@ -899,7 +899,7 @@ Writes the 32-byte digest of the `size` bytes at `data` into `out`.
 ## Ops of your own: `rayo/op.h`
 
 A model may name ops a program gives rayo when it loads the model, with
-[`rayo_model_create_with`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_model_create_with) or [`rayo_model_load`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-C.md#rayo_model_load)
+[`rayo_model_create_with`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_model_create_with) or [`rayo_model_load`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-C.md#rayo_model_load)
 (`rayo_model_options.ops`). An op is three functions, as rayo's own are:
 
 - **prepare**, once when the model loads: read the node's attributes and its weights, check
@@ -1025,7 +1025,7 @@ The library's version, `"0.1.0"`. Static storage. The same numbers are macros:
 ### Compile-time options
 
 Define any of these when building rayo **and** every program that includes its headers
-(`-DNAME=value`); [`include/rayo/config.h`](https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/include/rayo/config.h) documents each. Going over
+(`-DNAME=value`); [`include/rayo/config.h`](https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/include/rayo/config.h) documents each. Going over
 a limit fails with `RAYO_ERR_LIMIT`, naming it.
 
 | Option | Default | |

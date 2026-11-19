@@ -5,8 +5,8 @@ section: "rayo"
 order: 15
 repo: "rayo"
 path: "docs/API-DART.md"
-commit: "1e536df33c3d0a50b180b7431be52ed9838ebff2"
-source: "https://github.com/pesaclarity/rayo/blob/1e536df33c3d0a50b180b7431be52ed9838ebff2/docs/API-DART.md"
+commit: "a1eb966e976eba144c1098dd352a81de02812449"
+source: "https://github.com/pesaclarity/rayo/blob/a1eb966e976eba144c1098dd352a81de02812449/docs/API-DART.md"
 edit: "https://github.com/pesaclarity/rayo/edit/main/docs/API-DART.md"
 ---
 `package:rayo` is rayo for Dart and Flutter: the C library through `dart:ffi`, compiled from
