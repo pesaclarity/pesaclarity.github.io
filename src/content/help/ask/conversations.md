@@ -3,6 +3,8 @@ title: "Ask's conversations and settings"
 description: "Each space keeps its own Ask conversations, on your phone, for as long as you choose. Backups leave them out."
 order: 2
 updated: 2026-11-19
+screen: askConversations
+screenCaption: "Ask's conversations, grouped under Today, This week and Earlier. All records are made up."
 ---
 
 Each space keeps its own Ask conversations, encrypted on your phone, for as long as you choose. Backups leave them out, and they never leave the phone.

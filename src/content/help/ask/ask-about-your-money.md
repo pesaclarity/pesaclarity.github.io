@@ -3,8 +3,8 @@ title: "Ask about your money"
 description: "Ask answers questions about your money in your own words, such as how much you spent on food last month. It runs on your phone and sends nothing anywhere."
 order: 1
 updated: 2026-11-19
-screen: home
-screenCaption: "Home, with the bar to ask about your money above the tabs. All records are made up."
+screen: ask
+screenCaption: "Ask, answering how much was spent on food last month, with suggestions for what to ask next. All records are made up."
 ---
 
 Ask answers questions about your money in your own words, such as "How much did I spend on food last month?". Small models inside the app read your question and word the answer, on your phone. Every number comes from your own records.
