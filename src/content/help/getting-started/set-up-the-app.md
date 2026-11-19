@@ -34,4 +34,4 @@ Each answer can be changed in **Profile**, the round button at the top right of 
 - **How money comes in** for how money comes to you.
 - **My accounts** for which banks and wallets are read.
 
-If Android says the SMS setting is restricted, or you use a Xiaomi, Redmi or POCO phone, see [Install on Android](/install/).
+If Android says the SMS setting is restricted, or you use a Xiaomi, Redmi or POCO phone, see [Install](/install/) page.

@@ -9,7 +9,7 @@ screenCaption: "Support Pesa Clarity, which only the F-Droid build shows. All re
 
 There are two Android builds: one with Google services, and the F-Droid build without them. Each comes for newer phones and for older 32-bit phones. Almost everything is in both; the few differences are below.
 
-The app is not in any store yet. Every build comes from the app's [releases on GitHub](https://github.com/pesaclarity/pesaclarity-app/releases), and the [Install on Android](/install/) page links each one.
+The app is not in any store yet. Every build comes from the app's [releases on GitHub](https://github.com/pesaclarity/pesaclarity-app/releases), and the [Install](/install/) page links each one.
 
 ## Choose a build
 

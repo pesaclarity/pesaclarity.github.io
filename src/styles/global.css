@@ -869,3 +869,30 @@ main:focus {
   font-weight: 600;
   color: var(--color-brand-link);
 }
+
+/* A UN goal's number on its colour, used with the goal's name in text. */
+.sdg {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-small);
+  color: var(--color-on-sdg);
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.sdg-1 {
+  background: var(--color-sdg-1);
+}
+
+.sdg-8 {
+  background: var(--color-sdg-8);
+}
+
+.sdg-10 {
+  background: var(--color-sdg-10);
+}
