@@ -321,6 +321,10 @@ export const moneyFeatures: readonly Item[] = [
     title: "Encrypted backups",
     body: "Back up each space so only you can open it.",
   },
+  {
+    title: "Send to Firefly III",
+    body: "If you turn it on, your transactions go from your phone to the Firefly III server you run, never to ours.",
+  },
   { title: "App lock", body: "A PIN or your fingerprint keeps it yours." },
 ];
 
