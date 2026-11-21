@@ -2,8 +2,8 @@
 import Base from "../layouts/Base.astro";
 import { dpo, links } from "../data/site";
 
-const version = "2.4";
-const updated = "19 November 2026";
+const version = "2.5";
+const updated = "21 November 2026";
 ---
 
 <Base
@@ -22,7 +22,9 @@ const updated = "19 November 2026";
       <p>
         Pesa Clarity works out your budget on your phone. Your transactions,
         messages, statements and the questions you ask about them stay on it.
-        Our server does five narrow jobs and never sees a transaction.
+        Our server does five narrow jobs and never sees a transaction. If you
+        turn on Firefly III sync, your transactions are sent from your phone to
+        the Firefly III server you choose, and never to ours.
       </p>
 
       <h2>What stays on your phone</h2>
@@ -207,6 +209,48 @@ const updated = "19 November 2026";
         transfers abroad.
       </p>
 
+      <h2>Firefly III</h2>
+      <p>
+        Firefly III is a free personal finance manager that people run on their
+        own server. Pesa Clarity can send your transactions to it, so you do not
+        have to type them in again.
+      </p>
+      <ul>
+        <li>
+          It is off until you turn it on in Profile. You choose the server,
+          which spaces to send and from which date.
+        </li>
+        <li>
+          For each transaction the app sends the amount, date, payee, category,
+          account names and notes, such as the{" "}
+          <span class="nowrap">M-Pesa</span> code. It also sends each account's
+          balance on the start date and the space's name as a tag. It never
+          sends message text.
+        </li>
+        <li>
+          It sends them from your phone straight to the server address you type.
+          Nothing goes through our server, and we never see what is sent.
+        </li>
+        <li>
+          Changes and deletes in the app are sent too. Nothing is read back from
+          your server.
+        </li>
+        <li>
+          Your Firefly III token stays in your phone's secure storage. It is
+          sent only to your server, and never put in a backup, a log or a crash
+          report.
+        </li>
+        <li>
+          Turning it off stops sending and removes the token from your phone.
+          What was already sent stays on your server. Deleting a space stops
+          sending it; what was sent stays too.
+        </li>
+        <li>
+          We cannot see or delete anything on your server. You look after it and
+          who can reach it.
+        </li>
+      </ul>
+
       <h2>Exchange rates</h2>
       <p>
         To count money in other currencies, the app downloads today's exchange
@@ -263,6 +307,7 @@ const updated = "19 November 2026";
           Crash reports: the app asks each time, unless you choose Always send
           or Never send.
         </li>
+        <li>Firefly III sync: off unless you turn it on.</li>
       </ul>
       <p>
         Pesa Clarity has no ads and no third-party trackers, and no analytics
@@ -272,8 +317,10 @@ const updated = "19 November 2026";
       <h2>Keeping it safe</h2>
       <p>
         Data on your phone is encrypted, and everything sent to our server
-        travels over an encrypted connection. Deleting your account removes your
-        account, sign-in records and vault backups from our server.
+        travels over an encrypted connection. Firefly III sync uses an encrypted
+        connection too, unless you choose a plain one to a server on your home
+        network. Deleting your account removes your account, sign-in records and
+        vault backups from our server.
       </p>
 
       <h2>Your rights</h2>

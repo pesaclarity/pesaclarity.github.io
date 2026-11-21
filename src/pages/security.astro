@@ -19,6 +19,7 @@ const cantSee = [
   "What is inside a backup: it is encrypted on your phone with your passphrase before upload",
   "Your questions to Ask, or its answers",
   "Your budgets, debts, goals, payees and categories",
+  "What you send to your own Firefly III server",
 ];
 
 const threats = [
@@ -101,9 +102,21 @@ const threats = [
             app lock, it is released when the app opens. Once a message is read,
             its text is deleted.
           </p>
+          <p class="muted">
+            If you turn on Firefly III sync, your transactions go from your
+            phone straight to the Firefly III server you choose, never through
+            ours. The app talks only to the server you typed and follows no
+            redirects, and your token stays in the phone's secure storage. Our
+            own servers are pinned to their certificate authorities; yours is
+            not. The app trusts it through your phone's authorities, for that
+            one server only, or by a certificate fingerprint you confirmed. A
+            plain connection is allowed only to a server on your home network,
+            after a warning.
+          </p>
           <p class="source muted">
             From the privacy policy:{" "}
-            <a href={withBase("/privacy/")}>What stays on your phone</a>.
+            <a href={withBase("/privacy/")}>What stays on your phone</a> and{" "}
+            <a href={withBase("/privacy/")}>Firefly III</a>.
           </p>
         </div>
       </div>
