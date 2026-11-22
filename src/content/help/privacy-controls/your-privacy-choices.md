@@ -1,11 +1,11 @@
 ---
 title: "Your privacy choices"
-description: "Three switches decide what, if anything, leaves your phone to help the app. Your transactions never do."
+description: "Three switches decide what, if anything, leaves your phone to help the app. Your transactions never reach us."
 order: 2
-updated: 2026-11-19
+updated: 2026-11-22
 ---
 
-Your transactions, payees and debts stay on your phone. Three switches decide whether anything else leaves it to help the app, and you can change them any time.
+Your transactions, payees and debts stay on your phone, unless you send them to your own Firefly III server. Three switches decide whether anything else leaves it to help the app, and you can change them any time.
 
 ## Change your choices
 
@@ -25,6 +25,7 @@ Ask is never part of any of these. Your questions and answers stay on your phone
 - **Exchange rates**: to count money in other currencies, the app downloads today's rates. The request carries only your base currency's code. You can set your own rates instead.
 - **The update check**: once a day, the app asks our server whether a newer version or a notice is waiting. It carries only the app's version, which build it is and the platform. No account, device or install id.
 - **Sign-in and backups**, only if you use them. Backups are encrypted on your phone before upload, so we cannot read them.
+- **Firefly III**, only if you turn it on in **Profile** › **Firefly III**: your transactions go from your phone to the Firefly III server you run, never to ours. Your token stays on your phone and is never in a backup. See [Send to Firefly III](/help/privacy-controls/send-to-firefly-iii/).
 
 Pesa Clarity has no ads, no analytics and no third-party trackers.
 
