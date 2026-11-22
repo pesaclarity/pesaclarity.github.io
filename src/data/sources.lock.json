@@ -27,14 +27,14 @@
     },
     "docs": {
       "ref": "main",
-      "commit": "a112d96fa86118401190906c2ed79939ecd2d233"
+      "commit": "e0e3122b322c215b6a00b032b7b0246785025d2a"
     }
   },
   "dates": {
     "parsers@0.1.0": "2026-10-27"
   },
   "files": {
-    "src/content/docs/app/repositories.md": "26aeefc4bb8bead854214fadc11d2ad20fcd9661bce88a3af4a9cbe695e01ada",
+    "src/content/docs/app/repositories.md": "7bc1499b7cc39cdc566fcde8b6ecf78414ca0396a867e3ad34842d014d09c148",
     "src/content/docs/app/performance-budget.md": "94d61811c01dfdb51a82ef5327a26f31db5e9ad504bb694303174b2628652704",
     "src/content/docs/app/auto-categorise.md": "7ad94036f83fa6fdb3b1d2833d5c94f5a4098b7d98b659ae44c111349a49cda7",
     "src/content/docs/app/message-reader.md": "952dc6ab3c99b26d963352acb0e2c3a7e48c57ce609f64debe8c36dd13d47dea",
@@ -72,8 +72,8 @@
     "src/content/docs/server/settings-on-cloud-run.md": "912324e111df3b20b4aadb2d573443116ea6b14517e3a2a82053bf58c0a8945b",
     "src/content/docs/server/settings-in-github.md": "e3d70d0dd37b4758b2f3d4412dbd0f68864748b3883d28ddfd07aa22009cc165",
     "src/content/docs/security/security-policy.md": "f2de258ab1afba779135d159b18fa3b5483e036d84191d317d36bc49e6063700",
-    "src/content/docs/security/pinned-certificate-authorities.md": "fdcccc31305d3c9299d832b93371e5d63f7cf44e4ca036c62282ce584b193618",
-    "src/content/docs/security/federated-learning.md": "c09deb8cfda38f48bb4a7ff153ecf93a2c7171e638ae0cad4dab1b9033bbc424",
+    "src/content/docs/security/pinned-certificate-authorities.md": "6f6a09512d3ae79a4e598fdbcc8c7ac24a2ac1b069bec61006464fbaaa627cb2",
+    "src/content/docs/security/federated-learning.md": "c568dbbd84196dbfc9647a845b1672268de4bb768426816a786047b06fc9a6e1",
     "src/content/docs/verify/reproducible-builds.md": "8850aab612bb87a021b2d78fc0007fe41d71b2cd58d3f5498bad4368ce03f4a5",
     "src/content/docs/verify/releasing.md": "dd23b881445202bb08849e03f768fdb513e15818e32d68a0aab92646f4f96e08",
     "src/content/docs/contribute/contributing.md": "49ad08dfc03f58be407d91106e6da2ef2e9cd8eb1011430366da3d57c1f2c897",

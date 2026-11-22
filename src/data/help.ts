@@ -43,7 +43,7 @@ export const helpTopics: readonly HelpTopic[] = [
   {
     id: "privacy-controls",
     title: "Privacy controls",
-    body: "App lock, Help improve the app, and deleting your data.",
+    body: "App lock, Help improve the app, Firefly III and deleting your data.",
   },
   {
     id: "wrong-amount",
