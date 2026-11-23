@@ -61,7 +61,7 @@ jobs:
         id: screens
         run: node tool/app-screens.mjs "$RUNNER_TEMP/app-screens"
 
-      - uses: peter-evans/create-pull-request@v7
+      - uses: peter-evans/create-pull-request@v8
         with:
           branch: content/app-screenshots
           add-paths: public/screens/*.webp
