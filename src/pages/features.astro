@@ -21,6 +21,7 @@ import {
   selling,
   spaces,
   manageSpaces,
+  sharedSpaces,
   type Item,
 } from "../data/site";
 
@@ -56,6 +57,7 @@ const does: readonly Item[] = [
   { title: "Tax", body: "Estimates for your business" },
 ];
 const favourites = [
+  "Safe to spend, at the top of Home",
   "Your money summary in a minute",
   "What changed this month",
   "Tap any figure to see why",
@@ -204,6 +206,20 @@ const jumps = [
           )}
           <figcaption>{screens.spaces.name}</figcaption>
         </figure>
+      </div>
+      <div id="shared" class="subgroup">
+        <div class="section-intro">
+          <h3 class="sublabel">{sharedSpaces.title}</h3>
+          <p>{sharedSpaces.lead}</p>
+        </div>
+        <ul class="cards cards-4" role="list">
+          {sharedSpaces.items.map((item) => (
+            <li class="card-item">
+              <h4>{item.title}</h4>
+              <p>{item.body}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   </section>
