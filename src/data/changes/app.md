@@ -2,6 +2,198 @@
 
 All notable changes to the app. Versions follow [semantic versioning](https://semver.org): until 1.0, a `feat` bumps the minor version and a `fix` the patch. Entries from 0.2.0 on are written by release-please from commit titles (pull request titles until pull requests into `dev` were rebase-merged).
 
+## [0.5.8](https://github.com/pesaclarity/pesaclarity-app/compare/v0.5.7...v0.5.8) (2026-11-23)
+
+
+### Features
+
+* **accounts:** main line first, and a typed number for each line ([5e7de6f](https://github.com/pesaclarity/pesaclarity-app/commit/5e7de6f6fc8a4b7d9aa6abe86dfe07aaf95e63bc))
+* **accounts:** manage many M-Pesa lines ([eda2fbb](https://github.com/pesaclarity/pesaclarity-app/commit/eda2fbb7b10cc9b3f031f5435d57c8bd7d8ef88d))
+
+
+### Fixes
+
+* **release-notes:** stop a note at the footer rule and generated-by lines ([2f6b3bf](https://github.com/pesaclarity/pesaclarity-app/commit/2f6b3bf9edda1703e4c8cdf5114ef4459955d8e3))
+* SACCOs in What you own and owe; Plan leaves out family loan repayments ([bd1c50e](https://github.com/pesaclarity/pesaclarity-app/commit/bd1c50ef61efdf1279490ac8205f7634751a2c32))
+
+## [0.5.7](https://github.com/pesaclarity/pesaclarity-app/compare/v0.5.6...v0.5.7) (2026-11-22)
+
+
+### Features
+
+* **accounts:** edit, hide or remove an account ([16ef2b3](https://github.com/pesaclarity/pesaclarity-app/commit/16ef2b3491e99778542541e796af6589220a5b89))
+* **accounts:** SACCOs as one account with deposits, shares and loan ([c7de50f](https://github.com/pesaclarity/pesaclarity-app/commit/c7de50fcb63cbc6bbbfa49587b3ef49df145babc))
+* **goals:** keep a savings goal aside from Safe to spend and On hand ([b93879d](https://github.com/pesaclarity/pesaclarity-app/commit/b93879df3e226b23e4c50fc6a6fc595929417655))
+* **habits:** no-spend days, a plain streak and the Sunday check-in ([9be0bce](https://github.com/pesaclarity/pesaclarity-app/commit/9be0bce6adcac5d125d7a2c4080c4b53fc5a2442))
+* keep a goal aside; no-spend days and the Sunday check-in ([fe9e828](https://github.com/pesaclarity/pesaclarity-app/commit/fe9e8281214015170e38c0ef81c9285ff5cd689b))
+* paste M-Pesa messages on iPhone, and About you in setup ([59ee20b](https://github.com/pesaclarity/pesaclarity-app/commit/59ee20be079f7c6ebf8c74a482144125a576e5cb))
+* paste M-Pesa messages on iPhone, and About you in setup ([ca62d29](https://github.com/pesaclarity/pesaclarity-app/commit/ca62d290bc9d72278db5d1fa9c600d58285680f2))
+* **plan:** budget alerts and a bills calendar ([c5929aa](https://github.com/pesaclarity/pesaclarity-app/commit/c5929aa88c3b91c5337f4f27a451d7d85bd162d1))
+
+## [0.5.6](https://github.com/pesaclarity/pesaclarity-app/compare/v0.5.5...v0.5.6) (2026-11-22)
+
+
+### Features
+
+* **accounts:** ask before adding the M-Pesa family (0026 item 5) ([e39a6cd](https://github.com/pesaclarity/pesaclarity-app/commit/e39a6cd7a1962d4614360938ab6ae760d0573e38))
+* **accounts:** ask before adding the M-Pesa family (0026 item 5) ([f3332aa](https://github.com/pesaclarity/pesaclarity-app/commit/f3332aa694616770099284e475205f624ba691e3))
+* **accounts:** the M-Pesa family of accounts (0026) ([b01473d](https://github.com/pesaclarity/pesaclarity-app/commit/b01473d2a0fefed149a53b765e9959352c215c18))
+* **accounts:** the M-Pesa family of accounts (0026) ([8ac1cab](https://github.com/pesaclarity/pesaclarity-app/commit/8ac1cab4cb3abe5cbc4f1a4c6c34a42657473e4c))
+* **fuliza:** track Fuliza only for people who use it ([cd53935](https://github.com/pesaclarity/pesaclarity-app/commit/cd539355cb30f1ab6b6c4c3eccabfd868c5b9f8d))
+* **fuliza:** track Fuliza only for people who use it ([f41c0ed](https://github.com/pesaclarity/pesaclarity-app/commit/f41c0ed26af49b4dafe813a2feea546d2d0981cb))
+* **goals:** show Lent and borrowed under the goals, above net worth ([57011ef](https://github.com/pesaclarity/pesaclarity-app/commit/57011ef81072903d0293c9ab95d14a531b041907))
+* **journal:** everything reads the journal, and the replay month (0018 stages 4 and 5) ([56cf5c1](https://github.com/pesaclarity/pesaclarity-app/commit/56cf5c156c296095e059ad546d28d39c632f7bd1))
+* **lending:** file a transaction as money lent or borrowed ([ef050c1](https://github.com/pesaclarity/pesaclarity-app/commit/ef050c149d008a08e37ff2c55e9602b0ffda2f47))
+* **statements:** import KCB statements ([b29c265](https://github.com/pesaclarity/pesaclarity-app/commit/b29c26564cc417713addc180b8ae0606187ac57f))
+
+
+### Fixes
+
+* **fuliza:** read the switch apart from the ledger, and say it in the README ([98aab16](https://github.com/pesaclarity/pesaclarity-app/commit/98aab168b0496f0bac01f1f3fa2cec1bba33b266))
+* **insights:** follow the ledger, so Insights fills once transactions come ([77cad4b](https://github.com/pesaclarity/pesaclarity-app/commit/77cad4bc4d03d9417b45122b9122164287df8ae6))
+* **sms:** read every space's accounts on start and on return ([50a3322](https://github.com/pesaclarity/pesaclarity-app/commit/50a3322bc03716f33d1d6ed96f75f8a5c2251a48))
+
+## [0.5.5](https://github.com/pesaclarity/pesaclarity-app/compare/v0.5.4...v0.5.5) (2026-11-22)
+
+
+### Features
+
+* **ledger:** one rule that stops double entries for every account (0030) ([73b5bf1](https://github.com/pesaclarity/pesaclarity-app/commit/73b5bf1c83ca22ce2eedd6b5024c40b3ba0045ed))
+* **sms:** two M-Pesa lines on one phone ([e24eef8](https://github.com/pesaclarity/pesaclarity-app/commit/e24eef8bf730e21036a13b5f92ead87a1e55f1b2))
+* **spaces:** money between spaces (decision 0027) ([c3085b4](https://github.com/pesaclarity/pesaclarity-app/commit/c3085b442a35769982a3146f24ebbc541734f6d1))
+* **spaces:** put money in, pay yourself by bank, restore check and clear data question (0027) ([47e833e](https://github.com/pesaclarity/pesaclarity-app/commit/47e833e2cdfa8545d158b6a3b04ce3a5ac1af184))
+* **spaces:** the rest of money between spaces (0027): put money in, pay by bank, restore check, clear data ([adf6e9e](https://github.com/pesaclarity/pesaclarity-app/commit/adf6e9e27bc1dffb5b367740a9c3d29435adbac5))
+
+
+### Fixes
+
+* **firefly:** send Held for another space, so a switch adds up there ([a8f1d56](https://github.com/pesaclarity/pesaclarity-app/commit/a8f1d5609a9eb8b58471c39c140d382ac1a3644a))
+* **spaces:** every M-Pesa line for Put money in; a restore never fails on its check ([3d6aadc](https://github.com/pesaclarity/pesaclarity-app/commit/3d6aadccc25631b40a6ec093b06d71933dafb878))
+
+## [0.5.4](https://github.com/pesaclarity/pesaclarity-app/compare/v0.5.3...v0.5.4) (2026-11-21)
+
+
+### Features
+
+* **firefly:** Firefly III screen, Profile row and sending on start ([a4b2965](https://github.com/pesaclarity/pesaclarity-app/commit/a4b2965a4f4f9ac3586fdcae3bf4fa24a2dde5d3))
+* **firefly:** send a space's transactions to the person's own Firefly III ([acb68d7](https://github.com/pesaclarity/pesaclarity-app/commit/acb68d757b0f6bfcb407fcdd1d1c8bb58f72e4fd))
+* **theme:** show the chosen filter pill and count chip as red text, with no fill ([abc2048](https://github.com/pesaclarity/pesaclarity-app/commit/abc204883082ab490af26e88909a048126047eda))
+
+
+### Fixes
+
+* **firefly:** read nothing more while sending is off ([27dece1](https://github.com/pesaclarity/pesaclarity-app/commit/27dece19bc0fd007b5a79d071f6bd1960bce1f49))
+* **privacy:** policy 2.5, sending to your own Firefly III ([d923509](https://github.com/pesaclarity/pesaclarity-app/commit/d9235096a99196b786e677f6e130c11b18e20fc1))
+* **spaces:** store each message in one space, and take out copies on update ([69f76d0](https://github.com/pesaclarity/pesaclarity-app/commit/69f76d05564a1e66be8af23b14e5925a9ad5f41d))
+
+## [0.5.3](https://github.com/pesaclarity/pesaclarity-app/compare/v0.5.2...v0.5.3) (2026-11-21)
+
+
+### Features
+
+* **activity:** show own transfers across currencies as the mockups ([2f15c32](https://github.com/pesaclarity/pesaclarity-app/commit/2f15c3247786d90e5eb261f99ae60a09ebfdadfe))
+* **app-status:** pin the production signing key ([dcf1847](https://github.com/pesaclarity/pesaclarity-app/commit/dcf1847d9c0e5893124b0a1b5a07e07cc5ba82c8))
+* **categoriser:** suggest with the PyTorch categoriser on rayo, fine-tuned in Dart ([a34e8e7](https://github.com/pesaclarity/pesaclarity-app/commit/a34e8e78b4830e9e2b754ac5b0be980e6412e745))
+* **categoriser:** the rules decide where they are certain, the model the rest ([414afa4](https://github.com/pesaclarity/pesaclarity-app/commit/414afa466649b1062b9ac772f438922abb4eb082))
+* **categoriser:** well-known payees win over the model too ([c2b0778](https://github.com/pesaclarity/pesaclarity-app/commit/c2b0778f5b1231f6d6bc95daf88896a4af7695ac))
+* **debts:** show when a loan's next instalment is due ([33366b9](https://github.com/pesaclarity/pesaclarity-app/commit/33366b9531c6f98d19db7e2dc12ee0021f317f6d))
+* **goals:** save a goal in a savings app's goal ([8981805](https://github.com/pesaclarity/pesaclarity-app/commit/8981805cfe52c04dc72139b13a43fcc2cb53d173))
+* **income:** leave savings accounts out of money arriving ([6b1ddbc](https://github.com/pesaclarity/pesaclarity-app/commit/6b1ddbc3e98faf09945ccc757b99fa8a189eced8))
+* **journal:** clear Money in transit when own transfers pair, with fees ([3aaa161](https://github.com/pesaclarity/pesaclarity-app/commit/3aaa1614ca58b2967cb1096fd4dfd5bedb65454c))
+* **ledger:** pair own transfers across currencies and post their exchange ([a3b3905](https://github.com/pesaclarity/pesaclarity-app/commit/a3b3905a7f4a3237aa49e82d994b21cc87532197))
+* **ledger:** rule for own transfers across currencies ([d7a934e](https://github.com/pesaclarity/pesaclarity-app/commit/d7a934ef9664a7d913a0a5dd9afc53ddd413460e))
+* **plan:** count money moved into savings as saved ([c31929b](https://github.com/pesaclarity/pesaclarity-app/commit/c31929b224a478da4e16a5697b43017359b49cc3))
+* read KCB's messages into one transfer, debt repayment or payment each ([1941431](https://github.com/pesaclarity/pesaclarity-app/commit/1941431a0efb7943ee658cf96b9ff60b029c9959))
+* **savings:** keep Chumz as a savings account fed from M-Pesa ([db82c46](https://github.com/pesaclarity/pesaclarity-app/commit/db82c466f55abe9a254188987850f5b5c7f84cf8))
+* **savings:** know Chumz by the paybill its payments print ([4ce1962](https://github.com/pesaclarity/pesaclarity-app/commit/4ce1962423eab526d928c4c290a895bb4a3f3ea5))
+* **savings:** store savings accounts, their goals and typed balances ([0449367](https://github.com/pesaclarity/pesaclarity-app/commit/0449367ff88589b8c7b5f7de3ed2e49faf016320))
+* **savings:** work out a savings goal's interest from typed balances ([49a41dc](https://github.com/pesaclarity/pesaclarity-app/commit/49a41dc5dc8d2aa36c175739185a9b35d038a618))
+* **security:** add a setting to allow screenshots and screen recording ([d759e6b](https://github.com/pesaclarity/pesaclarity-app/commit/d759e6b35c0e49bbbca1d038fc14611b2f6a7ed3))
+* **sms:** drop known notices such as KCB's declined card payments ([dda39bb](https://github.com/pesaclarity/pesaclarity-app/commit/dda39bb5f70f8d56bbb7eb6d3ba96add41e91c4c))
+* **spaces:** keep a savings account whole when records move or clear ([5f2d460](https://github.com/pesaclarity/pesaclarity-app/commit/5f2d460f227366218ff3572c54624d510c0ce48a))
+* **theme:** show the selected side of a switch as red text, with no fill ([3e4f855](https://github.com/pesaclarity/pesaclarity-app/commit/3e4f855bcd53af51f4c0422dc633a4baed08e2fe))
+
+
+### Fixes
+
+* **a11y:** Ask's tap targets and previews; check Ask's screens again ([2a18cff](https://github.com/pesaclarity/pesaclarity-app/commit/2a18cffb76852d81a8d79b390559eef8a5019804))
+* **a11y:** Conversations title and Ask's suggestions whole at large text ([419d05e](https://github.com/pesaclarity/pesaclarity-app/commit/419d05eaf8138d4751b21d1b92ac7e04328040e5))
+* **a11y:** keep words whole at large text ([58fd1bf](https://github.com/pesaclarity/pesaclarity-app/commit/58fd1bfa7572af2eb1729e52312ef17643b9c4eb))
+* **a11y:** move a row's end part under its title when the title only just fits ([74a418d](https://github.com/pesaclarity/pesaclarity-app/commit/74a418d7a47f8fc67da7d6a05d29ee7e2dad10b2))
+* **backup:** restore a backup file only into its own space ([3bf25f3](https://github.com/pesaclarity/pesaclarity-app/commit/3bf25f368eccc169b8cf8796ca7def21db6e8c36))
+* **ledger:** count money from KCB into M-Pesa once when both send a message ([9116248](https://github.com/pesaclarity/pesaclarity-app/commit/9116248b065e49a7f480d835dfb887cc86656bdb))
+* **ledger:** offer own-transfer sides only in the same currency ([5360ac1](https://github.com/pesaclarity/pesaclarity-app/commit/5360ac165bd202c8d941a34ad21b1fb5d5e3e03d))
+* **sms:** let go of only the iPhone messages a scan read ([723a180](https://github.com/pesaclarity/pesaclarity-app/commit/723a180d332fc835d6522319b81d6e0a73078d32))
+* **sms:** read missed messages whenever the app returns to the front ([5b843b4](https://github.com/pesaclarity/pesaclarity-app/commit/5b843b4a7e1c71af91e98f3e9eb24cdf2f59648a))
+* **sms:** read missed messages whenever the app returns to the front ([215547b](https://github.com/pesaclarity/pesaclarity-app/commit/215547b8cbab9021de72e6a5056ee75ffb8e44ec))
+* **sms:** read missed messages whenever the app returns to the front ([#344](https://github.com/pesaclarity/pesaclarity-app/issues/344)) ([5b843b4](https://github.com/pesaclarity/pesaclarity-app/commit/5b843b4a7e1c71af91e98f3e9eb24cdf2f59648a))
+* **sms:** read only the open space's accounts right after a switch ([82a72ec](https://github.com/pesaclarity/pesaclarity-app/commit/82a72ecfc99478a91b8e2677992a8c1496945ca8))
+* **spaces:** accounts keep their opening balance after Clear data ([2fb2493](https://github.com/pesaclarity/pesaclarity-app/commit/2fb2493f8f8c92bfd45dce605ecb2c8c2488f844))
+* **spaces:** keep a two-message payment gone after it is cleared or moved ([e5a6ead](https://github.com/pesaclarity/pesaclarity-app/commit/e5a6eadbb6e3449c4d2e9c7486a5599506fe3126))
+* **spaces:** keep the list of spaces when Personal is restored ([a5756aa](https://github.com/pesaclarity/pesaclarity-app/commit/a5756aa64f39289419e56a7a39432010a7222e93))
+* **spaces:** leave a moved payment's balance behind ([2d4de42](https://github.com/pesaclarity/pesaclarity-app/commit/2d4de422edbb32d29b73cffca92741e8b6596420))
+* **spaces:** leave a payment's debt and goal behind when it moves ([94f63c1](https://github.com/pesaclarity/pesaclarity-app/commit/94f63c1945a1f4a5bdd996d90774d6b1a8b9bed3))
+* **spaces:** read each account in one space only ([36793b0](https://github.com/pesaclarity/pesaclarity-app/commit/36793b0a23909e164adbec42fb88fce3057c6a86))
+* **spaces:** show each space its own balances after a switch ([a17c894](https://github.com/pesaclarity/pesaclarity-app/commit/a17c894bd9c61a62ca38354c1d4ea560b729da9f))
+* **spaces:** stop a deleted business's rules moving money ([4abbb9b](https://github.com/pesaclarity/pesaclarity-app/commit/4abbb9b8ecf12961d30944e9aff5c7209b6df4f4))
+* **tool:** create the reader recording's rayo session as the app's rayo reads it ([f4c4b06](https://github.com/pesaclarity/pesaclarity-app/commit/f4c4b06b738d87adf1272b145143e18075c178cf))
+
+## [0.5.2](https://github.com/pesaclarity/pesaclarity-app/compare/v0.5.1...v0.5.2) (2026-11-19)
+
+
+### Features
+
+* a pure, untinted palette in light and dark ([5ddd873](https://github.com/pesaclarity/pesaclarity-app/commit/5ddd873f452efa1404c7659a2505ca07f51fb5f3))
+* a softer dark mode ([224b391](https://github.com/pesaclarity/pesaclarity-app/commit/224b3914b0f43f6e74163ffcd91a49a69422dbfe))
+* ask before the F-Droid build's daily update check ([cb23d40](https://github.com/pesaclarity/pesaclarity-app/commit/cb23d400c110b866b6f63af048bc799366466bef))
+* **ask:** ship the PyTorch Ask reader v4 (run 16) ([542aeec](https://github.com/pesaclarity/pesaclarity-app/commit/542aeec0d28c15b34840bdffeb0839277e4fe0b0))
+* crash report sheet and the counting and crash report choices in Privacy ([cd9a4d8](https://github.com/pesaclarity/pesaclarity-app/commit/cd9a4d88233dec96dfa0f032289286d7a2f1d2a8))
+* follow the iOS design guidelines ([#307](https://github.com/pesaclarity/pesaclarity-app/issues/307)) ([1afc31d](https://github.com/pesaclarity/pesaclarity-app/commit/1afc31db06167d309b12936ff8065ae23af1cdb3))
+* keep crash reports for the next start and send them only as the person chose ([75a577c](https://github.com/pesaclarity/pesaclarity-app/commit/75a577c3183033c91ae8e07346764f5642db3861))
+* **privacy:** policy 2.4, the monthly count and crash reports ([e8462a1](https://github.com/pesaclarity/pesaclarity-app/commit/e8462a19bf73e1fbe34e08231f0a51d62f587a9a))
+* **privacy:** policy 2.4, the monthly count and crash reports ([9131280](https://github.com/pesaclarity/pesaclarity-app/commit/913128039812000b5d16831d21a48ff3c50b706d))
+* **reader:** read messages with the PyTorch reader on rayo ([c2a71eb](https://github.com/pesaclarity/pesaclarity-app/commit/c2a71eb8b1b928aa808940bfd3f01e9cafa52174))
+* send a monthly counting token with the update check ([6039ca3](https://github.com/pesaclarity/pesaclarity-app/commit/6039ca31e4a499f4a420aba7ed5e1c4d39fb2832))
+
+
+### Fixes
+
+* a neutral grey for the second chart colour in dark mode ([04b9180](https://github.com/pesaclarity/pesaclarity-app/commit/04b918088608c40441d43f9fab1db29edf58765d))
+* **a11y:** darker small text on tinted cards ([914a023](https://github.com/pesaclarity/pesaclarity-app/commit/914a02307c8c242d055ffb59dc7af9d942faec04))
+* **a11y:** draw every tab label at one size ([bcfab9a](https://github.com/pesaclarity/pesaclarity-app/commit/bcfab9ae54f613408619197e615527640f70b20e))
+* **a11y:** follow the phone's reduce-motion setting ([b302d18](https://github.com/pesaclarity/pesaclarity-app/commit/b302d1812c0588a82455642868a810d88d5af57e))
+* **a11y:** keep an amount's currency code and number on one line ([fa0d8e8](https://github.com/pesaclarity/pesaclarity-app/commit/fa0d8e81fa3f53dade8d676617356168fc48e47b))
+* **a11y:** keep screens whole at larger text sizes ([a549498](https://github.com/pesaclarity/pesaclarity-app/commit/a549498936a4993640b161c4f49efdb25af7e019))
+* **a11y:** keep Sell tiles in a row the same height ([61c7a7d](https://github.com/pesaclarity/pesaclarity-app/commit/61c7a7d62fdd3ab5096987a9f30ad2481e32895f))
+* **a11y:** labels above fields so they stay whole at large text ([abd012b](https://github.com/pesaclarity/pesaclarity-app/commit/abd012b689d2ba960abc8c67bdb3a19bd120eca1))
+* **a11y:** labels above fields, names on two lines, darker small text ([#303](https://github.com/pesaclarity/pesaclarity-app/issues/303)) ([9be4136](https://github.com/pesaclarity/pesaclarity-app/commit/9be41360b0a639ec465a0fd34f8ab3f12f26878b))
+* **a11y:** labels above fields, two-line names, darker small print ([9be4136](https://github.com/pesaclarity/pesaclarity-app/commit/9be41360b0a639ec465a0fd34f8ab3f12f26878b))
+* **a11y:** let names in Activity and Money wrap to two lines ([7267c1a](https://github.com/pesaclarity/pesaclarity-app/commit/7267c1aaaa1d50a3fbd47dc29fae06f18848b16e))
+* **a11y:** make small tap targets at least 48 by 48 ([2b7b986](https://github.com/pesaclarity/pesaclarity-app/commit/2b7b986312b9486324206386a8c1c17b1bca26ae))
+* **a11y:** read amounts, headers and messages well with screen readers ([f2f4055](https://github.com/pesaclarity/pesaclarity-app/commit/f2f4055d1f1675c156aa3730425a678215a3a99d))
+* **a11y:** read the debt what-if slider as an amount, and hide its interest ([5cf3ecd](https://github.com/pesaclarity/pesaclarity-app/commit/5cf3ecd06d73d6d22e89c9ba5bee7ad69182cb5c))
+* move to rayo with the security fixes and faster kernels ([883a9f8](https://github.com/pesaclarity/pesaclarity-app/commit/883a9f8e7a5db124e36e0e22261ded3b9d655b8c))
+* never let the counting token hold up the update check ([71309eb](https://github.com/pesaclarity/pesaclarity-app/commit/71309eb1cf8417bde522ec3268eb8354f9c675ff))
+* **policy:** privacy policy 2.3, the hashed sign-in email, app lock and site search ([7aae60f](https://github.com/pesaclarity/pesaclarity-app/commit/7aae60fb865fcabbf890ce78f161912d14517689))
+* put a tab's buttons above its title on iPhone ([#309](https://github.com/pesaclarity/pesaclarity-app/issues/309)) ([df83225](https://github.com/pesaclarity/pesaclarity-app/commit/df83225e33e1307f1b94ecdfbf16240b1d859569))
+* show the Plan income bar ([4fea862](https://github.com/pesaclarity/pesaclarity-app/commit/4fea862d8301c031ee86af6f2af16412802bcf65))
+* tell Debt and Tax reserve apart on the Plan bar ([#301](https://github.com/pesaclarity/pesaclarity-app/issues/301)) ([54b2f3e](https://github.com/pesaclarity/pesaclarity-app/commit/54b2f3edf240955c65303f73467c80553eacc18f))
+* tell the Plan bar's groups apart in dark ([#305](https://github.com/pesaclarity/pesaclarity-app/issues/305)) ([259a52b](https://github.com/pesaclarity/pesaclarity-app/commit/259a52b057227a23d063ae2cb7978cba9c6024bc))
+* the iPhone launch screen uses the pure page colours ([8b90c3e](https://github.com/pesaclarity/pesaclarity-app/commit/8b90c3ee2a7e890c7c08051a11b723f5a5d3909e))
+
+
+### Performance
+
+* build Activity's rows as they scroll in ([d435141](https://github.com/pesaclarity/pesaclarity-app/commit/d435141cb57958196ec2c8c934c30efbebf08f3f))
+* build the book account name map once ([07b6284](https://github.com/pesaclarity/pesaclarity-app/commit/07b6284edf7363d8d662a4d80c9a43aba1c6187f))
+* decode the logo near the size of its tile ([4d9548e](https://github.com/pesaclarity/pesaclarity-app/commit/4d9548e58ea388cb0652585696ee15195841cf5d))
+* index transactions by date ([92a2369](https://github.com/pesaclarity/pesaclarity-app/commit/92a23695decd1711c243f62a97505ac1c38aa440))
+* read journal entries and postings column by column ([5ff4ed4](https://github.com/pesaclarity/pesaclarity-app/commit/5ff4ed416b7c6e1c8b4e497149ff89dba6bd34c4))
+* read ledger entries column by column ([89f6811](https://github.com/pesaclarity/pesaclarity-app/commit/89f681138b62e357946e62c42bc5185794ecff01))
+* read the space and the look at once before the first frame ([fc185ab](https://github.com/pesaclarity/pesaclarity-app/commit/fc185ab967eb8edba430a865acaf88a571049999))
+* share one read of the whole ledger per change ([af0ba96](https://github.com/pesaclarity/pesaclarity-app/commit/af0ba965022df42eaf4c08f8b173b365250d6280))
+* write a journal repost in one batch ([d84eccd](https://github.com/pesaclarity/pesaclarity-app/commit/d84eccdccab04c11c15716a03db9fb3a5cb10642))
+
 ## [0.5.1](https://github.com/pesaclarity/pesaclarity-app/compare/v0.5.0...v0.5.1) (2026-11-18)
 
 

@@ -5,8 +5,8 @@ section: "server"
 order: 36
 repo: "pesaclarity-backend"
 path: "docs/specs/0002-github-holds-settings.md"
-commit: "3445bce5dcaa114c14fa4e651fc820b8154a2825"
-source: "https://github.com/pesaclarity/pesaclarity-backend/blob/3445bce5dcaa114c14fa4e651fc820b8154a2825/docs/specs/0002-github-holds-settings.md"
+commit: "f91420a806b3bc6243e69de1fe1c17f649ae238d"
+source: "https://github.com/pesaclarity/pesaclarity-backend/blob/f91420a806b3bc6243e69de1fe1c17f649ae238d/docs/specs/0002-github-holds-settings.md"
 edit: "https://github.com/pesaclarity/pesaclarity-backend/edit/main/docs/specs/0002-github-holds-settings.md"
 ---
 **Status:** Implemented

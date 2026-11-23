@@ -5,8 +5,8 @@ section: "app"
 order: 1
 repo: "pesaclarity-app"
 path: "docs/performance-budget.md"
-commit: "b401ac205bc8a9bebebe5c52e983bb761f6901d8"
-source: "https://github.com/pesaclarity/pesaclarity-app/blob/b401ac205bc8a9bebebe5c52e983bb761f6901d8/docs/performance-budget.md"
+commit: "ab3c93185e8ee59ebc23157ce24e5fb3b117157c"
+source: "https://github.com/pesaclarity/pesaclarity-app/blob/ab3c93185e8ee59ebc23157ce24e5fb3b117157c/docs/performance-budget.md"
 edit: "https://github.com/pesaclarity/pesaclarity-app/edit/main/docs/performance-budget.md"
 ---
 The spec promises the app "works on 2 GB RAM Android Go phones". These are the targets a release must meet on that class of phone, and how to measure them. Measure release or profile builds only; debug builds are much slower.

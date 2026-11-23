@@ -5,8 +5,8 @@ section: "security"
 order: 39
 repo: "docs"
 path: "spec/federated-learning.md"
-commit: "e0e3122b322c215b6a00b032b7b0246785025d2a"
-source: "https://github.com/pesaclarity/docs/blob/e0e3122b322c215b6a00b032b7b0246785025d2a/spec/federated-learning.md"
+commit: "4cfe460b3ffa848f4cb14685c7a0aa63c217ade6"
+source: "https://github.com/pesaclarity/docs/blob/4cfe460b3ffa848f4cb14685c7a0aa63c217ade6/spec/federated-learning.md"
 edit: "https://github.com/pesaclarity/docs/edit/main/spec/federated-learning.md"
 ---
 **Status:** Accepted (step 1 built: pesaclarity/pesaclarity-ml#26, pesaclarity/pesaclarity-app#154) · **Date:** 2026-11-04 · **Issues:** pesaclarity/pesaclarity-backend#8, pesaclarity/pesaclarity-app#27, pesaclarity/pesaclarity-ml#3

@@ -5,8 +5,8 @@ section: "server"
 order: 35
 repo: "pesaclarity-backend"
 path: "docs/specs/0001-settings-live-on-cloud-run.md"
-commit: "3445bce5dcaa114c14fa4e651fc820b8154a2825"
-source: "https://github.com/pesaclarity/pesaclarity-backend/blob/3445bce5dcaa114c14fa4e651fc820b8154a2825/docs/specs/0001-settings-live-on-cloud-run.md"
+commit: "f91420a806b3bc6243e69de1fe1c17f649ae238d"
+source: "https://github.com/pesaclarity/pesaclarity-backend/blob/f91420a806b3bc6243e69de1fe1c17f649ae238d/docs/specs/0001-settings-live-on-cloud-run.md"
 edit: "https://github.com/pesaclarity/pesaclarity-backend/edit/main/docs/specs/0001-settings-live-on-cloud-run.md"
 ---
 **Status:** Implemented, then amended

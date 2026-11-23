@@ -5,14 +5,14 @@ section: "parser-packs"
 order: 6
 repo: "ujumbe-parsers"
 path: "README.md"
-commit: "fcee5edcab37dd6c2c9a2a0d2f76231d0f57a263"
-source: "https://github.com/pesaclarity/ujumbe-parsers/blob/fcee5edcab37dd6c2c9a2a0d2f76231d0f57a263/README.md"
+commit: "07ad926149776c1918720dd8fb6a2ea599c8c592"
+source: "https://github.com/pesaclarity/ujumbe-parsers/blob/07ad926149776c1918720dd8fb6a2ea599c8c592/README.md"
 edit: "https://github.com/pesaclarity/ujumbe-parsers/edit/main/README.md"
 ---
 New banks, SACCOs and wallets are the main way to contribute. Every pack is gated by its own samples.
 
 1. **Create the directory.** `packs/<id>/` where `<id>` is lower case with underscores, e.g. `co_op_bank` or `airtel_money`. The pack's `id` must match.
-2. **Write `pack.yaml`.** Copy `packs/kcb/pack.yaml` as a start. Set `senders` to the exact sender IDs the institution uses, `currency` (for messages that print none), `utc_offset` and a `time_format`. If no real wording is known yet, `rules: []` makes a review-only pack: its senders are read and every message goes to the review inbox. Otherwise add one rule per message type (`sent`, `received`, `paybill`, `till`, `withdrawal`, `airtime`, `fuliza`, `fuliza_repayment`, `reversal`, or `bank` for plain debit and credit alerts). Each rule's `pattern` is a regex using these named groups only:
+2. **Write `pack.yaml`.** Copy `packs/kcb/pack.yaml` as a start. Set `senders` to the exact sender IDs the institution uses, `currency` (for messages that print none), `utc_offset` and a `time_format`. If no real wording is known yet, `rules: []` makes a review-only pack: its senders are read and every message goes to the review inbox. Otherwise add one rule per message type (`sent`, `received`, `paybill`, `till`, `withdrawal`, `airtime`, `fuliza`, `fuliza_repayment`, `loan_repayment`, `reversal`, or `bank` for plain debit and credit alerts). Each rule's `pattern` is a regex using these named groups only:
 
    | Group | Meaning |
    | --- | --- |
@@ -28,8 +28,30 @@ New banks, SACCOs and wallets are the main way to contribute. Every pack is gate
    | `owed` | A debt's total still owed after this message, such as Fuliza's outstanding amount |
    | `due` | When that debt is due, a date read with the rule's `due_format` |
 
-   Rules are tried in order and the first match wins, so put specific shapes before general ones. Set `ignore_case: true` on a rule when the institution's wording changes case (`M-PESA` and `M-Pesa`). Sender IDs always compare without case, so `AirtelMoney` matches `airtelmoney`. A pack that uses `own_account` or `currency` needs `min_engine: 0.2.0`, and one that uses `owed` or `due` needs `min_engine: 0.3.0`. If a message prints no time, the engine uses the time the phone received it.
-3. **Write `fixtures.yaml`.** At least one sample per rule, plus samples that must stay `unmatched` (promotions, notices, balance enquiries). Every field the rule captures must appear in `expect`; a field left out must parse as absent.
+   Rules are tried in order and the first match wins, so put specific shapes before general ones. When a message describes money moving on another institution's account, such as a bank's confirmation of an M-Pesa payment into it, set `institution` on the rule to that institution's pack id (`institution: mpesa`); the app then records it on that account, and the bank's own alert records the other side. Set `ignore_case: true` on a rule when the institution's wording changes case (`M-PESA` and `M-Pesa`). Sender IDs always compare without case, so `AirtelMoney` matches `airtelmoney`. If a message prints no time, the engine uses the time the phone received it. Then set `min_engine` if the pack uses a newer feature (see Engine versions below).
+
+   **Notices.** Some messages from a selected sender are known not to be transactions: a declined card payment, a balance enquiry printed like a card transaction of KES 0. Rather than leave them in the review inbox, list them under `notices`, each with an `id` and a `pattern` (and `ignore_case` if needed):
+
+   ```yaml
+   notices:
+     - id: declined_card_payment
+       pattern: '^[A-Z]{3} ?[\d,]+\.\d{2} transaction made on KCB card [\d*]+ at .+? has been declined\.'
+   ```
+
+   Notices are tried only after every rule has failed to match, so a notice never hides a transaction. A match parses as a `KnownNotice` naming the notice's `id`, and the app drops it without storing it or asking the person. A notice reads no fields, so its pattern has no named groups. Anchor it with `^` and keep it narrow: unlike an unmatched message, a notice is never reviewed. Only add one for a shape known from real messages (as a synthetic sample), never for a guessed format.
+
+   **Engine versions.** `min_engine` (a [SemVer 2.0](https://semver.org) version, default `0.1.0`) names the oldest engine that can read the pack. An older engine refuses the whole pack with a `PackEngineException` (over the air: a `PackRejection` with reason `engineTooOld`), so the phone keeps its current copy instead of reading the pack half-way. Pre-releases count as older than their release: `0.4.0-beta.1` does not meet `min_engine: 0.4.0`. The engine also refuses a pack whose `min_engine` is lower than a feature it uses needs, so set at least:
+
+   | Feature | `min_engine` |
+   | --- | --- |
+   | `own_account` or `currency` group, or `rules: []` (review-only) | `0.2.0` |
+   | `owed` or `due` group, or `due_format` | `0.3.0` |
+   | `min_engine` on a rule | `0.3.1` (the first release after 0.3.0) |
+   | `loan_repayment` type, `institution` on a rule, or `notices` | `0.4.0` |
+
+   To add a rule for a newer engine without cutting older phones off the rest of the pack, give that rule its own `min_engine`. An older engine skips just that rule, lists it in `ParserPack.skippedRules`, and sends its messages to the review inbox; it reads the rest of the pack as usual.
+
+3. **Write `fixtures.yaml`.** At least one sample per rule and per notice, plus samples that must stay `unmatched` (promotions, service notices, balance enquiries). Every field the rule captures must appear in `expect`; a field left out must parse as absent. A sample a notice must drop has `expect: {notice: <id>}`, with no other fields.
 4. **Check it.** `dart run tool/check_packs.dart packs/<id>`, then `dart run tool/bundle_packs.dart` to ship it with the package, `dart run tool/message_examples.dart` to list its samples in [docs/MESSAGES.md](/docs/parser-packs/example-messages/), then `dart test`. Your editor can also validate against `schema/` through the `yaml-language-server` comment at the top of each file.
 5. **Open a pull request** naming the institution and which message types you covered.
 
