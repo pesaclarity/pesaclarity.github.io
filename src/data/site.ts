@@ -233,11 +233,11 @@ export const spaces: readonly Item[] = [
   { title: "Something else", body: "A project or anything to keep apart" },
 ];
 
-/** Looking after your spaces. Nothing is shared between them. */
+/** Looking after your spaces. Nothing moves between them unless you move it. */
 export const manageSpaces: readonly Item[] = [
   {
     title: "Each space its own",
-    body: "Every space keeps its own locked records on your phone. Nothing is shared between them.",
+    body: "Every space keeps its own locked records on your phone. Nothing moves between them unless you move it.",
   },
   {
     title: "Change a space",
@@ -253,6 +253,30 @@ export const manageSpaces: readonly Item[] = [
   },
 ];
 
+/** Sharing a household or chama space with the people in it. No server. */
+export const sharedSpaces: Highlight = {
+  title: "Share a space",
+  lead: "Run a household or a chama together. Each phone keeps its own copy, and changes travel as locked files you send each other. There is no server in the middle.",
+  items: [
+    {
+      title: "Locked files, not a cloud",
+      body: "Changes go in an encrypted .pcshare file you send any way you like: WhatsApp, Bluetooth or email. Only members can open it.",
+    },
+    {
+      title: "Join in two steps",
+      body: "Scan a QR code or open an invite file, then check the safety words match on both phones before anything is shared.",
+    },
+    {
+      title: "Roles",
+      body: "Each member has a role, and Who can change what shows what each role may do.",
+    },
+    {
+      title: "Approvals on the approver's phone",
+      body: "Changes that need a yes are signed on the approver's own phone, so nobody can approve for someone else.",
+    },
+  ],
+};
+
 /** Everyday money, in every space. */
 export const moneyFeatures: readonly Item[] = [
   {
@@ -264,6 +288,14 @@ export const moneyFeatures: readonly Item[] = [
     body: "Each account's balance comes from its messages, with Fuliza owed taken off. Add a cash account, or set a balance yourself.",
   },
   {
+    title: "Cash in hand",
+    body: "Money you withdraw moves into a Cash in hand account. It is never counted as spending, and the app tells you if cash goes below zero.",
+  },
+  {
+    title: "Counted once",
+    body: "A Fuliza fee is counted once, and moving money between your own accounts is never counted as money in or out.",
+  },
+  {
     title: "Finds what's missing",
     body: "When a balance doesn't add up, the app shows where the money went and helps you add what's missing.",
   },
@@ -273,7 +305,15 @@ export const moneyFeatures: readonly Item[] = [
   },
   {
     title: "Safe to spend today",
-    body: "One number for today that still covers your bills.",
+    body: "One number at the top of Home that still covers your bills. Tap the eye to hide it.",
+  },
+  {
+    title: "This month",
+    body: "Money in, money out and the difference, with what fees cost you.",
+  },
+  {
+    title: "Things to sort",
+    body: "Home shows real problems only, things to sort and what's coming up.",
   },
   {
     title: "Until the next money",
@@ -285,7 +325,11 @@ export const moneyFeatures: readonly Item[] = [
   },
   {
     title: "Week by week",
-    body: "This week against a usual one, for business and gig money.",
+    body: "This week against a usual one, for business and gig money. Choose the day your week starts on.",
+  },
+  {
+    title: "Weekly check-in",
+    body: "A short look back at your week, and what to sort next.",
   },
   {
     title: "Rainy day fund",
@@ -307,7 +351,7 @@ export const moneyFeatures: readonly Item[] = [
   },
   {
     title: "Insights",
-    body: "What changed this month and where money goes. Tap any figure to see why.",
+    body: "Your month: until the next money, runway, forecast and financial health. Week, month and year tabs with charts. Tap any figure to see why.",
   },
   {
     title: "Message reader",
