@@ -61,12 +61,20 @@ committed files match their hashes.
 ## Updating from the app
 
 ```sh
-cd analyser/engine && dart run tool/sync_app.dart ../../../pesaclarity-app
+cd analyser/engine && dart run tool/sync_app.dart ../../../pesaclarity-app   # lib/app, models/, goldens/app/
 cd ../.. && analyser/build.sh
 python3 analyser/fixtures/make_statements.py ../pesaclarity-app
 analyser/engine/tool/app_goldens.sh ../pesaclarity-app   # Flutter, PDFium
 node --test tests/analyser.test.mjs
 ```
+
+`sync_app.dart` copies the app's `lib/src` code into `engine/lib/app`, its
+shipped categoriser model into `models/`, and its encoder vectors and
+recorded categoriser outputs (`test/fixtures/categoriser/feature_vectors.v1.json`,
+`categoriser_decodes.json`, `test/fixtures/reader/reader_vectors.v1.json`)
+into `goldens/app/`, and records each file's SHA-256 in
+`engine/app_sources.json`; the tests fail if any of them is edited by hand.
+Don't copy these files by hand.
 
 Also move the ujumbe pin in `engine/pubspec.yaml` when the app moves it.
 

@@ -1,6 +1,6 @@
 {
   "app": "https://github.com/pesaclarity/pesaclarity-app",
-  "commit": "21bfe080653e98b47845240b361cb5d0f4d276ad",
+  "commit": "f9a3e0b9897832a5d025334480be0108ed84e5de",
   "ujumbe": "d5d198704af18b9dc9110a638be75c7199e4b27c",
   "files": {
     "core/money/currency_data.dart": "9c0b5383f73860deef337c84b55e227a0ac07a81cb32cd7bdea3af1efce436e5",
@@ -31,6 +31,9 @@
     "mapping.dart": "7a6fc59c9b44c4cc0e1b7beb1d983809e80d614b1d6a087f50ff5ee5eff85110",
     "models/categoriser.weights": "d2483ed0acb342ede6d62f99f7bd2d20e696f9449953c33719891bb5f70c874c",
     "models/labels.json": "016066696a8b194e9a2449753241d6c7a28eb795865df4be5f01c5b850a731e8",
-    "models/model-manifest.json": "fced1a01d2b3657b14b55698f5c30eb440a76dca30ef52043ac8e8c9871310e9"
+    "models/model-manifest.json": "fced1a01d2b3657b14b55698f5c30eb440a76dca30ef52043ac8e8c9871310e9",
+    "goldens/app/categoriser_decodes.json": "2f8ad1f0382758a377786eb20aa7be535f8eca42b3aec6a2d0956492084496e4",
+    "goldens/app/feature_vectors.v1.json": "e356258887998e8be46b39d80f9ae614b78f54ea7c8a4b7f2468d67e36a72d91",
+    "goldens/app/reader_vectors.v1.json": "4e8f0e0a876e3d251ef1f7d6854bcf7a9c6146964aeb524624d3dbe288ee4f25"
   }
 }

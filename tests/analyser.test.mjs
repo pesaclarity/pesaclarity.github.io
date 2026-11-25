@@ -139,13 +139,13 @@ test("lib/app is the app's code unchanged (analyser/engine/app_sources.json)", (
   const { files } = json("analyser/engine/app_sources.json");
   const sha = (path) => createHash("sha256").update(read(path)).digest("hex");
   for (const [path, want] of Object.entries(files)) {
-    const file = path.startsWith("models/")
+    const file = /^(models|goldens)\//.test(path)
       ? `analyser/${path}`
       : `analyser/engine/lib/app/${path}`;
     assert.equal(sha(file), want, path);
   }
   const listed = new Set(
-    Object.keys(files).filter((p) => !p.startsWith("models/")),
+    Object.keys(files).filter((p) => !/^(models|goldens)\//.test(p)),
   );
   const walk = (dir, prefix = "") =>
     readdirSync(new URL(dir, root), { withFileTypes: true }).flatMap((e) =>
@@ -154,6 +154,13 @@ test("lib/app is the app's code unchanged (analyser/engine/app_sources.json)", (
         : [`${prefix}${e.name}`],
     );
   assert.deepEqual(walk("analyser/engine/lib/app/").sort(), [...listed].sort());
+  // Every file in goldens/app is the app's, copied by sync_app.dart.
+  assert.deepEqual(
+    walk("analyser/goldens/app/", "goldens/app/").sort(),
+    Object.keys(files)
+      .filter((p) => p.startsWith("goldens/"))
+      .sort(),
+  );
   // The models the build serves are the app's.
   for (const m of [
     "categoriser.weights",
