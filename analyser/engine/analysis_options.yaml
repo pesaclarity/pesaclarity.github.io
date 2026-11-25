@@ -1,0 +1,4 @@
+analyzer:
+  exclude:
+    # Runs inside the app checkout (Flutter), not here.
+    - tool/app_goldens_test.dart

@@ -1,0 +1,67 @@
+{
+ "note": "What the app reads from synthetic_statement_locked.pdf (synthetic): PDFium, the app statement reader and its categoriser on rayo. Written by analyser/engine/tool/app_goldens.sh; do not edit.",
+ "app": "bccce3941b96c68d42deacbc246836c806b7a1a6",
+ "institution": "mpesa",
+ "periodStart": "2026-10-01T00:00:00.000Z",
+ "periodEnd": "2026-10-31T00:00:00.000Z",
+ "openingBalanceMinor": 500000,
+ "closingBalanceMinor": 513500,
+ "unreadCount": 0,
+ "pageText": [
+  "M-PESA STATEMENT\nCustomer Name: JOHN DOE\nStatement Period: 01 Oct 2026 - 31 Oct 2026\nReceipt No. Completion Time Details Transaction Status Paid In Withdrawn Balance\nTJA0000004 2026-10-26 13:45:00 Merchant Payment Online to 5000001 - Completed -350.00 5,135.00\nPage 1 of 2",
+  "Receipt No. Completion Time Details Transaction Status Paid In Withdrawn Balance\nEXAMPLE GROCERS\nTJA0000001 2026-10-26 09:15:42 Customer Transfer of Funds Charge Completed -15.00 5,485.00\nTJA0000001 2026-10-26 09:15:42 Customer Transfer to - 0700***001 JANE Completed -1,500.00 5,500.00\nDOE\nTJA0000003 2026-10-26 08:02:10 Funds received from - 0700***002 JOHN Completed 2,000.00 7,000.00\nKAMAU\nDisclaimer: synthetic test statement, not a real record.\nPage 2 of 2"
+ ],
+ "transactions": [
+  {
+   "time": "2026-10-26T05:02:10.000Z",
+   "direction": "inflow",
+   "kind": "received",
+   "amountMinor": 200000,
+   "feeMinor": 0,
+   "currency": "KES",
+   "counterparty": "JOHN KAMAU",
+   "counterpartyKind": "phone",
+   "counterpartyValue": "0700***002",
+   "receipt": "TJA0000003",
+   "balanceMinor": 700000,
+   "role": "awaitingPayee",
+   "category": "fuliza_repayment",
+   "source": "model",
+   "confidence": 0.9713538885116577
+  },
+  {
+   "time": "2026-10-26T06:15:42.000Z",
+   "direction": "outflow",
+   "kind": "sent",
+   "amountMinor": 150000,
+   "feeMinor": 1500,
+   "currency": "KES",
+   "counterparty": "JANE DOE",
+   "counterpartyKind": "phone",
+   "counterpartyValue": "0700***001",
+   "receipt": "TJA0000001",
+   "balanceMinor": 548500,
+   "role": "spending",
+   "category": "lifestyle",
+   "source": "model",
+   "confidence": 0.9974203109741211
+  },
+  {
+   "time": "2026-10-26T10:45:00.000Z",
+   "direction": "outflow",
+   "kind": "till",
+   "amountMinor": 35000,
+   "feeMinor": 0,
+   "currency": "KES",
+   "counterparty": "EXAMPLE GROCERS",
+   "counterpartyKind": "till",
+   "counterpartyValue": "EXAMPLE GROCERS",
+   "receipt": "TJA0000004",
+   "balanceMinor": 513500,
+   "role": "spending",
+   "category": "family_support",
+   "source": "model",
+   "confidence": 0.8182687759399414
+  }
+ ]
+}

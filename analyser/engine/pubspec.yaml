@@ -1,0 +1,19 @@
+name: pesaclarity_analyser
+description: >-
+  The web statement analyser's engine: the app's statement reader and
+  categoriser, compiled to JavaScript for a Web Worker.
+publish_to: none
+
+environment:
+  sdk: ^3.9.0
+
+dependencies:
+  # The same commit the app pins (app_sources.json).
+  ujumbe:
+    git:
+      url: https://github.com/pesaclarity/ujumbe-parsers.git
+      ref: d5d198704af18b9dc9110a638be75c7199e4b27c
+  crypto: ^3.0.6
+
+dev_dependencies:
+  test: ^1.25.0

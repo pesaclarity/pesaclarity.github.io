@@ -6,3 +6,5 @@ dist/
 !.env.example
 npm-debug.log*
 .DS_Store
+# The analyser engine's Dart build state.
+analyser/engine/.dart_tool/

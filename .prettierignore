@@ -9,3 +9,9 @@ LICENSE
 src/content/docs/
 src/data/changes/
 src/data/sources.lock.json
+# Built by analyser/build.sh (pdf.js, Dart wasm output); checked by hash.
+public/analyser/
+analyser/goldens/
+analyser/engine/app_sources.json
+analyser/models/
+analyser/fixtures/statements.json

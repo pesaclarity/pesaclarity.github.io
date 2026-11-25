@@ -1,0 +1,5 @@
+{
+  "repo": "https://github.com/pesaclarity/rayo",
+  "commit": "0d699efcee7216698b3438cdab65139344456741",
+  "note": "rayo.wasm, rayo-simd.wasm and rayo.mjs are built from this commit with wasi-sdk 25 (wasm/build.sh)."
+}
