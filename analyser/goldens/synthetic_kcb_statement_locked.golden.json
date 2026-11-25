@@ -1,6 +1,6 @@
 {
  "note": "What the app reads from synthetic_kcb_statement_locked.pdf (synthetic): PDFium, the app statement reader and its categoriser on rayo. Written by analyser/engine/tool/app_goldens.sh; do not edit.",
- "app": "21bfe080653e98b47845240b361cb5d0f4d276ad",
+ "app": "8493fc68181772b5d3647b7a7fdaea862637efe9",
  "institution": "kcb",
  "periodStart": "2026-09-01T00:00:00.000Z",
  "periodEnd": "2026-09-30T00:00:00.000Z",
@@ -27,9 +27,9 @@
    "receipt": "FT26244AAA01",
    "balanceMinor": 6995000,
    "role": "awaitingPayee",
-   "category": null,
-   "source": null,
-   "confidence": null
+   "category": "business_income",
+   "source": "model",
+   "confidence": 0.8349424004554749
   },
   {
    "time": "2026-08-31T21:00:00.000Z",
@@ -44,9 +44,9 @@
    "receipt": "FT26244AAA02",
    "balanceMinor": 6842000,
    "role": "spending",
-   "category": "shopping",
+   "category": "groceries",
    "source": "model",
-   "confidence": 0.9763520359992981
+   "confidence": 0.6782726049423218
   },
   {
    "time": "2026-09-01T21:00:00.000Z",
@@ -61,9 +61,9 @@
    "receipt": "FT26245AAA03",
    "balanceMinor": 6337500,
    "role": "spending",
-   "category": "shopping",
-   "source": "model",
-   "confidence": 0.9625215530395508
+   "category": null,
+   "source": null,
+   "confidence": null
   },
   {
    "time": "2026-09-01T21:00:00.000Z",
@@ -78,9 +78,9 @@
    "receipt": "FT26245AAA04",
    "balanceMinor": 6637500,
    "role": "income",
-   "category": "money_received",
-   "source": "model",
-   "confidence": 0.654445469379425
+   "category": null,
+   "source": null,
+   "confidence": null
   },
   {
    "time": "2026-09-02T21:00:00.000Z",
@@ -97,7 +97,7 @@
    "role": "spending",
    "category": "groceries",
    "source": "model",
-   "confidence": 0.7451257705688477
+   "confidence": 0.7169939279556274
   },
   {
    "time": "2026-09-02T21:00:00.000Z",
@@ -112,9 +112,9 @@
    "receipt": "FT26246AAA06",
    "balanceMinor": 6351500,
    "role": "spending",
-   "category": "shopping",
+   "category": "groceries",
    "source": "model",
-   "confidence": 0.9538028240203857
+   "confidence": 0.8966500163078308
   },
   {
    "time": "2026-09-03T21:00:00.000Z",
@@ -129,9 +129,9 @@
    "receipt": "FT26247AAA07",
    "balanceMinor": 6098500,
    "role": "spending",
-   "category": "shopping",
+   "category": "groceries",
    "source": "model",
-   "confidence": 0.9205250144004822
+   "confidence": 0.8991207480430603
   },
   {
    "time": "2026-09-03T21:00:00.000Z",
@@ -163,9 +163,9 @@
    "receipt": "FT26248AAA09",
    "balanceMinor": 5718500,
    "role": "spending",
-   "category": "shopping",
-   "source": "model",
-   "confidence": 0.9578343629837036
+   "category": null,
+   "source": null,
+   "confidence": null
   },
   {
    "time": "2026-09-04T21:00:00.000Z",
@@ -180,9 +180,9 @@
    "receipt": "FT26248AAA10",
    "balanceMinor": 5708500,
    "role": "spending",
-   "category": "friends_social",
-   "source": "model",
-   "confidence": 0.762462317943573
+   "category": null,
+   "source": null,
+   "confidence": null
   }
  ]
 }
