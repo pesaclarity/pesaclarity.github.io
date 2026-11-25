@@ -1,6 +1,6 @@
 {
  "note": "What the app reads from mpesa_month.pdf (synthetic): PDFium, the app statement reader and its categoriser on rayo. Written by analyser/engine/tool/app_goldens.sh; do not edit.",
- "app": "bccce3941b96c68d42deacbc246836c806b7a1a6",
+ "app": "21bfe080653e98b47845240b361cb5d0f4d276ad",
  "institution": "mpesa",
  "periodStart": "2026-10-01T00:00:00.000Z",
  "periodEnd": "2026-10-31T00:00:00.000Z",
@@ -25,9 +25,9 @@
    "receipt": "TJB0000101",
    "balanceMinor": 5750000,
    "role": "awaitingPayee",
-   "category": "salary",
-   "source": "model",
-   "confidence": 0.9228877425193787
+   "category": null,
+   "source": null,
+   "confidence": null
   },
   {
    "time": "2026-10-01T06:02:31.000Z",
@@ -42,9 +42,9 @@
    "receipt": "TJB0000102",
    "balanceMinor": 5500000,
    "role": "spending",
-   "category": null,
-   "source": null,
-   "confidence": null
+   "category": "utilities",
+   "source": "model",
+   "confidence": 0.8228287100791931
   },
   {
    "time": "2026-10-01T09:15:00.000Z",
@@ -59,9 +59,9 @@
    "receipt": "TJB0000103",
    "balanceMinor": 5316450,
    "role": "spending",
-   "category": "family_support",
+   "category": "groceries",
    "source": "model",
-   "confidence": 0.9992555975914001
+   "confidence": 0.9838588833808899
   },
   {
    "time": "2026-10-02T05:10:45.000Z",
@@ -93,9 +93,9 @@
    "receipt": "TJB0000105",
    "balanceMinor": 5003150,
    "role": "spending",
-   "category": "lifestyle",
+   "category": "family_support",
    "source": "model",
-   "confidence": 0.9999833703041077
+   "confidence": 0.9995148777961731
   },
   {
    "time": "2026-10-03T04:05:00.000Z",
@@ -110,9 +110,9 @@
    "receipt": "TJB0000106",
    "balanceMinor": 4653150,
    "role": "spending",
-   "category": "fuliza_repayment",
+   "category": "fuel",
    "source": "model",
-   "confidence": 0.8660915493965149
+   "confidence": 0.9922023415565491
   },
   {
    "time": "2026-10-04T10:20:11.000Z",
@@ -127,9 +127,9 @@
    "receipt": "TJB0000107",
    "balanceMinor": 4150250,
    "role": "ownTransfer",
-   "category": "airtime_data",
-   "source": "model",
-   "confidence": 0.9533886313438416
+   "category": null,
+   "source": null,
+   "confidence": null
   },
   {
    "time": "2026-10-05T07:00:00.000Z",
@@ -144,9 +144,9 @@
    "receipt": "TJB0000108",
    "balanceMinor": 4030250,
    "role": "spending",
-   "category": "fuliza_repayment",
+   "category": "utilities",
    "source": "model",
-   "confidence": 0.6364025473594666
+   "confidence": 0.9992771148681641
   },
   {
    "time": "2026-10-06T16:45:33.000Z",
@@ -161,9 +161,9 @@
    "receipt": "TJB0000109",
    "balanceMinor": 3965250,
    "role": "spending",
-   "category": null,
-   "source": null,
-   "confidence": null
+   "category": "eating_out",
+   "source": "model",
+   "confidence": 0.9999621510505676
   },
   {
    "time": "2026-10-07T05:01:02.000Z",
@@ -195,9 +195,9 @@
    "receipt": "TJB0000111",
    "balanceMinor": 4110250,
    "role": "awaitingPayee",
-   "category": "support_received",
+   "category": "money_received",
    "source": "model",
-   "confidence": 0.7080592513084412
+   "confidence": 0.8740496635437012
   },
   {
    "time": "2026-10-09T09:30:00.000Z",
@@ -212,9 +212,9 @@
    "receipt": "TJB0000112",
    "balanceMinor": 4013750,
    "role": "spending",
-   "category": "family_support",
+   "category": "groceries",
    "source": "model",
-   "confidence": 0.9585281014442444
+   "confidence": 0.9204243421554565
   },
   {
    "time": "2026-10-10T06:15:42.000Z",
@@ -229,9 +229,9 @@
    "receipt": "TJB0000113",
    "balanceMinor": 2513750,
    "role": "spending",
-   "category": "fuliza_repayment",
+   "category": "school_fees",
    "source": "model",
-   "confidence": 0.9121303558349609
+   "confidence": 0.9717881083488464
   },
   {
    "time": "2026-10-11T17:05:10.000Z",
@@ -246,9 +246,9 @@
    "receipt": "TJB0000114",
    "balanceMinor": 2471750,
    "role": "spending",
-   "category": "tax",
+   "category": "health",
    "source": "model",
-   "confidence": 0.9780140519142151
+   "confidence": 0.9996861815452576
   },
   {
    "time": "2026-10-12T04:50:00.000Z",
@@ -263,9 +263,9 @@
    "receipt": "TJB0000115",
    "balanceMinor": 2171750,
    "role": "spending",
-   "category": "fuliza_repayment",
+   "category": "fuel",
    "source": "model",
-   "confidence": 0.9852359890937805
+   "confidence": 0.9966384768486023
   },
   {
    "time": "2026-10-13T11:22:18.000Z",
@@ -280,9 +280,9 @@
    "receipt": "TJB0000116",
    "balanceMinor": 2070450,
    "role": "spending",
-   "category": null,
-   "source": null,
-   "confidence": null
+   "category": "loan_repayment",
+   "source": "model",
+   "confidence": 0.7475061416625977
   },
   {
    "time": "2026-10-14T08:11:11.000Z",
@@ -297,9 +297,9 @@
    "receipt": "TJB0000117",
    "balanceMinor": 1770550,
    "role": "spending",
-   "category": null,
-   "source": null,
-   "confidence": null
+   "category": "family_support",
+   "source": "model",
+   "confidence": 0.961013913154602
   },
   {
    "time": "2026-10-15T13:40:00.000Z",
@@ -314,9 +314,9 @@
    "receipt": "TJB0000118",
    "balanceMinor": 1692550,
    "role": "spending",
-   "category": "family_support",
-   "source": "model",
-   "confidence": 0.7936219573020935
+   "category": null,
+   "source": null,
+   "confidence": null
   },
   {
    "time": "2026-10-16T05:35:27.000Z",
@@ -348,9 +348,9 @@
    "receipt": "TJB0000120",
    "balanceMinor": 1540475,
    "role": "spending",
-   "category": "family_support",
+   "category": "groceries",
    "source": "model",
-   "confidence": 0.9941148161888123
+   "confidence": 0.9329190254211426
   },
   {
    "time": "2026-10-19T18:30:45.000Z",
@@ -365,9 +365,9 @@
    "receipt": "TJB0000121",
    "balanceMinor": 1495475,
    "role": "spending",
-   "category": "transport",
-   "source": "model",
-   "confidence": 0.6608401536941528
+   "category": null,
+   "source": null,
+   "confidence": null
   },
   {
    "time": "2026-10-20T10:00:00.000Z",
@@ -399,9 +399,9 @@
    "receipt": "TJB0000123",
    "balanceMinor": 1195475,
    "role": "spending",
-   "category": "savings",
-   "source": "model",
-   "confidence": 0.8939512372016907
+   "category": null,
+   "source": null,
+   "confidence": null
   },
   {
    "time": "2026-10-22T15:05:33.000Z",
@@ -433,9 +433,9 @@
    "receipt": "TJB0000125",
    "balanceMinor": 954575,
    "role": "spending",
-   "category": null,
-   "source": null,
-   "confidence": null
+   "category": "eating_out",
+   "source": "model",
+   "confidence": 0.9999759197235107
   },
   {
    "time": "2026-10-25T04:30:00.000Z",
@@ -450,9 +450,9 @@
    "receipt": "TJB0000126",
    "balanceMinor": 704575,
    "role": "spending",
-   "category": "fuliza_repayment",
+   "category": "fuel",
    "source": "model",
-   "confidence": 0.9978905320167542
+   "confidence": 0.9800065755844116
   },
   {
    "time": "2026-10-27T12:15:15.000Z",
@@ -467,9 +467,9 @@
    "receipt": "TJB0000127",
    "balanceMinor": 524575,
    "role": "spending",
-   "category": "savings",
+   "category": "family_support",
    "source": "model",
-   "confidence": 0.999812126159668
+   "confidence": 0.8503671884536743
   },
   {
    "time": "2026-10-28T05:08:08.000Z",
@@ -501,9 +501,9 @@
    "receipt": "TJB0000129",
    "balanceMinor": 303535,
    "role": "spending",
-   "category": "family_support",
+   "category": "groceries",
    "source": "model",
-   "confidence": 0.9873324036598206
+   "confidence": 0.9910518527030945
   },
   {
    "time": "2026-10-30T07:30:00.000Z",
@@ -518,9 +518,9 @@
    "receipt": "TJB0000130",
    "balanceMinor": 50235,
    "role": "spending",
-   "category": "lifestyle",
+   "category": "savings",
    "source": "model",
-   "confidence": 0.9999977946281433
+   "confidence": 0.6765902638435364
   }
  ]
 }

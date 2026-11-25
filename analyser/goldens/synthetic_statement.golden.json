@@ -1,6 +1,6 @@
 {
  "note": "What the app reads from synthetic_statement.pdf (synthetic): PDFium, the app statement reader and its categoriser on rayo. Written by analyser/engine/tool/app_goldens.sh; do not edit.",
- "app": "bccce3941b96c68d42deacbc246836c806b7a1a6",
+ "app": "21bfe080653e98b47845240b361cb5d0f4d276ad",
  "institution": "mpesa",
  "periodStart": "2026-10-01T00:00:00.000Z",
  "periodEnd": "2026-10-31T00:00:00.000Z",
@@ -25,9 +25,9 @@
    "receipt": "TJA0000003",
    "balanceMinor": 700000,
    "role": "awaitingPayee",
-   "category": "fuliza_repayment",
+   "category": "gifts_received",
    "source": "model",
-   "confidence": 0.9713538885116577
+   "confidence": 0.918152928352356
   },
   {
    "time": "2026-10-26T06:15:42.000Z",
@@ -42,9 +42,9 @@
    "receipt": "TJA0000001",
    "balanceMinor": 548500,
    "role": "spending",
-   "category": "lifestyle",
+   "category": "giving",
    "source": "model",
-   "confidence": 0.9974203109741211
+   "confidence": 0.8586239814758301
   },
   {
    "time": "2026-10-26T10:45:00.000Z",
@@ -59,9 +59,9 @@
    "receipt": "TJA0000004",
    "balanceMinor": 513500,
    "role": "spending",
-   "category": "family_support",
+   "category": "groceries",
    "source": "model",
-   "confidence": 0.8182687759399414
+   "confidence": 0.7685323357582092
   }
  ]
 }
