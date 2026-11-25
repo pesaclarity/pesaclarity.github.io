@@ -1,12 +1,12 @@
 {
   "files": {
-    "categoriser.weights": "0b97460bc709388fce6f9f08c58f3b0d307677271432e67dcd158d66595eff9d",
+    "categoriser.weights": "d2483ed0acb342ede6d62f99f7bd2d20e696f9449953c33719891bb5f70c874c",
     "core.mjs": "0ea5e14e69124ad1722029b0fe1ab2c92f27dff12fef222beb7a9602d2821c8f",
-    "engine.mjs": "560a41d2d04514b8de2cc007aada4798154e02291e3ae6c488e7fbed01b535b8",
-    "engine.wasm": "af22cb9626c52dda9bca4e7169dd318ce5268fee5337a44debd0ee52bac4e4a6",
+    "engine.mjs": "2cc43c8bd3cea5d1e389dfafa620cb0629cca3bc4c7c17b7f7b6ce42f95816f7",
+    "engine.wasm": "80b65290d7c737bce977d22a58e951b36d3ab8dfb83079ced864b6335a19ad62",
     "extract.mjs": "4e0aee86773f4f62450a9e8ebaa110799d19a9b8f51b08bbf9d273d38ca35a82",
     "labels.json": "016066696a8b194e9a2449753241d6c7a28eb795865df4be5f01c5b850a731e8",
-    "model-manifest.json": "b90b5f98a7e37ba49eac2c47798c6f6fb8bb03dca7ab4d63414b8535293fd175",
+    "model-manifest.json": "fced1a01d2b3657b14b55698f5c30eb440a76dca30ef52043ac8e8c9871310e9",
     "pdf.min.mjs": "522ad2c83bc8a0010e7f0cc60d0892b77c8d2bf2c9702dc12288311d94270f42",
     "pdf.worker.min.mjs": "b4c8353ded0d88d2e2009574a29eb4e0c3ff7e942ecdf51ef5f71566a9667f31",
     "rayo-simd.wasm": "810cc4efaa824016a63a177e3b73fe46bf7c1994d722c9302b9cb9e0652c6497",

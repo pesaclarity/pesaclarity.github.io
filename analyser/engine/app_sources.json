@@ -1,6 +1,6 @@
 {
   "app": "https://github.com/pesaclarity/pesaclarity-app",
-  "commit": "bccce3941b96c68d42deacbc246836c806b7a1a6",
+  "commit": "21bfe080653e98b47845240b361cb5d0f4d276ad",
   "ujumbe": "d5d198704af18b9dc9110a638be75c7199e4b27c",
   "files": {
     "core/money/currency_data.dart": "9c0b5383f73860deef337c84b55e227a0ac07a81cb32cd7bdea3af1efce436e5",
@@ -11,7 +11,7 @@
     "domain/categoriser/features.dart": "f735ef2c5be85e660bf1b4719fc2b1f0ff0ad07e0535c0157e680b4109393711",
     "domain/categoriser/learning.dart": "602b602e135d9c13db9fb5b2bf57e30b6ad9d6bd282b63c0d3a2acf811f36245",
     "domain/categoriser/model_manifest.dart": "4d870b16cc284a0d7b88cde47985324b3e3ca2a5f32cc7b6b6bcfdb40c72b947",
-    "domain/categoriser/rule_categoriser.dart": "0fd3df9e088e9848e2f6f385668edb4b3b7e22fd9f6a13ed3335e33fae4281bf",
+    "domain/categoriser/rule_categoriser.dart": "5d5f8b39c1a49a6489a5ee82f8a7393ee40dff184e517a3df7f7c5115fd6cd7f",
     "domain/categoriser/suggester.dart": "ab765bbff33c43cd90d6b83be6378d35683c0e42e143a606afba063e3d2010c7",
     "domain/categoriser/trainable.dart": "2bc620b0b8141499fa9811935e91fd27e981fb0de73dc2875b7a55b1ec4ae745",
     "domain/enums.dart": "86f5cdf1f1c124fcb14390fd809ec8c58d5fc26cb7f6707dbf7078d775a3d999",
@@ -29,8 +29,8 @@
     "domain/statements/statement_type.dart": "70080ec6c57e7cf3a128e69e367c33271f09f1936467a294748f1f1b6931a816",
     "domain/time/calendar.dart": "27b5d9121dbfa0e44043bcb3d3a0b3efb41e86aefefa1ccd5f9ee0a3d761dd54",
     "mapping.dart": "7a6fc59c9b44c4cc0e1b7beb1d983809e80d614b1d6a087f50ff5ee5eff85110",
-    "models/categoriser.weights": "0b97460bc709388fce6f9f08c58f3b0d307677271432e67dcd158d66595eff9d",
+    "models/categoriser.weights": "d2483ed0acb342ede6d62f99f7bd2d20e696f9449953c33719891bb5f70c874c",
     "models/labels.json": "016066696a8b194e9a2449753241d6c7a28eb795865df4be5f01c5b850a731e8",
-    "models/model-manifest.json": "b90b5f98a7e37ba49eac2c47798c6f6fb8bb03dca7ab4d63414b8535293fd175"
+    "models/model-manifest.json": "fced1a01d2b3657b14b55698f5c30eb440a76dca30ef52043ac8e8c9871310e9"
   }
 }
