@@ -110,10 +110,11 @@ for (const { name, html } of pages) {
     for (const [, attrs, body] of scripts.filter((s) => /\ssrc=/.test(s[1]))) {
       assert.match(
         attrs,
-        new RegExp(`src="${base}/_astro/(Search|DocBody)[^"]+\\.js"`),
+        new RegExp(`src="${base}/_astro/(Search|DocBody|analyse)[^"]+\\.js"`),
       );
       assert.equal(body.trim(), "");
       if (/DocBody/.test(attrs)) assert.match(name, /^docs\/[^/]+\/[^/]+\//);
+      else if (/analyse/.test(attrs)) assert.equal(name, "analyse/index.html");
       else assert.match(html, /data-search-input/);
     }
     assert.doesNotMatch(html, /\son[a-z]+="/i);

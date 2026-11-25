@@ -1,0 +1,555 @@
+---
+import Base from "../layouts/Base.astro";
+import { withBase } from "../lib/paths";
+---
+
+<Base
+  title="Statement analyser"
+  description="Open an M-Pesa or KCB statement PDF and see your money in and out, spending by category, top payees and fees. It is read in your browser; nothing is uploaded."
+  strictCsp
+>
+  <div
+    class="container analyser"
+    data-analyser
+    data-worker={withBase("/analyser/worker.mjs")}
+    data-install={withBase("/install/")}
+  >
+    <p class="visually-hidden" role="status" aria-live="polite" data-status></p>
+    <div class="an-bar-top">
+      <button type="button" class="button button-secondary" data-clear hidden>
+        Clear
+      </button>
+    </div>
+
+    <section class="an-view an-narrow" data-view-choose>
+      <h1 class="an-title" tabindex="-1">
+        See where your money went
+      </h1>
+      <p class="an-lead">
+        Open an M-Pesa or KCB statement PDF and see your spending by category,
+        your top payees and what you paid in fees.
+      </p>
+      <div class="an-card an-drop" data-drop>
+        <p class="an-drop-text" aria-hidden="true">
+          Drop a statement PDF here
+        </p>
+        <label class="button button-primary an-wide an-pick">
+          Choose a PDF
+          <input
+            class="visually-hidden"
+            type="file"
+            accept="application/pdf,.pdf"
+            data-file
+          />
+        </label>
+        <p class="an-error" role="alert" data-choose-error></p>
+      </div>
+      <div class="an-card an-privacy">
+        <svg
+          class="an-lock"
+          viewBox="0 0 24 24"
+          width="22"
+          height="22"
+          aria-hidden="true"
+        >
+          <rect x="4.5" y="10.5" width="15" height="10" rx="2"></rect>
+          <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"></path>
+          <circle cx="12" cy="15.5" r="1.2"></circle>
+        </svg>
+        <p>
+          Your statement stays on this device. It is read here, in this page;
+          nothing is uploaded or kept. Once the page has loaded it works with
+          the internet off.
+        </p>
+      </div>
+      <p class="an-hint">
+        Get your M-Pesa statement from the M-PESA app, or by dialling *334#. It
+        comes by email with a password. One statement at a time.
+      </p>
+    </section>
+
+    <section class="an-view an-narrow" data-view-password hidden>
+      <h2 class="an-title" tabindex="-1">
+        This statement has a password
+      </h2>
+      <div class="an-card an-file">
+        <div>
+          <p class="an-file-name" data-file-name></p>
+          <p class="an-file-detail" data-file-detail></p>
+        </div>
+        <button type="button" class="an-link-button" data-change>
+          Change
+        </button>
+      </div>
+      <form class="an-form" data-password-form>
+        <label for="an-password">Password</label>
+        <input
+          id="an-password"
+          type="password"
+          autocomplete="off"
+          aria-describedby="an-password-error an-password-help"
+          data-password
+        />
+        <p
+          id="an-password-error"
+          class="an-error"
+          role="alert"
+          data-password-error
+        ></p>
+        <p id="an-password-help" class="an-hint">
+          For M-Pesa it is in the SMS that came with the statement. It is used
+          only on this page, never kept or sent.
+        </p>
+        <button type="submit" class="button button-primary an-wide">
+          Open
+        </button>
+      </form>
+    </section>
+
+    <section class="an-view an-narrow" data-view-reading hidden>
+      <h2 class="an-title" tabindex="-1">
+        Reading your statement
+      </h2>
+      <div class="an-card an-file">
+        <div>
+          <p class="an-file-name" data-file-name></p>
+          <p class="an-file-detail" data-file-detail></p>
+        </div>
+        <button type="button" class="an-link-button" data-change>
+          Change
+        </button>
+      </div>
+      <div class="an-card">
+        <ol class="an-steps" role="list">
+          <li data-step>Opened the PDF</li>
+          <li data-step data-step-count>
+            Read the transactions
+          </li>
+          <li data-step>Sorting them into categories</li>
+        </ol>
+        <progress
+          class="an-progress"
+          max="3"
+          value="0"
+          aria-label="Reading progress"
+          data-progress
+        ></progress>
+      </div>
+    </section>
+
+    <section class="an-view" data-view-results hidden>
+      <div data-results></div>
+    </section>
+
+    <section class="an-view an-narrow" data-view-unsupported hidden>
+      <h2 class="an-title" tabindex="-1">
+        Please update your browser
+      </h2>
+      <p class="an-lead">
+        The statement analyser needs a newer browser: Chrome or Edge 137+,
+        Firefox 131+, or Safari 18.4+.
+      </p>
+    </section>
+
+    <noscript>
+      <p class="an-lead">
+        The statement analyser reads your statement in this page, so it needs
+        JavaScript turned on.
+      </p>
+    </noscript>
+  </div>
+</Base>
+
+<script>
+  import "../scripts/analyser-page";
+</script>
+
+<style is:global>
+  .analyser {
+    padding-block: var(--space-5) var(--space-8);
+  }
+  .an-bar-top {
+    display: flex;
+    justify-content: flex-end;
+    min-height: var(--size-touch-target);
+  }
+  .an-narrow {
+    max-width: 34rem;
+    margin-inline: auto;
+  }
+  .an-title {
+    font-size: var(--text-xl);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin: 0 0 var(--space-3);
+  }
+  .an-title:focus {
+    outline: none;
+  }
+  .an-lead,
+  .an-sub {
+    color: var(--color-text-muted);
+    margin: 0 0 var(--space-5);
+  }
+  .an-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    padding: var(--space-4) var(--space-5);
+    margin-bottom: var(--space-4);
+  }
+  .an-wide {
+    width: 100%;
+  }
+  .an-drop {
+    text-align: center;
+    padding-block: var(--space-6);
+    border-style: dashed;
+  }
+  .an-drop[data-over] {
+    border-color: var(--color-brand);
+  }
+  .an-drop-text {
+    margin: 0 0 var(--space-4);
+  }
+  .an-pick {
+    cursor: pointer;
+  }
+  .an-pick:focus-within {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 3px;
+  }
+  .an-error {
+    color: var(--color-brand-link);
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-sm);
+  }
+  .an-error:empty {
+    display: none;
+  }
+  .an-privacy {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+  }
+  .an-privacy p {
+    margin: 0;
+    font-size: var(--text-sm);
+  }
+  .an-lock {
+    flex: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+  }
+  .an-hint {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    margin: var(--space-2) 0 var(--space-4);
+  }
+  .an-file {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .an-file > div {
+    min-width: 0;
+  }
+  .an-file p {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .analyser [hidden] {
+    display: none !important;
+  }
+  .an-file-detail {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+  .an-link-button {
+    font: inherit;
+    font-weight: 600;
+    background: none;
+    border: 0;
+    color: var(--color-text);
+    min-height: var(--size-touch-target);
+    padding-inline: var(--space-3);
+    cursor: pointer;
+    border-radius: var(--radius-small);
+  }
+  .an-form label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: var(--space-2);
+  }
+  .an-form input {
+    width: 100%;
+    font: inherit;
+    font-size: var(--text-lg);
+    min-height: var(--size-touch-target);
+    padding: var(--space-2) var(--space-3);
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-bottom: 2px solid var(--color-text-muted);
+    border-radius: var(--radius-small);
+  }
+  .an-form input[aria-invalid="true"] {
+    border-bottom-color: var(--color-brand-link);
+  }
+  .an-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-4);
+    display: grid;
+    gap: var(--space-3);
+  }
+  .an-steps li {
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+    color: var(--color-text-muted);
+  }
+  .an-steps li::before {
+    content: "";
+    flex: none;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 50%;
+    border: 2px solid var(--color-border);
+  }
+  .an-steps li[data-state="done"] {
+    color: var(--color-text);
+  }
+  .an-steps li[data-state="done"]::before {
+    border-color: var(--color-text);
+    background: radial-gradient(circle, var(--color-text) 35%, transparent 40%);
+  }
+  .an-steps li[data-state="now"]::before {
+    border-color: var(--color-text-muted);
+  }
+  .an-progress {
+    width: 100%;
+    height: 6px;
+    appearance: none;
+    border: 0;
+    border-radius: 3px;
+    background: var(--color-subtle);
+    overflow: hidden;
+  }
+  .an-progress::-webkit-progress-bar {
+    background: var(--color-subtle);
+  }
+  .an-progress::-webkit-progress-value {
+    background: var(--color-text);
+  }
+  .an-progress::-moz-progress-bar {
+    background: var(--color-text);
+  }
+
+  /* Results */
+  .an-head {
+    margin-bottom: var(--space-4);
+  }
+  .an-head .an-sub {
+    margin-bottom: var(--space-2);
+  }
+  .an-note {
+    color: var(--color-warning);
+    font-size: var(--text-sm);
+  }
+  .an-grid {
+    display: grid;
+    gap: 0 var(--space-6);
+  }
+  @media (min-width: 56rem) {
+    .an-grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+  .an-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+    gap: var(--space-3);
+  }
+  .an-stat p {
+    margin: 0;
+  }
+  .an-stat-label,
+  .an-stat-detail {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+  .an-stat-value {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .an-in {
+    color: var(--color-success-text);
+  }
+  .an-chart {
+    margin-inline: 0;
+  }
+  .an-chart-title {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+  }
+  .an-chart-svg {
+    display: block;
+    width: 100%;
+    height: 8rem;
+  }
+  .an-bar-in {
+    fill: var(--color-text-muted);
+    opacity: 0.55;
+  }
+  .an-bar-out {
+    fill: var(--color-text);
+  }
+  .an-chart-labels {
+    display: grid;
+    grid-template-columns: repeat(var(--n), 1fr);
+    text-align: center;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    margin-top: var(--space-2);
+  }
+  .an-legend {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    margin: var(--space-2) 0 0;
+  }
+  .an-key {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 2px;
+    display: inline-block;
+  }
+  .an-key-in {
+    background: var(--color-text-muted);
+    opacity: 0.55;
+  }
+  .an-key-out {
+    background: var(--color-text);
+    margin-left: var(--space-2);
+  }
+  .an-section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: var(--space-5) 0 var(--space-2);
+  }
+  .an-label {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+  .an-label-side {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+  .an-grid > .an-col:first-child > .an-section-head:first-child,
+  .an-col > .an-section-head:first-child {
+    margin-top: 0;
+  }
+  @media (max-width: 55.99rem) {
+    .an-col + .an-col > .an-section-head:first-child {
+      margin-top: var(--space-5);
+    }
+  }
+  .an-list > [hidden] {
+    display: none;
+  }
+  .an-card-list {
+    padding: 0;
+    overflow: hidden;
+  }
+  .an-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .an-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-1) var(--space-3);
+    align-items: center;
+    padding: var(--space-3) var(--space-5);
+  }
+  .an-list > .an-row + .an-row {
+    border-top: 1px solid var(--color-border);
+  }
+  .an-row-text {
+    display: grid;
+    min-width: 0;
+  }
+  .an-row-label {
+    overflow-wrap: anywhere;
+  }
+  .an-row-detail {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+  .an-row-amount {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .an-meter {
+    grid-column: 1 / -1;
+    height: 6px;
+    border-radius: 3px;
+    background:
+      linear-gradient(var(--color-text), var(--color-text)) 0 0 / var(--w) 100%
+        no-repeat,
+      var(--color-subtle);
+  }
+  .an-more {
+    display: block;
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    color: var(--color-text);
+    background: none;
+    border: 0;
+    border-top: 1px solid var(--color-border);
+    min-height: var(--size-touch-target);
+    padding: var(--space-3) var(--space-5);
+    cursor: pointer;
+  }
+  .an-more::after {
+    content: "›";
+    float: right;
+  }
+  .an-app {
+    margin-top: var(--space-5);
+  }
+  .an-app-title {
+    font-size: var(--text-lg);
+    margin: 0 0 var(--space-2);
+  }
+  .an-app p {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    margin: 0 0 var(--space-4);
+  }
+  [data-view="results"] .an-bar-top {
+    margin-bottom: calc(-1 * var(--size-touch-target));
+  }
+  [data-view="results"] .an-head {
+    padding-right: 6rem;
+  }
+</style>
