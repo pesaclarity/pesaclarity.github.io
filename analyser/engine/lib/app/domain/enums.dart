@@ -1,0 +1,192 @@
+/// Kinds of account the app tracks.
+enum AccountType {
+  bank,
+  mpesa,
+  sacco,
+  moneyMarket,
+  cash,
+
+  /// An account added by hand that is none of the above.
+  other,
+
+  /// Money on one of this space's own accounts that belongs to another
+  /// space (decision 0027): "Held for Vegetable stall" in Personal, one for
+  /// each other space and account. Below zero, the other space owes this
+  /// one. Never a money account of its own: it holds no messages and no
+  /// reported balance.
+  heldForSpace,
+
+  /// This space's money on an account that lives in another space: the
+  /// business's "On your M-Pesa", the owner's account. Below zero, it is
+  /// what the owner has put in. Switched payments sit on it.
+  ownersAccount,
+
+  /// Another space's money that paid for something of this space's: the
+  /// owner's purchase with the business's money, "Paid from Vegetable
+  /// stall" in Personal. It counts in neither money in nor money out.
+  paidBySpace;
+
+  /// Whether this is one of the accounts money between spaces keeps
+  /// ([heldForSpace], [ownersAccount], [paidBySpace]): no messages are read
+  /// into it, it has no reported balance, and it is left out of what the
+  /// space's own accounts hold.
+  bool get isBetweenSpaces =>
+      this == heldForSpace || this == ownersAccount || this == paidBySpace;
+}
+
+/// Whether money came in or went out of an account.
+enum TransactionDirection { inflow, outflow }
+
+/// What kind of message or statement line a transaction came from.
+///
+/// Mirrors the ujumbe parser's transaction types, plus the noise kinds that
+/// Activity collapses to one line per day.
+enum TransactionKind {
+  sent,
+  received,
+  paybill,
+  till,
+  withdrawal,
+  deposit,
+  airtime,
+  fulizaDraw,
+  fulizaRepayment,
+
+  /// A repayment of a loan, such as a bank's salary advance, which the
+  /// message names. Paying back a debt, never spending.
+  loanRepayment,
+
+  /// Small automatic moves into a money market fund, such as spare change.
+  roundUp,
+
+  /// A bank or wallet charge sent as its own message or statement line.
+  charge,
+  reversal,
+  bank,
+
+  /// The difference recorded when the person sets an account's real
+  /// balance, or explains a gap between two reported balances. Neither
+  /// income nor spending.
+  correction,
+}
+
+/// Where a transaction came from.
+enum TransactionSource { sms, statement, manual }
+
+/// Category kinds; only [expense] counts as spending.
+enum CategoryType { income, expense, debt, savings, tax, transfer }
+
+/// Leakage groups shown on Insights; [none] is not a leak.
+enum LeakType { none, lifestyle, friends, family, fees }
+
+/// What a payee raw identifier is: a phone number, a Buy Goods till, a
+/// paybill with its account reference, or a bank account number.
+enum PayeeIdentifierKind { phone, till, paybill, account }
+
+enum RecurrenceFrequency { weekly, monthly, quarterly, yearly }
+
+/// Whether a repeat charge is tracked as a subscription, or was marked as a
+/// one-off so it is not suggested again.
+enum SubscriptionStatus { tracking, dismissed }
+
+/// A budget line that is not a recurring bill.
+enum BudgetItemKind { oneOff, carriedArrears }
+
+enum DebtType {
+  bankLoan,
+  card,
+  overdraft,
+  salaryAdvance,
+  fuliza,
+  mobileLoan,
+  saccoLoan,
+  family,
+
+  /// A business's supplier, for stock or costs bought to pay later.
+  supplier,
+}
+
+enum GoalStatus { active, paused, achieved }
+
+/// What an entry on a savings account the app keeps is.
+enum SavingsEntryKind {
+  /// Money paid in from another of the person's accounts, or typed in.
+  paidIn,
+
+  /// Money taken back out to another of the person's accounts, or typed in.
+  takenOut,
+
+  /// What a balance the person typed showed the money had earned.
+  interest,
+
+  /// The rest of what a typed balance showed: money that was there before
+  /// the records start, or a change nothing recorded explains. Never income
+  /// or spending.
+  correction,
+}
+
+enum ParserPackTestStatus { unknown, passed, failed }
+
+/// Where a category suggestion came from.
+enum SuggestionSource {
+  /// The person's own earlier choice for this payee.
+  correction,
+
+  /// The on-device categoriser model.
+  model,
+
+  /// Built-in payee defaults and rules, used when no model is installed.
+  rules,
+}
+
+/// How an imported statement compared with the ledger.
+enum StatementImportResult {
+  /// The ledger balance matches the statement's closing balance.
+  reconciled,
+
+  /// The ledger is off from the statement's closing balance by some amount.
+  gap,
+}
+
+/// How part of a sale was paid.
+enum SalePaymentMethod {
+  cash,
+  mpesa,
+  bank,
+
+  /// The customer pays later.
+  credit,
+}
+
+/// A record made from a business's Today: stock or a cost bought, a
+/// customer paying what they owe, paying a supplier, the owner paying
+/// themselves, or change sent back to a customer who paid too much.
+enum QuickRecordKind { bought, gotPaid, paid, paidYourself, change, putIn }
+
+/// What a business sells: something kept in stock, or its time or skill.
+enum ItemKind { product, service }
+
+/// Why an item's stock changed.
+enum StockMoveKind {
+  /// What was there when the item was added.
+  opening,
+
+  /// Sold: stock down at the average cost.
+  sold,
+
+  /// Bought to sell: stock up at what was paid.
+  restocked,
+
+  /// Counted: the difference from what the records said.
+  counted,
+}
+
+/// Why a count came out different from the records.
+enum CountReason {
+  spoiled,
+  used,
+  lost,
+
+  /// The records were wrong; not a cost.
+  miscounted,
+}

@@ -1,0 +1,8 @@
+[
+  { "file": "synthetic_statement.pdf" },
+  { "file": "synthetic_statement_locked.pdf", "password": "0000" },
+  { "file": "synthetic_kcb_statement.pdf" },
+  { "file": "synthetic_kcb_statement_locked.pdf", "password": "5678" },
+  { "file": "mpesa_month.pdf" },
+  { "file": "mpesa_month_locked.pdf", "password": "4321" }
+]
