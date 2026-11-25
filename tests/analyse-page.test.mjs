@@ -3,8 +3,11 @@
 // app's goldens, that nothing is requested from anywhere but this site, and
 // that Clear forgets everything. Run `npm run build` first.
 //
-// Needs playwright-core and a Chromium. Skipped when playwright-core cannot
-// be found; set PLAYWRIGHT_CORE to its folder to point at one elsewhere.
+// Needs playwright-core and a Chromium (`npx playwright-core install
+// chromium`). Skipped when playwright-core cannot be found, except in CI
+// (CI=true), where that is a failure; set PLAYWRIGHT_CORE to its folder to
+// point at one elsewhere, and PLAYWRIGHT_CHROMIUM to a Chromium binary to use
+// instead of Playwright's own.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createServer } from "node:http";
@@ -27,6 +30,11 @@ async function loadPlaywright() {
   return null;
 }
 const chromium = await loadPlaywright();
+if (!chromium && process.env.CI === "true") {
+  throw new Error(
+    "playwright-core not found; CI must run the analyser page test (npm ci)",
+  );
+}
 
 const types = {
   ".html": "text/html",
@@ -77,7 +85,11 @@ test(
   async () => {
     const server = await serve();
     const origin = `http://127.0.0.1:${server.address().port}`;
-    const browser = await chromium.launch();
+    const browser = await chromium.launch(
+      process.env.PLAYWRIGHT_CHROMIUM
+        ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM }
+        : {},
+    );
     try {
       const page = await browser.newPage();
       const requests = [];
