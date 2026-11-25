@@ -1,12 +1,12 @@
 {
   "files": {
-    "categoriser.weights": "d2483ed0acb342ede6d62f99f7bd2d20e696f9449953c33719891bb5f70c874c",
+    "categoriser.weights": "c97c8e0abf64eec71b0d5ca96ed3abf95dfd600a27e4b45a16617a131eda2aee",
     "core.mjs": "0ea5e14e69124ad1722029b0fe1ab2c92f27dff12fef222beb7a9602d2821c8f",
     "engine.mjs": "2cc43c8bd3cea5d1e389dfafa620cb0629cca3bc4c7c17b7f7b6ce42f95816f7",
-    "engine.wasm": "80b65290d7c737bce977d22a58e951b36d3ab8dfb83079ced864b6335a19ad62",
+    "engine.wasm": "3c9e4434293c6027ed9860b7026729658cfaf7dfa77c7d9711e04ee1eecc9ec7",
     "extract.mjs": "4e0aee86773f4f62450a9e8ebaa110799d19a9b8f51b08bbf9d273d38ca35a82",
     "labels.json": "016066696a8b194e9a2449753241d6c7a28eb795865df4be5f01c5b850a731e8",
-    "model-manifest.json": "fced1a01d2b3657b14b55698f5c30eb440a76dca30ef52043ac8e8c9871310e9",
+    "model-manifest.json": "2642712d5407d597128047d23a3c14934ca9a7cfdf118e3840e65273ebec9a28",
     "pdf.min.mjs": "522ad2c83bc8a0010e7f0cc60d0892b77c8d2bf2c9702dc12288311d94270f42",
     "pdf.worker.min.mjs": "b4c8353ded0d88d2e2009574a29eb4e0c3ff7e942ecdf51ef5f71566a9667f31",
     "rayo-simd.wasm": "810cc4efaa824016a63a177e3b73fe46bf7c1994d722c9302b9cb9e0652c6497",
