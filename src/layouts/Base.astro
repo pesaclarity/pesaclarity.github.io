@@ -1,4 +1,5 @@
 ---
+import { createHash } from "node:crypto";
 import { withBase } from "../lib/paths";
 import "@fontsource/inter/latin-400.css";
 import "@fontsource/inter/latin-500.css";
@@ -17,9 +18,18 @@ interface Props {
   title?: string;
   description?: string;
   noindex?: boolean;
+  /** A strict Content-Security-Policy as a meta tag (GitHub Pages sends no headers). */
+  strictCsp?: boolean;
 }
 
-const { title, description = site.description, noindex = false } = Astro.props;
+const {
+  title,
+  description = site.description,
+  noindex = false,
+  strictCsp = false,
+} = Astro.props;
+const themeHash = createHash("sha256").update(themeScript).digest("base64");
+const csp = `default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-${themeHash}'; worker-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'`;
 const pageTitle = title
   ? `${title} · ${site.name}`
   : `${site.name}: ${site.promise}`;
@@ -32,6 +42,7 @@ const ogImage = new URL(withBase("/og.png"), Astro.site);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {strictCsp && <meta http-equiv="Content-Security-Policy" content={csp} />}
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
