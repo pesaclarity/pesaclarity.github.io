@@ -7,7 +7,9 @@
 // the checkout is on, except lib/app/mapping.dart: the pure functions of the
 // app's transaction_mapping.dart, cut out mechanically (its database
 // imports and transactionFromParsed, which writes a database row, are
-// dropped). The commit and each file's SHA-256 go to app_sources.json, and
+// dropped). It also copies the model the app ships to ../models and the
+// app's encoder vectors and recorded categoriser outputs to ../goldens/app.
+// The commit and each file's SHA-256 go to app_sources.json, and
 // test/sources_test.dart fails if a copied file is edited by hand.
 import 'dart:convert';
 import 'dart:io';
@@ -42,6 +44,14 @@ const files = [
   'domain/reader/rule_reader.dart',
   'domain/statements/statement_type.dart',
   'domain/time/calendar.dart',
+];
+
+/// The app's test vectors and recorded outputs the analyser tests check
+/// against, relative to the app's test/fixtures, copied to ../goldens/app.
+const goldens = [
+  'categoriser/categoriser_decodes.json',
+  'categoriser/feature_vectors.v1.json',
+  'reader/reader_vectors.v1.json',
 ];
 
 const mappingSource = 'features/sms/application/transaction_mapping.dart';
@@ -102,11 +112,15 @@ void main(List<String> args) {
                 '--porcelain',
                 '--',
                 'lib',
+                'assets/models',
+                'test/fixtures',
               ]).stdout
               as String)
           .trim();
   if (dirty.isNotEmpty) {
-    stderr.writeln('the app checkout has changes under lib:\n$dirty');
+    stderr.writeln(
+      'the app checkout has changes under lib, assets/models or test/fixtures:\n$dirty',
+    );
     exit(1);
   }
   final out = Directory('lib/app');
@@ -119,28 +133,40 @@ void main(List<String> args) {
       ..writeAsBytesSync(bytes);
     hashes[f] = sha(bytes);
   }
-  final mapping = cutMapping(File('$app/lib/src/$mappingSource').readAsStringSync());
+  final mapping = cutMapping(
+    File('$app/lib/src/$mappingSource').readAsStringSync(),
+  );
   File('lib/app/mapping.dart').writeAsStringSync(mapping);
   hashes['mapping.dart'] = sha(utf8.encode(mapping));
 
   // The model the app ships, for the web worker.
   final models = Directory('../models')..createSync(recursive: true);
-  for (final m in ['categoriser.weights', 'labels.json', 'model-manifest.json']) {
+  for (final m in [
+    'categoriser.weights',
+    'labels.json',
+    'model-manifest.json',
+  ]) {
     final bytes = File('$app/assets/models/categoriser/$m').readAsBytesSync();
     File('${models.path}/$m').writeAsBytesSync(bytes);
     hashes['models/$m'] = sha(bytes);
+  }
+
+  // The app's test vectors and recorded outputs, for tests/analyser.test.mjs.
+  final appGoldens = Directory('../goldens/app');
+  if (appGoldens.existsSync()) appGoldens.deleteSync(recursive: true);
+  appGoldens.createSync(recursive: true);
+  for (final g in goldens) {
+    final name = g.split('/').last;
+    final bytes = File('$app/test/fixtures/$g').readAsBytesSync();
+    File('${appGoldens.path}/$name').writeAsBytesSync(bytes);
+    hashes['goldens/app/$name'] = sha(bytes);
   }
 
   final ujumbe = RegExp(
     r'ujumbe:\s*\n\s*git:\s*\n\s*url: (\S+)\s*\n\s*ref: (\S+)',
   ).firstMatch(File('$app/pubspec.yaml').readAsStringSync());
   File('app_sources.json').writeAsStringSync(
-    '${const JsonEncoder.withIndent('  ').convert({
-      'app': 'https://github.com/pesaclarity/pesaclarity-app',
-      'commit': commit,
-      'ujumbe': ujumbe?.group(2),
-      'files': hashes,
-    })}\n',
+    '${const JsonEncoder.withIndent('  ').convert({'app': 'https://github.com/pesaclarity/pesaclarity-app', 'commit': commit, 'ujumbe': ujumbe?.group(2), 'files': hashes})}\n',
   );
   stdout.writeln('copied ${hashes.length} files from $commit');
 }
