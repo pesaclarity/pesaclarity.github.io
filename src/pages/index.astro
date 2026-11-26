@@ -5,7 +5,13 @@ import Base from "../layouts/Base.astro";
 import PlayButton from "../components/PlayButton.astro";
 import ScreenGallery from "../components/ScreenGallery.astro";
 import Screen from "../components/Screen.astro";
-import { appRelease, homeScreens, screens } from "../data/site";
+import {
+  appRelease,
+  homeScreens,
+  playRelease,
+  screens,
+  testRelease,
+} from "../data/site";
 import { goals, notEndorsed } from "../data/impact";
 
 // The four reasons to trust it, each with where to read more.
@@ -62,7 +68,10 @@ const heroDark = darkScreen("home");
           </a>
         </div>
         <p class="hero-meta muted" data-version={appRelease?.version}>
-          {appRelease ? `Version ${appRelease.version} · ` : ""}
+          {playRelease
+            ? `Google Play ${playRelease.version.replace(/^v/, "")} · `
+            : ""}
+          {testRelease ? `Test build ${testRelease.version} · ` : ""}
           <a href={withBase("/install/")}>Other ways to install</a>, including
           F-Droid and iPhone
         </p>

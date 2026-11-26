@@ -150,6 +150,20 @@ export const appRelease = await fetchAppRelease(releaseTag, {
   token: import.meta.env.GITHUB_TOKEN,
 });
 
+/** The newest full release: the version Google Play has. */
+export const playRelease =
+  releaseTag === "latest"
+    ? appRelease
+    : await fetchAppRelease("latest", { token: import.meta.env.GITHUB_TOKEN });
+
+/** The newest test build, for testers. */
+export const testRelease =
+  releaseTag === "test-build"
+    ? appRelease
+    : await fetchAppRelease("test-build", {
+        token: import.meta.env.GITHUB_TOKEN,
+      });
+
 /** `19.4 MB`, the file most phones take; null when the size is unknown. */
 export const mainApkSize: string | null = formatSize(
   appRelease?.sizes[apkFiles.android] ?? NaN,
