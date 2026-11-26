@@ -2,9 +2,10 @@
 import { darkScreen } from "../lib/screens";
 import { withBase } from "../lib/paths";
 import Base from "../layouts/Base.astro";
+import PlayBadge from "../components/PlayBadge.astro";
 import ScreenGallery from "../components/ScreenGallery.astro";
 import Screen from "../components/Screen.astro";
-import { appRelease, downloads, homeScreens, screens } from "../data/site";
+import { appRelease, homeScreens, screens } from "../data/site";
 import { goals, notEndorsed } from "../data/impact";
 
 // The four reasons to trust it, each with where to read more.
@@ -55,12 +56,7 @@ const heroDark = darkScreen("home");
           private, and on your phone.
         </p>
         <div class="button-row">
-          <a
-            class="button button-primary button-large"
-            href={downloads.android}
-          >
-            Download for Android
-          </a>
+          <PlayBadge height={52} />
           <a class="button button-secondary button-large" href="#how">
             How it works
           </a>

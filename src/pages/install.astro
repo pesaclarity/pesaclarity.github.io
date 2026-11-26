@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import PlayBadge from "../components/PlayBadge.astro";
 import { withBase } from "../lib/paths";
 import {
   apks,
@@ -19,24 +20,25 @@ const changes = release?.changes ?? [];
 
 <Base
   title="Install"
-  description="How to install Pesa Clarity from its APK file and let it read your M-Pesa and bank messages."
+  description="How to install Pesa Clarity from Google Play, or the F-Droid build from its file, and let it read your M-Pesa and bank messages."
 >
   <article class="container install-page">
     <div class="prose">
       <p class="eyebrow">Install</p>
       <h1>Install</h1>
       <p class="muted">
-        Pesa Clarity is not on Google Play or the App Store yet. Publishing
-        there costs money, and <a href={withBase("/sponsor/")}>sponsorship</a>{" "}
-        pays for it, so the app can reach more people safely. It is not on
-        F-Droid yet either, so you install it from a file. It takes a few
-        minutes, once.
+        On Android, get Pesa Clarity from Google Play. Play installs it and
+        keeps it up to date, so there is nothing more to do there.
       </p>
+      <div class="play">
+        <PlayBadge height={60} />
+      </div>
 
-      <h2 id="download">1. Download the app</h2>
+      <h2 id="download">The F-Droid build</h2>
       <p>
-        On your phone, tap the file for your phone. Most phones take the first
-        one.
+        The F-Droid build has no Google services. It is not on F-Droid yet, so
+        you install it from a file. It takes a few minutes, once. On your phone,
+        tap the file for your phone. Most phones take the first one.
       </p>
       {release && (
         <p class="muted" data-version={release.version}>
@@ -62,8 +64,12 @@ const changes = release?.changes ?? [];
         Older or Android Go phone? Take the one for older phones.{" "}
         <a href={links.releases}>All releases</a> are on GitHub.
       </p>
+      <p class="muted testers">
+        Testing a build before it reaches Play?{" "}
+        <a href={downloads.testerApk}>APK for testers</a>
+      </p>
 
-      <h2>2. Allow the install</h2>
+      <h2>Allow the install</h2>
       <ol>
         <li>Open the downloaded file, from the notification or from Files.</li>
         <li>
@@ -82,15 +88,16 @@ const changes = release?.changes ?? [];
         </li>
       </ol>
 
-      <h2>3. Let it read your messages</h2>
+      <h2>Let it read your messages</h2>
       <p>
         Open Pesa Clarity, pick your accounts and tap{" "}
         <strong>Allow access to messages</strong>. If Android asks, choose{" "}
         <strong>Allow</strong>.
       </p>
       <p>
-        On Android 13 and newer, an app installed from a file may not be allowed
-        to read SMS until you say so. If nothing happens, or SMS says{" "}
+        An app from Google Play does not need the steps below. On Android 13 and
+        newer, an app installed from a file may not be allowed to read SMS until
+        you say so. If nothing happens, or SMS says{" "}
         <strong>Restricted setting</strong>:
       </p>
       <ol>
@@ -117,10 +124,11 @@ const changes = release?.changes ?? [];
       <p>
         On these phones there is often no{" "}
         <strong>Allow restricted settings</strong> option, and SMS shows{" "}
-        <strong>App was denied access</strong>. Install through Obtainium
-        instead, a free, open-source app store that takes the app straight from
-        our releases. Apps it installs are not restricted, and it keeps Pesa
-        Clarity up to date.
+        <strong>App was denied access</strong>. Get the app from Google Play,
+        or, for the F-Droid build, install through Obtainium, a free,
+        open-source app store that takes the app straight from our releases.
+        Apps it installs are not restricted, and it keeps Pesa Clarity up to
+        date.
       </p>
       <ol>
         <li>Uninstall Pesa Clarity if you already installed it from a file.</li>
@@ -181,10 +189,11 @@ const changes = release?.changes ?? [];
       </p>
 
       <h2>Updating</h2>
+      <p>From Google Play, the app updates through Play, like any other app.</p>
       <p>
-        Download the newest file the same way and install it over the app you
-        have. Your data stays. Uninstalling first deletes it, and you would need
-        to allow messages again.
+        For the F-Droid build, download the newest file the same way and install
+        it over the app you have. Your data stays. Uninstalling first deletes
+        it, and you would need to allow messages again.
       </p>
       <p>
         On iPhone, SideStore shows <strong>Update</strong> when a new test build
@@ -222,6 +231,10 @@ const changes = release?.changes ?? [];
 
   h2 {
     margin-top: var(--space-6);
+  }
+
+  .play {
+    margin-block: var(--space-4) var(--space-5);
   }
 
   ol li,

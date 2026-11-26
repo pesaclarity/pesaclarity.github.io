@@ -52,6 +52,8 @@ export const links = {
   // Apps it installs are not "restricted", so Xiaomi phones let them read SMS.
   obtainium: "https://github.com/ImranR98/Obtainium/releases/latest",
   appSource: `${org}/pesaclarity-app`,
+  // The app on Google Play, where Android users install and update it.
+  play: "https://play.google.com/store/apps/details?id=com.pesaclarity.app",
   // The organisation's security policy, shared by every repository.
   security: `${org}/.github/blob/main/SECURITY.md`,
   // The payment service's own terms, which cover a gift's payment.
@@ -79,8 +81,10 @@ export const apkFiles = {
 } as const;
 
 export const downloads = {
-  android: `${releaseFiles}/${apkFiles.android}`,
-  android32: `${releaseFiles}/${apkFiles.android32}`,
+  // Android users install and update the app from Google Play.
+  android: links.play,
+  // The Play build's APK, for testers only; Play gives everyone else updates.
+  testerApk: `${releaseFiles}/${apkFiles.android}`,
   fdroid: `${releaseFiles}/${apkFiles.fdroid}`,
   fdroid32: `${releaseFiles}/${apkFiles.fdroid32}`,
   testBuild: releaseTag === "test-build",
@@ -106,20 +110,16 @@ export interface Apk {
   file: string;
 }
 
-/** Every APK, in plain words. */
+/** The official "Get it on Google Play" badge, kept in this repo. */
+export const playBadge = {
+  src: "/brand/google-play-badge.svg",
+  alt: "Get it on Google Play",
+  width: 155,
+  height: 60,
+} as const;
+
+/** Every APK outside Google Play, in plain words: the F-Droid build. */
 export const apks: readonly Apk[] = [
-  {
-    label: "For most phones",
-    body: "With Google sign-in. Start here.",
-    href: downloads.android,
-    file: apkFiles.android,
-  },
-  {
-    label: "For older phones",
-    body: "For 32-bit and Android Go phones.",
-    href: downloads.android32,
-    file: apkFiles.android32,
-  },
   {
     label: "F-Droid build",
     body: "Free of Google services.",
@@ -747,13 +747,13 @@ export const faqs: readonly Faq[] = [
   { q: "Who sees my money?", a: "Only you." },
   {
     q: "Is it on Google Play or the App Store?",
-    a: "Not on Google Play or the App Store yet. Publishing there costs money, and sponsorship pays for it, so the app can reach more people safely. Until then, download it from this site.",
+    a: "Pesa Clarity is on Google Play: install it there and Play keeps it up to date. It is not on the App Store yet; publishing there costs money, and sponsorship pays for it.",
   },
   {
     q: "iPhone?",
     a: "A test build installs with SideStore or AltStore, signed with your own Apple ID, until the app is on the App Store.",
   },
-  { q: "When can I start?", a: "Today. Download it for Android." },
+  { q: "When can I start?", a: "Today. Get it on Google Play." },
   {
     q: "Does it work without internet?",
     a: "Yes. Your records and sums are on your phone.",
@@ -770,7 +770,7 @@ export const faqs: readonly Faq[] = [
   },
   {
     q: "Which download?",
-    a: "The Android build has Google sign-in. The F-Droid build has no Google services.",
+    a: "The Google Play build has Google sign-in. The F-Droid build has no Google services.",
   },
 ];
 
@@ -793,10 +793,6 @@ export const sponsorCosts: readonly Item[] = [
   {
     title: "Getting on the App Store",
     body: "Apple's developer account costs US$99 a year, and the price varies by region. That puts Pesa Clarity on every iPhone, with updates from the App Store.",
-  },
-  {
-    title: "Getting on Google Play",
-    body: "Google charges a fee for a developer account. Then Android users get the app and its updates from Play instead of installing a file.",
   },
   {
     title: "Keeping it running",

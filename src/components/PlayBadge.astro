@@ -1,0 +1,41 @@
+---
+// The official "Get it on Google Play" badge, linked to the app's listing.
+// Google's badge guidelines: use the artwork as is, never smaller than its
+// minimum, and link it only to the Play listing.
+import { withBase } from "../lib/paths";
+import { links, playBadge } from "../data/site";
+
+interface Props {
+  /** The badge's height in pixels; Google asks for at least 40. */
+  height?: number;
+  class?: string;
+}
+
+const { height = 60, class: className } = Astro.props;
+const width = Math.round((playBadge.width / playBadge.height) * height);
+---
+
+<a class:list={["play-badge", className]} href={links.play}>
+  <img
+    src={withBase(playBadge.src)}
+    width={width}
+    height={height}
+    alt={playBadge.alt}
+    decoding="async"
+  />
+</a>
+
+<style>
+  .play-badge {
+    display: inline-flex;
+    line-height: 0;
+    align-self: center;
+    border-radius: 8px;
+  }
+
+  .play-badge img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+  }
+</style>

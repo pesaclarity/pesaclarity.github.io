@@ -2,7 +2,7 @@
 import { withBase } from "../lib/paths";
 import Mark from "./Mark.astro";
 import ThemeSwitch from "./ThemeSwitch.astro";
-import { downloads } from "../data/site";
+import PlayBadge from "./PlayBadge.astro";
 
 const nav = [
   { href: withBase("/features/"), label: "Features" },
@@ -73,9 +73,7 @@ const current = (href: string) => path === href || path.startsWith(href);
           </ul>
         </nav>
       </details>
-      <a class="button button-primary nav-cta" href={downloads.android}>
-        Download
-      </a>
+      <PlayBadge height={40} class="nav-cta nav-badge" />
       <ThemeSwitch />
     </div>
   </div>
@@ -151,7 +149,7 @@ const current = (href: string) => path === href || path.startsWith(href);
     background: var(--color-subtle);
   }
 
-  .nav-cta {
+  .nav-cta:not(.nav-badge) {
     padding-inline: var(--space-4);
   }
 
