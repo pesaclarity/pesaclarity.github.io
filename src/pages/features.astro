@@ -2,7 +2,7 @@
 import { darkScreen } from "../lib/screens";
 import { withBase } from "../lib/paths";
 import Base from "../layouts/Base.astro";
-import PlayBadge from "../components/PlayBadge.astro";
+import PlayButton from "../components/PlayButton.astro";
 import ScreenGallery from "../components/ScreenGallery.astro";
 import {
   accounts,
@@ -334,7 +334,7 @@ const jumps = [
       <div class="cta">
         <h2 id="download-title">Get the app.</h2>
         <div class="button-row">
-          <PlayBadge height={52} />
+          <PlayButton />
           <a
             class="button button-secondary button-large"
             href={downloads.fdroid}

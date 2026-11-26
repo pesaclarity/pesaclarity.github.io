@@ -1,0 +1,126 @@
+---
+// Opens the app's Google Play listing. "store" is the full Play button with
+// the coloured Play mark; "compact" is the header's red Download button.
+import { links } from "../data/site";
+
+interface Props {
+  variant?: "store" | "compact";
+  class?: string;
+}
+
+const { variant = "store", class: className } = Astro.props;
+---
+
+{variant === "compact" ? (
+  <a
+    class:list={["button button-primary play-compact", className]}
+    href={links.play}
+  >
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16">
+      <path
+        fill="currentColor"
+        d="M4.6 2.2c-.3.3-.4.7-.4 1.2v17.2c0 .5.1.9.4 1.2l9.7-9.8L4.6 2.2Zm10.8 10.9 2.8 2.8-11.9 6.8 9.1-9.6Zm0-2.2L6.3 1.3l11.9 6.8-2.8 2.8Zm3.9-2.1 3.1 1.8c.9.5.9 1.3 0 1.8l-3.1 1.8-3-3 3-2.4Z"
+      />
+    </svg>
+    <span>Download</span>
+  </a>
+) : (
+  <a
+    class:list={["play-store", className]}
+    href={links.play}
+    aria-label="Get it on Google Play"
+  >
+    <svg aria-hidden="true" viewBox="0 0 28 30" width="26" height="28">
+      <path
+        fill="#00D7FE"
+        d="M1.2.9C.8 1.3.6 2 .6 2.8v24.4c0 .8.2 1.5.6 1.9l.1.1L15 15.5v-.3L1.3.8l-.1.1Z"
+      />
+      <path
+        fill="#FFCE00"
+        d="m19.5 20.1-4.5-4.6v-.3l4.5-4.6.1.1 5.4 3.1c1.5.9 1.5 2.3 0 3.2l-5.4 3.1h-.1Z"
+      />
+      <path
+        fill="#FF3A44"
+        d="M19.6 20 15 15.3 1.2 29.1c.5.5 1.4.6 2.3.1l16.1-9.2Z"
+      />
+      <path
+        fill="#00F076"
+        d="M19.6 10.6 3.5 1.5C2.6.9 1.7 1 1.2 1.5L15 15.3l4.6-4.7Z"
+      />
+    </svg>
+    <span class="play-store-text">
+      <span class="play-store-small">Get it on</span>
+      <span class="play-store-big">Google Play</span>
+    </span>
+  </a>
+)}
+
+<style>
+  .play-compact {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  @media (max-width: 480px) {
+    .play-compact svg {
+      display: none;
+    }
+  }
+
+  .play-store {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 3.25rem;
+    padding: 0.4rem 1.6rem 0.4rem 1.25rem;
+    border-radius: var(--radius-pill);
+    background: #111;
+    color: #fff;
+    border: 1px solid #111;
+    text-decoration: none;
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+
+  .play-store:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgb(0 0 0 / 0.18);
+  }
+
+  .play-store:focus-visible {
+    outline: 3px solid var(--color-brand);
+    outline-offset: 3px;
+  }
+
+  :global(:root[data-theme="dark"]) .play-store {
+    border-color: #555;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme="light"])) .play-store {
+      border-color: #555;
+    }
+  }
+
+  .play-store-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+    text-align: left;
+  }
+
+  .play-store-small {
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+
+  .play-store-big {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
+</style>

@@ -355,7 +355,7 @@ test("links to a part of a page find it", () => {
 const playListing =
   "https://play.google.com/store/apps/details?id=com.pesaclarity.app";
 
-test("Android downloads go to Google Play, with its badge", () => {
+test("Android downloads go to Google Play, with the Play button", () => {
   for (const name of [
     "index.html",
     "features/index.html",
@@ -364,7 +364,7 @@ test("Android downloads go to Google Play, with its badge", () => {
     const page = pages.find((p) => p.name === name);
     assert.ok(page, name);
     assert.ok(page.html.includes(`href="${playListing}"`), name);
-    assert.match(page.html, /alt="Get it on Google Play"/, name);
+    assert.match(page.html, /Get it on Google Play/, name);
   }
   for (const { name, html } of pages) {
     assert.doesNotMatch(html, /play\.google\.com\/intl[^"]*badge/, name);
