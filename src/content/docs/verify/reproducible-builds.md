@@ -5,8 +5,8 @@ section: "verify"
 order: 40
 repo: "pesaclarity-app"
 path: "docs/reproducible-builds.md"
-commit: "b401ac205bc8a9bebebe5c52e983bb761f6901d8"
-source: "https://github.com/pesaclarity/pesaclarity-app/blob/b401ac205bc8a9bebebe5c52e983bb761f6901d8/docs/reproducible-builds.md"
+commit: "ab3c93185e8ee59ebc23157ce24e5fb3b117157c"
+source: "https://github.com/pesaclarity/pesaclarity-app/blob/ab3c93185e8ee59ebc23157ce24e5fb3b117157c/docs/reproducible-builds.md"
 edit: "https://github.com/pesaclarity/pesaclarity-app/edit/main/docs/reproducible-builds.md"
 ---
 The spec asks that anyone can confirm a published APK matches this source. F-Droid can then ship our signed APK after rebuilding it and comparing. This page lists what that needs and what currently stands in the way.

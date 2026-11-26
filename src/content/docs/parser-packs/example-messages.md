@@ -5,13 +5,13 @@ section: "parser-packs"
 order: 9
 repo: "ujumbe-parsers"
 path: "docs/MESSAGES.md"
-commit: "fcee5edcab37dd6c2c9a2a0d2f76231d0f57a263"
-source: "https://github.com/pesaclarity/ujumbe-parsers/blob/fcee5edcab37dd6c2c9a2a0d2f76231d0f57a263/docs/MESSAGES.md"
+commit: "07ad926149776c1918720dd8fb6a2ea599c8c592"
+source: "https://github.com/pesaclarity/ujumbe-parsers/blob/07ad926149776c1918720dd8fb6a2ea599c8c592/docs/MESSAGES.md"
 edit: "https://github.com/pesaclarity/ujumbe-parsers/edit/main/docs/MESSAGES.md"
 ---
 Every sample message the packs are tested with, generated from `packs/*/fixtures.yaml` by `tool/message_examples.dart`. Do not edit; regenerate with `dart run tool/message_examples.dart`.
 
-All samples are synthetic: fake names, masked fake numbers and made-up receipts, written in the shape of real alerts. "Review inbox" means no rule reads the message, so the person checks it once.
+All samples are synthetic: fake names, masked fake numbers and made-up receipts, written in the shape of real alerts. "Review inbox" means no rule reads the message, so the person checks it once; "dropped" means a notice in the pack knows it is not a transaction, so the app drops it without asking.
 
 - [Airtel Money](#airtel-money)
 - [Co-operative Bank](#co-operative-bank)
@@ -24,7 +24,7 @@ All samples are synthetic: fake names, masked fake numbers and made-up receipts,
 
 ## Airtel Money
 
-Pack `airtel_money` 0.1.0 · senders `AirtelMoney` · rules none yet (review-only)
+Pack `airtel_money` 0.1.1 · senders `AirtelMoney` · rules none yet (review-only)
 
 **a send goes to the review inbox** (`AirtelMoney` → review inbox)
 
@@ -40,7 +40,7 @@ Example alert: Ksh 1,000.00 received from JOHN KAMAU 0700000002 on 26/10/2026 at
 
 ## Co-operative Bank
 
-Pack `co_op_bank` 0.1.1 · senders `CoopBank` · rules `card_withdrawal`, `card_payment`, `paybill_sent`
+Pack `co_op_bank` 0.2.0 · senders `CoopBank` · rules `card_withdrawal`, `card_payment`, `paybill_sent` · notices `card_enquiry`
 
 **money sent to M-Pesa is left to M-Pesa's own message** (`CoopBank` → review inbox)
 
@@ -72,13 +72,13 @@ Dear ALEX, Card PAYMENT transaction dated 27-OCT-2026 19:17:46 of KES 1790  SAMP
 Dear JANE DOE, you have sent Ksh. 60.0 to SAMPLE COMMUNITY CHURCH for 12345 on 10/25/2026 at 11:03:49. MPESA Ref. MPX00000002.
 ```
 
-**balance enquiry is not a transaction** (`CoopBank` → review inbox)
+**balance enquiry is not a transaction** (`CoopBank` → notice `card_enquiry` · dropped)
 
 ```text
 Dear ALEX, Card BAL ENQ transaction dated 28-OCT-2026 11:49:57 of KES 0 EXAMPLEBRANCH001>NAIROBI KE Was Successful.Enquiries 0000000000.
 ```
 
-**statement request is not a transaction** (`CoopBank` → review inbox)
+**statement request is not a transaction** (`CoopBank` → notice `card_enquiry` · dropped)
 
 ```text
 Dear ALEX, Card STM REQ transaction dated 05-OCT-2026 18:30:26 of KES 0 EXAMPLEBRANCH001>NAIROBI KE Was Successful.Enquiries 0000000000.
@@ -136,7 +136,73 @@ Dear Customer, your account 0000****002 has been credited with EUR 2,000.00 on 0
 
 ## KCB
 
-Pack `kcb` 0.3.0 · senders `KCB` · rules `account_alert`, `wallet_transfer`, `account_named`
+Pack `kcb` 0.4.1 · senders `KCB` · rules `loan_repayment`, `account_movement`, `mpesa_paybill`, `mpesa_received`, `pesalink_sent`, `card_payment`, `account_alert`, `wallet_transfer`, `account_named` · notices `declined_card_payment`
+
+**repay a salary advance from the KCB account** (`KCB` → `loan_repayment` · money out)
+
+```text
+Dear JANE AKINYI DOE, KES 12000.00 was debited from your KCB account to repay your KCB Salary Advance 100000001. The loan has been partially paid. Your loan balance is KES 48500.25, next instalment is due on 15/12/2026. Pay the loan to borrow again.
+```
+
+**money in through KCB Mobi, such as from M-Pesa paybill** (`KCB` → `account_movement` · money in)
+
+```text
+Dear Customer, your acc 1234567890 has been credited KES 12,000.00 Mobi at KCB DATA PROCESSING CENTRE at 19:45:10 on 05 NOV 2026. For any queries call KCB on  +254700000000
+```
+
+**account debited for an outgoing PesaLink** (`KCB` → `account_movement` · money out)
+
+```text
+Dear Customer, your acc 1234567890 has been debited KES 8,000.00 Pesalink Outgoing at KCB DATA PROCESSING CENTRE at 10:12:30 on 06 NOV 2026. For any queries call KCB on  +254700000000
+```
+
+**a direct credit, such as a salary or EFT** (`KCB` → `account_movement` · money in)
+
+```text
+Dear Customer, your acc 1234567890 has been credited KES 8,940.00 Direct Credits at KCB DATA PROCESSING CENTRE at 10:08:05 on 06 NOV 2026. For any queries call KCB on  +254700000000
+```
+
+**M-Pesa paid to KCB paybill, confirmed by KCB** (`KCB` → `mpesa_paybill` · money out)
+
+```text
+Ksh 12000.00 sent to KCB Pay Bill 522522 for account 123***7890 JANE AKINYI DOE has been received on 05/11/2026 at 07:45 PM. M-PESA ref TJA0000020. To reverse this transaction, SMS this message to 16120
+```
+
+**money from someone's KCB account into M-Pesa** (`KCB` → `mpesa_received` · money in)
+
+```text
+KCB0000000000021 Confirmed.  KES 2,500.00 received from MARY WAMBUI DOE - 987****654 on 2026-11-07 03:15:20 PM via KCB.
+```
+
+**send to another bank over PesaLink** (`KCB` → `pesalink_sent` · money out)
+
+```text
+0001000720261106101500abcd1234 Completed. Your SEND TO PESALINK request of KES 8,000.00 from 123****890 to 555****321 - JANE AKINYI DOE at 2026-11-06 10:15:00 AM has been processed successfully. Transaction cost KES 15.00  Incl. Tax Amount KES 2.00. Pata extra cash with a flexible Mobile Loan of up to KES 100K. Dial *000# or use the KCB App.
+```
+
+**card payment in another currency** (`KCB` → `card_payment` · money out)
+
+```text
+USD 42.50 transaction made on KCB card 4111***0007 at example-store.co on 22/10/2026 21:05pm, Avail balance KES 2,310.40 Enquiries call +254700000000. Pata extra cash with a flexible Mobile Loan. Dial *000# or use the KCB App to check limit.
+```
+
+**card payment to a merchant shown as a phone number** (`KCB` → `card_payment` · money out)
+
+```text
+USD 9.99 transaction made on KCB card 4111***0007 at +10000000000 on 23/10/2026 08:30am, Avail balance KES 1,000.00 Enquiries call +254700000000.
+```
+
+**declined card payment is not a transaction** (`KCB` → notice `declined_card_payment` · dropped)
+
+```text
+USD 3.50 transaction made on KCB card 4111***0007 at example-store.co on 21/10/2026 20:41pm has been declined. Reason - Insufficient funds.Balance KESKES 0.00. Queries call +254700000000. Pata extra cash with a flexible Mobile Loan. Dial *000# or use
+```
+
+**declined card payment in shillings, morning time** (`KCB` → notice `declined_card_payment` · dropped)
+
+```text
+KES 1,250.00 transaction made on KCB card 4111***0007 at EXAMPLE GROCERS on 02/11/2026 09:05am has been declined. Reason - Insufficient funds.Balance KES 120.00. Queries call +254711087000.
+```
 
 **account debited** (`KCB` → `account_alert` · money out)
 
@@ -176,7 +242,7 @@ Dear Customer, your account balance is KES 19,500.50 as at 27/10/2026 10:00.
 
 ## Loop
 
-Pack `loop` 0.1.0 · senders `NCBALOOP`, `NCBA_LOOP` · rules none yet (review-only)
+Pack `loop` 0.1.1 · senders `NCBALOOP`, `NCBA_LOOP` · rules none yet (review-only)
 
 **a payment alert goes to the review inbox** (`NCBALOOP` → review inbox)
 

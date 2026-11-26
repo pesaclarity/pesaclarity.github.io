@@ -5,8 +5,8 @@ section: "ml"
 order: 27
 repo: "pesaclarity-ml"
 path: "docs/ASK.md"
-commit: "3054046301641784dcae20e18d48950cf02a7836"
-source: "https://github.com/pesaclarity/pesaclarity-ml/blob/3054046301641784dcae20e18d48950cf02a7836/docs/ASK.md"
+commit: "43d001e8c939e25f28ad5ab5d22c562769d9b14b"
+source: "https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/docs/ASK.md"
 edit: "https://github.com/pesaclarity/pesaclarity-ml/edit/main/docs/ASK.md"
 ---
 Ask lets people ask questions about their own money in plain words ("how much did I spend on
@@ -22,11 +22,11 @@ database lookups answer:
    placeholders. The app fills the placeholders, checks the reply and, if the check fails,
    shows the kind's fixed fallback sentence instead.
 
-Both models train on synthetic text only ([`questions.py`](https://github.com/pesaclarity/pesaclarity-ml/blob/3054046301641784dcae20e18d48950cf02a7836/src/akili/ask/questions.py),
-[`replies.py`](https://github.com/pesaclarity/pesaclarity-ml/blob/3054046301641784dcae20e18d48950cf02a7836/src/akili/ask/replies.py)). This document is the contract between the Python
-code ([`schema.py`](https://github.com/pesaclarity/pesaclarity-ml/blob/3054046301641784dcae20e18d48950cf02a7836/src/akili/ask/schema.py)) and the app. An implementation that follows it
+Both models train on synthetic text only ([`questions.py`](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/src/akili/ask/questions.py),
+[`replies.py`](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/src/akili/ask/replies.py)). This document is the contract between the Python
+code ([`schema.py`](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/src/akili/ask/schema.py)) and the app. An implementation that follows it
 and passes every case in
-[`ask_examples.v1.json`](https://github.com/pesaclarity/pesaclarity-ml/blob/3054046301641784dcae20e18d48950cf02a7836/src/akili/resources/ask_examples.v1.json) is conformant. Where this
+[`ask_examples.v1.json`](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/src/akili/resources/ask_examples.v1.json) is conformant. Where this
 document and the examples disagree, the examples win. Both manifests carry
 `ask_schema_version`; the app refuses a model whose version it does not implement.
 
@@ -35,7 +35,7 @@ document and the examples disagree, the examples win. Both manifests carry
 ### Input
 
 Exactly the message reader's input: `int32[n, 192]`, the 96 token ids then the 96 shape ids
-of [`akili.reader.tokens.encode`](https://github.com/pesaclarity/pesaclarity-ml/blob/3054046301641784dcae20e18d48950cf02a7836/src/akili/reader/tokens.py), as specified in
+of [`akili.reader.tokens.encode`](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/src/akili/reader/tokens.py), as specified in
 [READER.md](/docs/ml/message-reader/) (`reader_schema_version` 1). The app's existing Dart tokeniser serves
 both models unchanged. Questions longer than 96 tokens are cut, as for messages.
 
@@ -47,6 +47,14 @@ both models unchanged. Questions longer than 96 tokens are cut, as for messages.
 
 The manifest (`ask-reader-manifest.json`) lists both and their labels; read the outputs by
 shape (rank 2 is the intent, rank 3 the slots), as with the message reader.
+
+The app runs the reader on rayo (in Dart where rayo cannot load) from `ask-reader.weights`,
+in the plain format of [WEIGHTS.md](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/docs/WEIGHTS.md), which also says how to run it. The reader is
+trained in PyTorch and exported through ONNX to rayo-convert, which quantises it to int8
+([The model and its file](#the-model-and-its-file)); there is no TFLite file. The manifest gives
+the weights' file, SHA-256, size and format version, and the ONNX file they were converted from
+(`source`). rayo takes the input as two vectors, `tokens` (the first 96 ids) and `shapes` (the
+last 96), as before.
 
 | Id | Intent | Example |
 | --- | --- | --- |
@@ -113,25 +121,36 @@ the first is the period asked about, the second the one to compare with.
 
 ### Training and scores
 
-`akili ask-reader` trains on 120,000 synthetic questions from about 720 templates
-([`questions.py`](https://github.com/pesaclarity/pesaclarity-ml/blob/3054046301641784dcae20e18d48950cf02a7836/src/akili/ask/questions.py)) for 20 epochs and exports the int8 TFLite
-file with its manifest and `ask-reader-report.json`. The export is deterministic: the same code
-gives the same SHA-256 (the model is trained and exported before any evaluation runs, and
-`--skip-evaluation` skips the five folds). Payee and account holes mostly take
-invented names ([`names.py`](https://github.com/pesaclarity/pesaclarity-ml/blob/3054046301641784dcae20e18d48950cf02a7836/src/akili/ask/names.py)): Kenyan-sounding words built from
+`akili ask-reader` (the `[torch]` extra) trains on 120,000 synthetic questions from 850
+templates ([`questions.py`](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/src/akili/ask/questions.py)) for 30 epochs and exports
+`ask-reader.weights` (int8, with its rayo graph), the ONNX file it was converted from
+(`ask-reader.onnx`), the manifest and `ask-reader-report.json`; every score is of the int8 file
+as rayo's C library runs it (`--rayo-dir` or `RAYO_DIR`, a rayo checkout; without one,
+rayo-convert's NumPy reference). The export is deterministic: one thread, torch's
+deterministic algorithms and fixed seeds, so the same code, torch version and machine give the
+same SHA-256 (the model is trained and exported before any evaluation is read, and
+`--skip-evaluation` skips the five folds; `--jobs 5` trains the folds in processes of their
+own, beside the released model, with the same scores). Payee and account holes mostly take
+invented names ([`names.py`](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/src/akili/ask/names.py)): Kenyan-sounding words built from
 syllables, business words, "Example"/"Sample"/"Demo" names, banks, wallets and Saccos, one to
-four words, in mixed case. Each epoch also swaps 70% of the invented payee and account token
+four words, in mixed case; version 4 adds one-word names (a syllable word or an invented word
+that starts with a vowel, "Egizu"), common first names alone ("kevin") and names with plain
+words in them ("Example Corner", "Golden Butchery"), from word lists of their own that no
+evaluation set's name uses. Each epoch also swaps 70% of the invented payee and account token
 ids (and 3% of the other tokens) for random hash buckets, as an unknown name lands in a bucket
 another word trained, so the reader tags a name from where it sits in the question; the words of
 the well-known names ("Naivas", "KCB", "my mum") keep their ids, so it still knows those.
 
-The report holds three scores:
+The report holds these scores:
 
 - `unseen_templates`: five folds, each trained without a fifth of every intent's templates and
   scored on them. `mean_intent_accuracy` and `mean_slot_f1` are on the version 1 templates
   only, with the very questions version 1 was scored on, so they compare across versions;
-  `v2` scores the version 2 templates.
-- `hard_held_out` ([`probes.py`](https://github.com/pesaclarity/pesaclarity-ml/blob/3054046301641784dcae20e18d48950cf02a7836/src/akili/ask/probes.py)): 2,000 questions from 45 templates
+  `v2` scores the version 2 templates (on the very questions v2 was scored on), `v3` the
+  version 3 ones (on the very questions v3 was scored on, but for the Sacco fix of version 4)
+  and `v4` the version 4 ones. A fold can run in a process of its own (`fold_scores`, joined by
+  `summarise_folds` in [`reader.py`](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/src/akili/ask/reader.py)), which keeps memory down.
+- `hard_held_out` ([`probes.py`](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/src/akili/ask/probes.py)): 2,000 questions from 45 templates
   that training never uses, on counts and sums for one payee, "how much to X", money in from
   someone, money in, "<account> balance" and look-alikes that are out of scope or help, with
   names from a pool whose syllable words training never sees (its business words, prefixes
@@ -142,35 +161,210 @@ The report holds three scores:
   sees ("Mock Zundi Emporium EA").
 - `app_questions`: 65 questions from pesaclarity-app's tests (counts, money in, "X sent me",
   account balances, names the app does not know), with the reader's reading of each.
+- `misses`: 62 hand-written questions, never trained on: the misses the v2 reader made
+  ("charges on KCB this month", "how much to john", "what did X cost me", "has Otieno paid me")
+  with close variants (casing, Sheng, other accounts and names, with and without a period) and
+  look-alikes that must keep their own intent ("has Otieno paid me back", "what did charges
+  cost me"), scored per group as a regression check.
+- `conformance_questions`: the 68 questions of the conformance file, with the reading of each.
 
-| | v1 (dfb9c24) | v2 |
-| --- | --- | --- |
-| Unseen v1 templates: intent accuracy | 0.834 | 0.867 |
-| Unseen v1 templates: slot F1 | 0.828 | 0.847 |
-| Unseen v1 templates: payee / category / item F1 | 0.833 / 0.769 / 0.795 | 0.717 / 0.725 / 0.670 |
-| Unseen v1 templates: period / account / amount F1 | 0.881 / 0.693 / 0.469 | 0.960 / 0.820 / 0.806 |
-| Unseen v2 templates: intent accuracy / slot F1 | - | 0.846 / 0.865 |
-| Hard held-out: intent accuracy | 0.640 | 0.963 |
-| Hard held-out: payee/account exact | 0.110 | 0.926 |
-| Hard held-out: names of unseen words only | 0.013 | 0.872 |
-| App questions: intent accuracy | 0.815 | 0.954 |
-| App questions: payee/account exact | 0.347 | 0.959 |
-| Conformance questions: intent / all slots exact | 1.000 / 0.882 | 0.985 / 0.941 |
-| Parameters / TFLite bytes | 191,749 / 216,872 | 239,589 / 271,904 |
+**Version 4 on the fixed test sets.** Version 4 also stopped the name pools from making the
+app's own test names as Saccos ("Example Sacco" came out of `NamePool.sacco`, which did not
+check `EXCLUDED`, into training and into the version 2 and 3 held-out questions). That changes
+the version 2 and 3 held-out questions and the hard held-out set (version 1's, the app's, the
+misses and the conformance questions are as before), so the version 4 reader is compared with
+the Keras v3 reader on the new sets, like for like: the Keras v3 recipe and templates retrained
+in five folds on the fixed generator for the held-out template rows, and the shipped Keras v3
+TFLite file on the probe sets (the hard held-out set re-scored).
+
+| | v3, Keras (re-scored) | v4, PyTorch (released) | |
+| --- | --- | --- | --- |
+| Unseen v1 templates: intent accuracy / slot F1 | 0.869 / 0.850 | 0.887 / 0.872 | better |
+| Unseen v1 templates: payee / category / item F1 | 0.722 / 0.723 / 0.687 | 0.741 / 0.766 / 0.737 | better |
+| Unseen v1 templates: period / account / amount F1 | 0.957 / 0.830 / 0.864 | 0.968 / 0.870 / 0.888 | better |
+| Unseen v2 templates: intent accuracy / slot F1 | 0.851 / 0.871 | 0.864 / 0.886 | better |
+| Unseen v3 templates: intent accuracy / slot F1 | 0.909 / 0.900 | **0.906** / 0.916 | intent 0.0024 lower |
+| Unseen v4 templates: intent accuracy / slot F1 | - | 0.829 / 0.815 | |
+| Hard held-out: intent / payee/account exact / unseen-word names | 0.964 / 0.928 / 0.884 | 0.969 / 0.943 / 0.914 | better |
+| App questions: intent accuracy / payee/account exact | 1.000 / 0.959 | 1.000 / 1.000 | level / better |
+| Misses: intent accuracy / all slots exact | 0.984 / 0.968 | 0.984 / 0.984 | level / better |
+| Conformance questions: intent / all slots exact | 1.000 / 0.971 | 1.000 / 0.971 | level |
+| Parameters / file bytes | 239,589 / 271,904 (TFLite) | 239,589 / 252,860 (`.weights`) | |
+
+The version 4 reader is level or better on every figure but one: intent on unseen version 3
+templates, 0.906 against 0.909 (0.0024, about 70 of 30,000 questions; six runs of the final
+recipe gave 0.904 to 0.918), which the owner accepted. It reads all 65 of the app's questions'
+intents and all 49 of their names right: "received from Acme" is `received_from` with Acme,
+"Compare my spending at Example Nowhere with last month" is `compare` with the whole name, and
+"Example Nowhere" comes out whole in all its questions. It keeps the four misses v3 fixed, and
+its one miss in the misses set is v3's known one, "what did john cost me" (charges). Amount F1
+is the mean of five folds, one of which holds out a single amount template ("how much did I
+spend on stuff over 1,000", 54 spans): there it is 0.632 (Keras 0.684), on the other four
+folds 0.952 to 0.978. "How many payments over 1000 this month?" still reads "over 1000 this
+month" as one period, as the Keras reader does. The retrained Keras release model scored lower
+on the probe sets than the shipped file (the app's questions 0.954 / 0.898), so the shipped
+file is the one compared there.
+
+On the version 1 to 3 sets as they were before the fix (and so not comparable with the table
+above), the earlier readers scored:
+
+| | v1 (dfb9c24) | v2 (d51d5bc) | v3, Keras (#51) | v3, PyTorch (#60) |
+| --- | --- | --- | --- | --- |
+| Unseen v1 templates: intent accuracy | 0.834 | 0.867 | 0.868 | 0.877 |
+| Unseen v1 templates: slot F1 | 0.828 | 0.847 | 0.848 | 0.863 |
+| Unseen v1 templates: payee / category / item F1 | 0.833 / 0.769 / 0.795 | 0.717 / 0.725 / 0.670 | 0.715 / 0.736 / 0.673 | 0.731 / 0.762 / 0.694 |
+| Unseen v1 templates: period / account / amount F1 | 0.881 / 0.693 / 0.469 | 0.960 / 0.820 / 0.806 | 0.957 / 0.806 / 0.894 | 0.960 / 0.870 / 0.838 |
+| Unseen v2 templates: intent accuracy / slot F1 | - | 0.846 / 0.865 | 0.853 / 0.869 | 0.866 / 0.877 |
+| Unseen v3 templates: intent accuracy / slot F1 | - | - | 0.916 / 0.911 | 0.914 / 0.917 |
+| Hard held-out: intent accuracy | 0.640 | 0.963 | 0.964 | 0.964 |
+| Hard held-out: payee/account exact | 0.110 | 0.926 | 0.926 | 0.938 |
+| Hard held-out: names of unseen words only | 0.013 | 0.872 | 0.885 | 0.893 |
+| App questions: intent accuracy | 0.815 | 0.954 | 1.000 | 0.969 |
+| App questions: payee/account exact | 0.347 | 0.959 | 0.959 | 0.918 |
+| Misses: intent accuracy / all slots exact | - | 0.855 / 0.887 | 0.984 / 0.968 | 0.984 / 0.984 |
+| Conformance questions: intent / all slots exact | 1.000 / 0.882 | 0.985 / 0.941 | 1.000 / 0.971 | 1.000 / 0.971 |
+| Parameters / file bytes | 191,749 / 216,872 (TFLite) | 239,589 / 271,904 (TFLite) | 239,589 / 271,904 (TFLite), 251,276 (`.weights`) | 239,589 / 252,860 (`.weights`) |
+
+The Keras columns score the TFLite file; the PyTorch columns score the int8 `ask-reader.weights`
+on rayo's C library. The v3 PyTorch reader (#60), on the old sets, was below v3 in Keras on
+amount F1 (0.838 against 0.894), v3 intent (0.914 against 0.916) and the app's questions (63 of
+65 intents, 45 of 49 names); version 4 was made for those.
+
+How version 4 was chosen: sixteen full runs, each deterministic, on the same folds and seeds.
+
+- Runs 1 to 4 (the PyTorch v3 recipe, version 4 data): every one fixed the app's questions,
+  and each was short elsewhere: payee F1 on unseen version 1 templates (0.672 to 0.710, the
+  invented names made the reader tag more words as payees, some of them categories), amount F1
+  (0.800 to 0.849) or parity.
+- Runs 5 to 10 (30 epochs; data): a lower-case plain word ("golden") read as a category, so
+  version 4's longer names are seldom lower case; amounts are never bare digits, which read as
+  a count or a year ("top 10 payees" lost the amount fold its precision, "2025" read as an
+  amount); counts ("my 5 biggest payments", "more than 3 times") and repaid loans ("did X pay me
+  back") as look-alikes; version 4 templates drawn at half the weight of the others. Amount F1
+  rose to 0.92, payee F1 above Keras'; parity failed in four of the six, the int8 slots moving
+  up to 0.065 at the 99.9th percentile.
+- Runs 11 to 16 (AdamW with weight decay 0.01; the Sacco fix): parity within its limits in all
+  six, the slots' 99.9th percentile 0.047 to 0.052. One-word first names fixed "hw much to
+  brian" but, mixed into every one-word name, cost the hard held-out set's intents; run 16, the
+  one released, has them only in money-out templates of their own ("how much to kevin").
+
+How the recipe was chosen, on these very folds, seeds and questions (nothing in the data
+changed): the Keras recipe as it is (Adam, cosine decay to 5%, the same dropout and token
+swaps) gave 0.865 / 0.851 on unseen version 1 templates and was below v3 on nine figures,
+among them the app's intents (0.954) and the misses' slots (0.952). Label smoothing of 0.1 on
+both heads lifted every held-out template score (0.878 / 0.868) but cost the probes names and
+the conformance file's intents (0.985); on the intent alone, or with an exponential moving
+average of the weights, it lost "How much to John?" again. Smoothing of 0.05 on both heads
+kept most of the held-out gain and the probes; version 4 keeps it, and adds AdamW's weight
+decay (0.01) and 30 epochs.
+Scores are on synthetic questions; real ones will score lower.
 
 On unseen version 1 templates, v1 tagged its few payees, categories and items by heart wherever
-they stood; v2 leans on where a word stands, so it tags those three a little less often in
-phrasings it has never seen, and periods, accounts and amounts more often. Weak spots: long
-names whose words are all new, names straight after a verb the reader does not
-know ("mara ngapi nimeenda X"), "what did X cost me" and "how much to john" (read as charges),
-an account followed by a period ("charges on KCB this month" reads "KCB this month" as the
-period), and look-alikes such as "how often should I pay rent". Of the conformance questions it
-reads "has Otieno paid me" as a personal loan repaid.
-Scores are on synthetic questions; real ones will score lower.
+they stood; v2 and v3 lean on where a word stands, so they tag those three a little less often
+in phrasings they have never seen, and periods, accounts and amounts more often. v3 reads all
+four misses of v2 right ("charges on KCB this month" is the account KCB and the period "this
+month"; "how much to john" and "what did Naivas cost me" are spending; "has Otieno paid me" is
+money in, "has Otieno paid me back" still a loan repaid), and 61 of the 62 questions of the
+misses set. Known misses: "what did john cost me", a lone first name before "cost me", still
+reads as charges (one-word names in training fixed it but cost the app's questions 4 points of
+name matches, so v3 leaves them out); "what did Uber cost me" tags Uber as a category ("uber
+rides" is one); "send my sister money" (out of scope) tags "my sister" as a payee; long names
+whose words are all new; names straight after a verb the reader does not know ("mara ngapi
+nimeenda X"); "how much for X" (read as a follow-up) and "count the payments to X" (read as
+spending). v3's account F1 on unseen version 1 templates (in Keras) is 0.014 lower than
+v2's; in PyTorch it is 0.050 higher. The PyTorch reader has the same known misses.
+
+### The model and its file
+
+[`AskReader`](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/src/akili/ask/reader_model.py) is the Keras network (`keras_reader.py`, at the
+`tflite-archive` tag) as a `torch.nn` module, layer for
+layer and under the same names (`token_embedding`, `shape_embedding`, `conv_1` .. `conv_3`,
+`slot_hidden`, `slot_context`, `slot_span`, `slots`, `intent_hidden`, `intent`), 239,589
+parameters. [`fit`](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/src/akili/ask/reader.py) trains it with the Keras trainer's recipe, data
+and token swaps, plus label smoothing of 0.05 on both heads, AdamW's decoupled weight decay of
+0.01 (which keeps the weights small, so the int8 file stays close to torch) and 30 epochs. Each
+batch runs on its longest
+question and the 10 padding tokens after it (`RECEPTIVE_FIELD`: how far a slot output reaches),
+which gives exactly the outputs, loss and gradients of all 96 positions in a third of the time
+(a test checks it). `torch.onnx` (opset 17) exports it and rayo-convert quantises it to int8
+(decision 0023): the file has the Keras reader's tensors, with their shapes, dtypes and scale
+axes (`shape_embedding.table` and `slots.kernel`, fewer than 1,024 values, stay float32), the
+same `layers` list, and rayo's graph with the inputs `tokens` and `shapes` (the module takes the
+two halves, so the graph needs no split) and the outputs `slots`, then `intent`. The graph
+pools with rayo's general ops (`compare`, `reshape`, `reduce`, `mul`, `sub`, `div`,
+`maximum`); rayo's own `masked_reduce` is what the Keras file's graph used. 252,860 bytes,
+against the 400,000-byte budget, which is on this file (SHA-256 `1dac0b7b…`; two runs of
+`akili ask-reader` give the same bytes).
+
+`ask-reader-manifest.json` has the weights' four fields and `source` (the ONNX file's name,
+SHA-256 and size) in place of `model_file`, `model_sha256` and `model_size_bytes`, then
+`ask_schema_version`, the tokeniser's fields, `input`, `rayo_inputs` and `outputs` as before.
+
+### Parity
+
+The export fails unless rayo's int8 file is close to the torch model's float probabilities on
+3,195 questions (1,000 generated with the next seed, the hard held-out set, the app's, the
+misses and the conformance questions): at most 0.1 apart for the intent and 0.25 for a token's
+slots, 0.06 at the 99.9th percentile, and the same label wherever torch's two best
+probabilities are more than 0.2 apart (two labels can swap only when each moves by about half
+the gap between them, and the largest moves are about 0.15 to 0.25). Decision 0023 proposed 1e-2,
+which held for the message reader; the Ask reader moves further, because it has eight int8
+layers (six in a row on the slots' path) and `intent_hidden` quantises one 224-wide row that
+holds both the pooled convolution features and the much smaller mean of the embeddings, with
+one scale. Measured on the released file:
+the intent within 0.062 (99.9% of questions within 0.039), the slots within 0.090 (99.9% of
+tokens within 0.052); 3,192 of the 3,195 intents and 23,825 of the 23,837 tokens' slots are
+torch's, and each of the fifteen that are not is a near-tie in torch (its two best within 0.2).
+Without weight decay, version 4's data took the slots to the limits (0.06 at the 99.9th
+percentile in half the runs); with it, six runs stayed between 0.047 and 0.052.
+
+The NumPy forward pass the Dart reader copies
+([`reader_weights.forward`](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/src/akili/ask/reader_weights.py)) runs as rayo runs the file:
+every activation in float32 and each operation in rayo's order (the int8 layers' finish,
+`bias + float(sum - zero * rowsum) * (scale * weight scale)`, and the pooling's sums, one
+position after another in float32). Every int8 layer so quantises rayo's very inputs, and no
+rounding to int8 falls the other way: the intent matches rayo bit for bit and the slots to
+1e-7 on the app, misses and conformance questions. (Sums in float64 used to give the same to
+about 1e-7 almost always, but on one test model an input sat a float32 ulp from a rounding
+boundary and the slots came out 1.5e-4 apart.) The app's fixtures are re-recorded for each new
+file.
 
 ### Versions
 
-- **v2** (this version): invented names in training, 98 new templates (version 2) for the
+- **v4** (this version): 89 new templates (version 4) for the PyTorch v3 reader's weak
+  patterns: money in from a name in few words ("received from X", "got from X", "was paid by
+  X"), with sends to a name as the look-alike; a payee in compare, trend, biggest-payment, debt,
+  bill and income-source questions ("compare my spending at X with last month"); one-word names
+  first names alone and names with plain words in them ([`names.py`](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/src/akili/ask/names.py));
+  amounts and amount filters typed many ways ("over 1000", "ksh 2,500 and above", "at least
+  1.5k"), never bare digits; and look-alikes: counts ("my 5 biggest payments"), repaid loans
+  ("did X pay me back"), a category where a name could stand ("what did rent cost me"). They are
+  held out in the folds like the others (`v4` in the report) and drawn at half the weight of
+  the others (`V4_WEIGHT`; versions 2 and 3 keep their boost). The name pools no longer make
+  the app's own test names as Saccos ("Example Sacco"), which changes the version 2 and 3
+  held-out questions and the hard held-out set; Keras v3 is re-scored on them. Version 1
+  templates keep their folds and test questions, and version 2 and 3 templates their folds. No
+  version 4 question is an evaluation question and no version 4 name is one the evaluation sets
+  ask about (a test checks both). Recipe: AdamW's weight decay of 0.01 and 30 epochs. The
+  reference forward pass runs in float32 in rayo's order. Same network, seeds, input, outputs,
+  labels and `ask_schema_version`; the app needs no change beyond the new file (and the Dart
+  reader's pooling sums in float32).
+- **v3 in PyTorch** (#60, decision 0023 stage 3): the same network, layer names,
+  data, templates, folds and seeds, trained in PyTorch with label smoothing of 0.05 and
+  shipped as rayo-convert's int8 file; no TFLite file. The Keras reader and `--keras` were
+  removed with TensorFlow in stage 5 (the v3 `ask-reader.tflite` is in the `tflite-archive`
+  release). Same input,
+  outputs, labels and `ask_schema_version`; the manifest names the ONNX source instead of a
+  TFLite file.
+- **v3** (#51): 37 new templates (version 3) for v2's misses: charges on an account
+  followed by a period, "how much to X", "what did X cost me", "has X paid me", with the
+  look-alikes that keep their intents ("has X paid me back", "what did charges cost me"), and
+  bare month names as periods ("compare September with October", "what about September"). The
+  report adds the `misses` and `conformance_questions` scores and `v3` held-out templates;
+  version 1 and 2 templates keep their folds, so their scores compare. Same network, recipe,
+  seeds, input, outputs, labels and `ask_schema_version`; the weights carry rayo's general ops
+  (#49).
+- **v2** (d51d5bc): invented names in training, 98 new templates (version 2) for the
   phrasings v1 misread in the app, token swaps, a wider network with a slot head of its own
   (96 filters; two small convolutions over the slot features; token embeddings 24 wide), more
   data and a cosine learning-rate decay. Same input, outputs, labels and `ask_schema_version`;
@@ -180,6 +374,15 @@ Scores are on synthetic questions; real ones will score lower.
   "how often do I pay X" as out of scope and "how much did I pay X" as subscriptions.
 
 ## Ask writer
+
+The writer is **frozen as shipped** (pesaclarity/docs, decision 0023): `ask-writer.weights`
+(SHA-256 `e90687df…`, 591,860 bytes), read out of `ask-writer.tflite` (`3461c243…`, akili
+dfb9c24, v0.2.0), until Ask LM replaces it. Its Keras trainer went with TensorFlow in stage 5,
+so it is not retrained or changed here; the code and the TFLite file are at the
+`tflite-archive` tag and in its release. A fix it needs before Ask LM ships goes in the app's
+checks and fixed sentences. What follows stays the contract: the vocabulary
+([`akili.ask.writer`](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/src/akili/ask/writer.py)), the fact grammar, the checker and the
+conformance cases.
 
 ### Vocabulary
 
@@ -347,7 +550,7 @@ model wrote no number of its own.
 
 ## Conformance file
 
-[`ask_examples.v1.json`](https://github.com/pesaclarity/pesaclarity-ml/blob/3054046301641784dcae20e18d48950cf02a7836/src/akili/resources/ask_examples.v1.json), regenerated by
+[`ask_examples.v1.json`](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/src/akili/resources/ask_examples.v1.json), regenerated by
 `akili ask-examples` (`--check` fails when it is out of date):
 
 - `questions`: 68 hand-written questions with the intent and slot spans (character offsets)

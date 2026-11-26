@@ -3,11 +3,11 @@
   "repos": {
     "pesaclarity-app": {
       "ref": "main",
-      "commit": "b401ac205bc8a9bebebe5c52e983bb761f6901d8"
+      "commit": "ab3c93185e8ee59ebc23157ce24e5fb3b117157c"
     },
     "ujumbe-parsers": {
       "ref": "main",
-      "commit": "fcee5edcab37dd6c2c9a2a0d2f76231d0f57a263"
+      "commit": "07ad926149776c1918720dd8fb6a2ea599c8c592"
     },
     "rayo": {
       "ref": "main",
@@ -15,11 +15,11 @@
     },
     "pesaclarity-ml": {
       "ref": "main",
-      "commit": "3054046301641784dcae20e18d48950cf02a7836"
+      "commit": "43d001e8c939e25f28ad5ab5d22c562769d9b14b"
     },
     "pesaclarity-backend": {
       "ref": "main",
-      "commit": "3445bce5dcaa114c14fa4e651fc820b8154a2825"
+      "commit": "f91420a806b3bc6243e69de1fe1c17f649ae238d"
     },
     ".github": {
       "ref": "main",
@@ -27,24 +27,24 @@
     },
     "docs": {
       "ref": "main",
-      "commit": "e0e3122b322c215b6a00b032b7b0246785025d2a"
+      "commit": "4cfe460b3ffa848f4cb14685c7a0aa63c217ade6"
     }
   },
   "dates": {
     "parsers@0.1.0": "2026-10-27"
   },
   "files": {
-    "src/content/docs/app/repositories.md": "7bc1499b7cc39cdc566fcde8b6ecf78414ca0396a867e3ad34842d014d09c148",
-    "src/content/docs/app/performance-budget.md": "94d61811c01dfdb51a82ef5327a26f31db5e9ad504bb694303174b2628652704",
-    "src/content/docs/app/auto-categorise.md": "7ad94036f83fa6fdb3b1d2833d5c94f5a4098b7d98b659ae44c111349a49cda7",
-    "src/content/docs/app/message-reader.md": "952dc6ab3c99b26d963352acb0e2c3a7e48c57ce609f64debe8c36dd13d47dea",
-    "src/content/docs/app/runtime-overhead.md": "033b402335e3d413be76078ef98c723b5741280670e41206b0c07d113fc11e25",
-    "src/content/docs/parser-packs/overview.md": "13e82610fdb95a1b7127db7a4d1417e3ce231307925ee0fe0ffe6f6a696fc2cc",
-    "src/content/docs/parser-packs/write-a-parser-pack.md": "8542f05424e9b1a734e15816e3727d8d59c6233b3fd9381593873ce389effb15",
-    "src/content/docs/parser-packs/signing-and-releases.md": "70430d7bd2c2ec8431a4a85e63d7080f33cb3198e26520b55f83170d56dc8096",
-    "src/content/docs/parser-packs/signing-packs.md": "4072dc4e096e6e83ef3d461d3abb1b5c768131677ac0e0888e5548484c417e80",
-    "src/content/docs/parser-packs/example-messages.md": "e64fdebb7aae15b4b79ed47a208b575aff4e24ef06566e3651147d4d34986ba6",
-    "src/content/docs/parser-packs/contributing.md": "78e5f9858db56e7b2ab1c848f2ec6f900b5eba905f123b79c230e8a8cea30a5e",
+    "src/content/docs/app/repositories.md": "52d597eeee7f057b2cbf85bbe3a363dec0458fc830ef644607e9ee7267388d31",
+    "src/content/docs/app/performance-budget.md": "f2645e71c7b521ef7224eb183a50611c8e876ee076faa9eec15e466d95af59ff",
+    "src/content/docs/app/auto-categorise.md": "5c11e0577aed4e38d5ae52bd389189cebca54c25e0d74d185fc30d0614a5a659",
+    "src/content/docs/app/message-reader.md": "fe0658193aefabe714f23209021e5070d125d020159361e80e8aa5a4839acdd2",
+    "src/content/docs/app/runtime-overhead.md": "fa01f0713e23cd8679236216e706506420cb3eadcc51c2a72db6d70ee0cbbc8b",
+    "src/content/docs/parser-packs/overview.md": "a435ca3758fd0c082df06c967e704d1fbde4a444f9a302ebae373dec1fd61ceb",
+    "src/content/docs/parser-packs/write-a-parser-pack.md": "6acbecde990ae2a36587488a4a585d848431823754bbd08d64e06a05a21a85f4",
+    "src/content/docs/parser-packs/signing-and-releases.md": "e640864b9d6374f8cdde7970a0912d2fa675e97a82f312fa43902806ef8092d6",
+    "src/content/docs/parser-packs/signing-packs.md": "4d92022118fe9c2efb7ea15ebf9da9cb5f8680085308ac8ed26c3145be0f872b",
+    "src/content/docs/parser-packs/example-messages.md": "206e12de9c05777a264d445c70d1d49c3fe52f238456164a38ef2a123849f89a",
+    "src/content/docs/parser-packs/contributing.md": "5b4b266c0875c22ee6a0c51c0afccfce4efd476999b7c89d774d70ba8280dfed",
     "src/content/docs/rayo/overview.md": "7d118e9fbc1cd6694c2208bf744d8e5da340501c519b859fdcbc9f24b63cd0d4",
     "src/content/docs/rayo/getting-started.md": "13e411000383509c006fca7335fdbf53cb4be8c8506157cf317bfcc554b95ef7",
     "src/content/docs/rayo/concepts.md": "78492dd352001772f00e72111cb8f70e9e2e2d00ac032276b7bbdff08a44e206",
@@ -60,28 +60,28 @@
     "src/content/docs/rayo/troubleshooting.md": "1afde6351bbfce4df9c9125534f7a68ec960285cb79fde58f937a2191b896278",
     "src/content/docs/rayo/faq.md": "508900e90b5d6c1948cb4941d2730c085b2cd96d7684a9791f19b3503e1cf245",
     "src/content/docs/rayo/roadmap.md": "bc0c93ffe1ea8e2ff5841ae051addb7fe6313f80ef466f950a5b5eea148d57d4",
-    "src/content/docs/ml/overview.md": "dd5ef9faa1e041e41e925efcab72ed861bd063727bd8acc37003c67839f19be3",
-    "src/content/docs/ml/ask.md": "cd8b6e3bb13c5a9fa5f1470257352074776b03af6f4f998ea6d6edd01a647004",
-    "src/content/docs/ml/message-reader.md": "f1b8904d5c459a13f73461553980ed5c04d38de739763e74094ee415225a0dc1",
-    "src/content/docs/ml/features.md": "934a1ce3e8c9a77cd4da188a85bf53adf6307e73eeb24f6c64cd6b544277e1b7",
-    "src/content/docs/ml/dp-sgd-review.md": "762266f3f461a59d406236df81df33451342f01d25f5f551204cb72382053d1a",
-    "src/content/docs/ml/privacy-audit.md": "dfcd6109b1064be9b90a6292612bf76f8b49fbb8a7054065776312d74837fe68",
-    "src/content/docs/ml/model-weights.md": "0b4421632a635361a9fa9282cbc6f910f3d0217ecc5ddd6715982ead09668c40",
-    "src/content/docs/server/overview.md": "16690ca41f09919f80a127311a1c36d144874e57b63f3ee14fabb1bde1c5f6e5",
-    "src/content/docs/server/deploying.md": "a74c2f25c4637c4d327ce109d7d19d0eb98f8ed285f0e9898841027b90b9e5ee",
-    "src/content/docs/server/settings-on-cloud-run.md": "912324e111df3b20b4aadb2d573443116ea6b14517e3a2a82053bf58c0a8945b",
-    "src/content/docs/server/settings-in-github.md": "e3d70d0dd37b4758b2f3d4412dbd0f68864748b3883d28ddfd07aa22009cc165",
+    "src/content/docs/ml/overview.md": "34a9612e7e908e66e12e4e9fef65e434a427ec0df569c759b005f1cd0e0e841e",
+    "src/content/docs/ml/ask.md": "1d4dd791e017ba1caf3cd287415e42582683ab7f7589fbe0cce5c7af09a8fe86",
+    "src/content/docs/ml/message-reader.md": "f3fc4eb994a9e39ad30eaae329515eb6228b25f4df856baab26151050c8495ab",
+    "src/content/docs/ml/features.md": "cc0ad6886dae1093a0b7c1b694039d828411518e62b464f8b17e6df906574cf7",
+    "src/content/docs/ml/dp-sgd-review.md": "7055c6b6c3f0107de9fd11cb32b8010d46269ef042ad07561c3c610b72ebed4c",
+    "src/content/docs/ml/privacy-audit.md": "b787389b604cb0d29d007584ee99a8d9be6de7a7ec3cb8921e520c621fcfccb0",
+    "src/content/docs/ml/model-weights.md": "62d78e325da678fd11fc4f533bbda0bb24097885b88d8135cba0e9fdb0bfcec3",
+    "src/content/docs/server/overview.md": "0cade1b212442fa18a86cdb6c78e09e3a68cc9116c3567beb551ed6a03db38cc",
+    "src/content/docs/server/deploying.md": "4cc90109387816d88d60fd918164f634ddb096d304c0be2ce96d0d65e9ad4256",
+    "src/content/docs/server/settings-on-cloud-run.md": "5fffd82c65300be44bc72f95b85b30ebb64c53bc04cdc3b6ad19fe1f83914855",
+    "src/content/docs/server/settings-in-github.md": "2c9832eb7639e0bfaf2c1f7ceb5eb794a2bea78725526a776ec85de74de008c8",
     "src/content/docs/security/security-policy.md": "f2de258ab1afba779135d159b18fa3b5483e036d84191d317d36bc49e6063700",
-    "src/content/docs/security/pinned-certificate-authorities.md": "6f6a09512d3ae79a4e598fdbcc8c7ac24a2ac1b069bec61006464fbaaa627cb2",
-    "src/content/docs/security/federated-learning.md": "c568dbbd84196dbfc9647a845b1672268de4bb768426816a786047b06fc9a6e1",
-    "src/content/docs/verify/reproducible-builds.md": "8850aab612bb87a021b2d78fc0007fe41d71b2cd58d3f5498bad4368ce03f4a5",
-    "src/content/docs/verify/releasing.md": "dd23b881445202bb08849e03f768fdb513e15818e32d68a0aab92646f4f96e08",
+    "src/content/docs/security/pinned-certificate-authorities.md": "73eebe68c5ec69dd3c70fa4dae28b38189140a53cda2cc34e5d66cc4b1f679cd",
+    "src/content/docs/security/federated-learning.md": "6a03a5a6212ede617675452f56e58c610c57a47ea68b8f8db1c08246754d26d2",
+    "src/content/docs/verify/reproducible-builds.md": "aa69f8307fc4a3dab9c45ac31bea34b0c1e18b4dd7ad4c1fca9ba17c9b99a4f4",
+    "src/content/docs/verify/releasing.md": "85533f40e76fa52bb9c6b4a520afe006587d786ba55b7ed2c987db517ffacf06",
     "src/content/docs/contribute/contributing.md": "49ad08dfc03f58be407d91106e6da2ef2e9cd8eb1011430366da3d57c1f2c897",
     "src/content/docs/contribute/code-of-conduct.md": "8cee58d939fb55c46bf05c9fdb9306b47d72d019fab0efb678d418c47b4771f7",
-    "src/data/changes/app.md": "03c6334073ec38c1af3fd0c9ac0705b7db9c09214c1235ceef0c710c65ecc0a6",
+    "src/data/changes/app.md": "ff46aa89781b669eaf099855e0124256043fbfde79669759573b127d2e230271",
     "src/data/changes/parsers.md": "6b5399ab5d16376942ab6a1d276df96deb0215eef5f0bc4306a24ae536599561",
     "src/data/changes/rayo.md": "7bc3c0111791c069baedb981ee311ac13a87788b23f379f017710700b80b9680",
-    "src/data/changes/ml.md": "b1970d566b107dd4cc3abd1c7f41032d01b59b26b1b4e7703296986e225f04b9",
-    "src/data/changes/server.md": "5783a519fe2b4d8744d97cb8bc3d2cc25e4c92f0a61a22ae13f9aee7d8bacad1"
+    "src/data/changes/ml.md": "069930ed6c5fd0b7b12417d24beb78a7726ddf294e9130201ec8cdb02e24dda0",
+    "src/data/changes/server.md": "4a3c9fb52fabc6fbe2a26c53d932b1e3bde183c7277c4bb3fdda97b98a9c2274"
   }
 }

@@ -5,18 +5,18 @@ section: "ml"
 order: 32
 repo: "pesaclarity-ml"
 path: "MODEL-WEIGHTS.md"
-commit: "3054046301641784dcae20e18d48950cf02a7836"
-source: "https://github.com/pesaclarity/pesaclarity-ml/blob/3054046301641784dcae20e18d48950cf02a7836/MODEL-WEIGHTS.md"
+commit: "43d001e8c939e25f28ad5ab5d22c562769d9b14b"
+source: "https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/MODEL-WEIGHTS.md"
 edit: "https://github.com/pesaclarity/pesaclarity-ml/edit/main/MODEL-WEIGHTS.md"
 ---
-The code in this repository is licensed under AGPL-3.0 (see [LICENSE](https://github.com/pesaclarity/pesaclarity-ml/blob/3054046301641784dcae20e18d48950cf02a7836/LICENSE)). Trained model
+The code in this repository is licensed under AGPL-3.0 (see [LICENSE](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/LICENSE)). Trained model
 weights are licensed separately, by track.
 
 ## App-track weights: CC BY-SA 4.0
 
 The categoriser and message reader weights that ship inside the Pesa Clarity app, including
 federated models built from people who left "Help improve the app" on, are licensed under the
-[Creative Commons Attribution-ShareAlike 4.0 International licence](https://github.com/pesaclarity/pesaclarity-ml/blob/3054046301641784dcae20e18d48950cf02a7836/LICENSE-WEIGHTS) (CC BY-SA
+[Creative Commons Attribution-ShareAlike 4.0 International licence](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/LICENSE-WEIGHTS) (CC BY-SA
 4.0).
 
 - You may copy, share and adapt them, for any purpose, including commercially.
@@ -35,7 +35,7 @@ on their phone.
 
 Models trained only from people who opted in to the separate commercial track are never published.
 They are licensed to organisations under a written agreement on the terms in
-[COMMERCIAL-MODEL-TERMS.md](https://github.com/pesaclarity/pesaclarity-ml/blob/3054046301641784dcae20e18d48950cf02a7836/COMMERCIAL-MODEL-TERMS.md). A Kenyan data protection lawyer reviews the
+[COMMERCIAL-MODEL-TERMS.md](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/COMMERCIAL-MODEL-TERMS.md). A Kenyan data protection lawyer reviews the
 agreement before the first licence, as the spec's release conditions require.
 
 ## For both tracks
@@ -43,7 +43,7 @@ agreement before the first licence, as the spec's release conditions require.
 - No weights are committed to this repository. `.gitignore` excludes model artefacts
   (`artefacts/`, `mlruns/`, `*.tflite`, `*.keras`, checkpoints and saved models).
 - Every release, on either track, must first pass the
-  [release checklist](https://github.com/pesaclarity/pesaclarity-ml/blob/3054046301641784dcae20e18d48950cf02a7836/docs/RELEASE-CHECKLIST.md): a user-level privacy budget within the track
+  [release checklist](https://github.com/pesaclarity/pesaclarity-ml/blob/43d001e8c939e25f28ad5ab5d22c562769d9b14b/docs/RELEASE-CHECKLIST.md): a user-level privacy budget within the track
   limits, secure aggregation, the minimum cohort and a passing membership-inference audit. Its
   `privacy-report.json` and `audit-report.json` are published with the weights.
 - Models you train yourself with this code, on your own data, are yours. The AGPL still applies to

@@ -5,8 +5,8 @@ section: "security"
 order: 38
 repo: "docs"
 path: "decisions/0005-pin-certificate-authorities.md"
-commit: "e0e3122b322c215b6a00b032b7b0246785025d2a"
-source: "https://github.com/pesaclarity/docs/blob/e0e3122b322c215b6a00b032b7b0246785025d2a/decisions/0005-pin-certificate-authorities.md"
+commit: "4cfe460b3ffa848f4cb14685c7a0aa63c217ade6"
+source: "https://github.com/pesaclarity/docs/blob/4cfe460b3ffa848f4cb14685c7a0aa63c217ade6/decisions/0005-pin-certificate-authorities.md"
 edit: "https://github.com/pesaclarity/docs/edit/main/decisions/0005-pin-certificate-authorities.md"
 ---
 Date: 2026-10-27 · Status: Accepted
@@ -19,7 +19,7 @@ MASVS L2 expects certificate pinning. Our hosts (Cloud Run, Cloudflare) manage o
 
 Connections to our hosts trust only the root authorities named in the build (`PESACLARITY_PINNED_HOSTS` and `PESACLARITY_TRUSTED_ROOTS`, at least two roots). Third-party services such as Google Drive use the phone's authorities.
 
-A server the person runs themselves, such as their own Firefly III ([0029](https://github.com/pesaclarity/docs/blob/e0e3122b322c215b6a00b032b7b0246785025d2a/decisions/0029-firefly-iii-sync.md)), is not one of our hosts and is not pinned: we do not know who signs its certificate. Its client reaches only that one server and trusts the phone's authorities, or exactly one certificate whose fingerprint the person confirmed.
+A server the person runs themselves, such as their own Firefly III ([0029](https://github.com/pesaclarity/docs/blob/4cfe460b3ffa848f4cb14685c7a0aa63c217ade6/decisions/0029-firefly-iii-sync.md)), is not one of our hosts and is not pinned: we do not know who signs its certificate. Its client reaches only that one server and trusts the phone's authorities, or exactly one certificate whose fingerprint the person confirmed.
 
 ## Consequences
 

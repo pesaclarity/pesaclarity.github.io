@@ -5,8 +5,8 @@ section: "app"
 order: 0
 repo: "docs"
 path: "REPOS.md"
-commit: "e0e3122b322c215b6a00b032b7b0246785025d2a"
-source: "https://github.com/pesaclarity/docs/blob/e0e3122b322c215b6a00b032b7b0246785025d2a/REPOS.md"
+commit: "4cfe460b3ffa848f4cb14685c7a0aa63c217ade6"
+source: "https://github.com/pesaclarity/docs/blob/4cfe460b3ffa848f4cb14685c7a0aa63c217ade6/REPOS.md"
 edit: "https://github.com/pesaclarity/docs/edit/main/REPOS.md"
 ---
 The `pesaclarity` GitHub organisation holds one repository per licence boundary from the spec's open-source section. All exist now; each is built in the phase shown. Codenames are Swahili words used for package and module names.
@@ -20,7 +20,7 @@ The `pesaclarity` GitHub organisation holds one repository per licence boundary 
 | [`pesaclarity.github.io`](https://github.com/pesaclarity/pesaclarity.github.io) | dirisha (window) | Website: what Pesa Clarity is, principles, privacy, open source, calls to action | AGPL-3.0 (code), CC BY 4.0 (text) | 2, before Play review |
 | [`pesaclarity-backend`](https://github.com/pesaclarity/pesaclarity-backend) | ngome (fortress) | Auth, encrypted backup vault (Play Integrity and App Attest), federated-learning aggregator. Docker, Cloud Run | AGPL-3.0 + commercial on request | 2–3 (weeks 7–14) |
 | [`pesaclarity-ml`](https://github.com/pesaclarity/pesaclarity-ml) | akili (intelligence) | Categoriser, message reader, Ask reader and writer, DP-SGD config, rayo weights export, MLflow tracking, release audits | AGPL-3.0 (code); app-track weights CC BY-SA 4.0, commercial-track weights by written licence | 3. Beta (weeks 12–14) |
-| [`rayo`](https://github.com/pesaclarity/rayo) | | On-device inference engine in pure C89, with no Google libraries: runs the app's models and small language models on phones, a converter from TFLite, ONNX and Hugging Face files, and a Dart package | AGPL-3.0 | After phase 3 ([0020](https://github.com/pesaclarity/docs/blob/e0e3122b322c215b6a00b032b7b0246785025d2a/decisions/0020-rayo-our-own-inference-engine.md)) |
+| [`rayo`](https://github.com/pesaclarity/rayo) | | On-device inference engine in pure C89, with no Google libraries: runs the app's models and small language models on phones, a converter from TFLite, ONNX and Hugging Face files, and a Dart package | AGPL-3.0 | After phase 3 ([0020](https://github.com/pesaclarity/docs/blob/4cfe460b3ffa848f4cb14685c7a0aa63c217ade6/decisions/0020-rayo-our-own-inference-engine.md)) |
 
 `pesaclarity-app` depends on `ujumbe-parsers` as the Dart package `ujumbe`, so packs version and release independently of the app.
 
@@ -30,6 +30,6 @@ The `pesaclarity` GitHub organisation holds one repository per licence boundary 
 - No secrets in any repo. App signing, pack signing and server keys live in a hardware key or secrets manager.
 - `main` is protected: pull requests, no force-push.
 - Checks run on your machine, not on GitHub. Every code repo (`pesaclarity-app`, `ujumbe-parsers`, `pesaclarity-backend`, `pesaclarity-ml` and the website) has `tool/check`, and `tool/setup-hooks` turns on a pre-push hook that runs it before every push. GitHub Actions only builds, releases and deploys; pull requests run no heavy builds. The app gets an Android and an iPhone test build of `dev` each evening, skipped when `dev` has not changed.
-- Every commit follows Conventional Commits; the commits set versions and changelogs. Pull requests into `dev` are rebase-merged, so each commit lands as is ([0008](https://github.com/pesaclarity/docs/blob/e0e3122b322c215b6a00b032b7b0246785025d2a/decisions/0008-dev-branch-and-release-please.md)).
-- `pesaclarity-app`, `pesaclarity-backend`, `pesaclarity-ml` and `ujumbe-parsers` publish from `main`, so changes go to `dev` and reach `main` after QA ([0008](https://github.com/pesaclarity/docs/blob/e0e3122b322c215b6a00b032b7b0246785025d2a/decisions/0008-dev-branch-and-release-please.md)).
+- Every commit follows Conventional Commits; the commits set versions and changelogs. Pull requests into `dev` are rebase-merged, so each commit lands as is ([0008](https://github.com/pesaclarity/docs/blob/4cfe460b3ffa848f4cb14685c7a0aa63c217ade6/decisions/0008-dev-branch-and-release-please.md)).
+- `pesaclarity-app`, `pesaclarity-backend`, `pesaclarity-ml` and `ujumbe-parsers` publish from `main`, so changes go to `dev` and reach `main` after QA ([0008](https://github.com/pesaclarity/docs/blob/4cfe460b3ffa848f4cb14685c7a0aa63c217ade6/decisions/0008-dev-branch-and-release-please.md)).
 - Every repo links back here for the spec and brand.

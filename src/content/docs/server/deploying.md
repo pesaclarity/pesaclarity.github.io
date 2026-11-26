@@ -5,8 +5,8 @@ section: "server"
 order: 34
 repo: "pesaclarity-backend"
 path: "docs/deploying.md"
-commit: "3445bce5dcaa114c14fa4e651fc820b8154a2825"
-source: "https://github.com/pesaclarity/pesaclarity-backend/blob/3445bce5dcaa114c14fa4e651fc820b8154a2825/docs/deploying.md"
+commit: "f91420a806b3bc6243e69de1fe1c17f649ae238d"
+source: "https://github.com/pesaclarity/pesaclarity-backend/blob/f91420a806b3bc6243e69de1fe1c17f649ae238d/docs/deploying.md"
 edit: "https://github.com/pesaclarity/pesaclarity-backend/edit/main/docs/deploying.md"
 ---
 How the server runs in production, and the commands to set it up and look after it. Everything here runs from a terminal with `gcloud`, `gh` and `jq`, plus a few clicks in the Cloud Run and GitHub consoles. The design is in [specs 0001](/docs/server/settings-on-cloud-run/) and [0002](/docs/server/settings-in-github/).
@@ -54,7 +54,7 @@ Merge to `main` (README, "Branches and releases"). To watch the build: `gcloud b
    - A secret gets a new Secret Manager version only when its value changed.
    - Removing a variable or secret in GitHub removes it from Cloud Run on the next sync.
 
-The workflow names each secret it reads: the eight secret settings the server has (database URL, JWT secret, contact pepper, SMTP password, the two R2 keys, the admin token and the app status signing seed). A new secret setting has to be added to `.github/workflows/sync-settings.yml` as well.
+The workflow names each secret it reads: the nine secret settings the server has (database URL, JWT secret, contact pepper, SMTP password, the two R2 keys, the admin token, the app status signing seed and the admin secret key). A new secret setting has to be added to `.github/workflows/sync-settings.yml` as well.
 
 GitHub may hold a Sync settings run for approval when it flags a workflow as potentially malicious. Approve the run on its page in the Actions tab, signed in with write access.
 
@@ -98,6 +98,57 @@ Migrations don't roll back with a revision, so only roll back to a release that 
 gcloud run services logs read "$CLOUD_RUN_SERVICE" --region "$GCP_REGION" --limit 50
 gcloud run jobs executions list --job "$CLOUD_RUN_PURGE_JOB" --region "$GCP_REGION" --limit 5
 ```
+
+## Install counts, crash reports and the dashboard (ADR 0024)
+
+**Request logs.** The owner decided that Google keeps no request logs for the two routes that count and take crash reports. Add a Cloud Logging exclusion once (it also covers future revisions):
+
+```sh
+gcloud logging sinks update _Default --project "$GCP_PROJECT_ID" \
+  --add-exclusion=name=ngome-no-request-logs,description="ADR 0024: no request logs for app status and crash reports",filter='resource.type="cloud_run_revision" AND resource.labels.service_name="'"$CLOUD_RUN_SERVICE"'" AND log_id("run.googleapis.com/requests") AND (httpRequest.requestUrl:"/v1/app-status" OR httpRequest.requestUrl:"/v1/crash-reports")'
+gcloud logging sinks describe _Default --project "$GCP_PROJECT_ID"   # check it is listed
+```
+
+Those two routes lose their security logs; the token format check, the flood ceiling and its dashboard flag, and the crash reports' size and daily caps still apply. The server's own log line for them carries only the route template, status and duration.
+
+**The dashboard.** Set its origin (the service's URL, or a custom domain mapped to it), the owner's email address and the key that encrypts the authenticator secret, sync, then make the admin user from a terminal (README, "Admin dashboard"). Set the email and key before the release with ADR 0025 deploys if you can; if it deploys first, passkey-only sign-in has already ended and the dashboard shows "Sign-in isn't configured" (`503`) until they are set and synced, while the app's API carries on:
+
+```sh
+gh variable set NGOME_ADMIN_ORIGIN --env production --body "https://<service url host>"
+gh variable set NGOME_ADMIN_EMAIL --env production --body "<the owner's address>"
+python3 -c 'import secrets, base64; print(base64.b64encode(secrets.token_bytes(32)).decode(), end="")' \
+  | gh secret set NGOME_ADMIN_SECRET_KEY --env production
+gh workflow run "Sync settings"
+```
+
+After the deploy, check that the server reads the caller's address from the entry Google appends, not one the caller wrote: the answer must be your own address, not `203.0.113.7`.
+
+```sh
+curl -s "$API/v1/admin/client-address" -H "Authorization: Bearer $NGOME_ADMIN_TOKEN" \
+  -H 'X-Forwarded-For: 203.0.113.7'
+```
+
+If it shows `203.0.113.7`, or an address of Google's, set `NGOME_PROXY_HOPS` (2 behind a load balancer) and sync again. Then make the starter user and sign in:
+
+```sh
+curl -X POST "$API/v1/admin/starter-user" -H "Authorization: Bearer $NGOME_ADMIN_TOKEN" \
+  -H 'Content-Type: application/json' -d '{"username": "<your username>"}'
+```
+
+It prints a temporary password once; clear the terminal afterwards. Within 24 hours open `https://<service url host>/admin/sign-in`, sign in with it, type the code emailed to `NGOME_ADMIN_EMAIL`, choose your own password (15 characters or more; a passphrase from your password manager), scan the QR code with your authenticator app and type its code, and save the ten recovery codes away from the computer. Passkeys enrolled before ADR 0025 stay, and work as a second factor after the password. Lost the password or the authenticator and every recovery code? Run the command again with `"reset": true` (the owner is emailed). Keep an offline copy of `NGOME_ADMIN_SECRET_KEY`: without it the authenticator has to be set up again.
+
+Passkeys are bound to the origin's host name: moving the dashboard to another host means adding them again.
+
+To open it on another address as well, such as a custom domain mapped to the service, add that origin and sync. The password and the authenticator work on every address; a passkey works only on the address it was added on, so sign in there and add one from Security if you want it:
+
+```sh
+gh variable set NGOME_ADMIN_EXTRA_ORIGINS --env production --body '["https://<other host>"]'
+gh workflow run "Sync settings"
+```
+
+**Country.** Off until DB-IP Lite's CC BY 4.0 licence is confirmed on db-ip.com. Then build the image with `--build-arg DBIP_COUNTRY_LITE_MONTH=<YYYY-MM>` (add it to the Cloud Build trigger and `tool/cloudbuild.yaml`), set `NGOME_COUNTRY_LOOKUP_ENABLED=true` and `NGOME_COUNTRY_DB_PATH=/app/data/dbip-country-lite.mmdb`, and refresh the month in each month's first deploy.
+
+**The purge job** now also deletes closed counting periods, old crash reports, expired dashboard sessions and codes, idle sign-in limits and audit entries over 90 days old, so point it at the new image after the deploy (see "After a deploy: the jobs' image").
 
 ## Adding R2
 
@@ -203,6 +254,7 @@ gh secret set NGOME_SMTP_PASSWORD --env production   # the Brevo SMTP key
 python3 -c 'import secrets; print(secrets.token_urlsafe(48), end="")' | gh secret set NGOME_JWT_SECRET --env production
 python3 -c 'import secrets; print(secrets.token_urlsafe(48), end="")' | gh secret set NGOME_CONTACT_PEPPER --env production
 python3 -c 'import secrets; print(secrets.token_urlsafe(48), end="")' | gh secret set NGOME_ADMIN_TOKEN --env production
+python3 -c 'import secrets, base64; print(base64.b64encode(secrets.token_bytes(32)).decode(), end="")' | gh secret set NGOME_ADMIN_SECRET_KEY --env production
 ```
 
 The app status signing key (README, "App status and notices"): make a pair with `uv run ngome-app-status-key`, set the seed with `gh secret set NGOME_APP_STATUS_SIGNING_SEED --env production` (paste it when asked) and put the public key in the app's pinned list. Keep an offline copy of the seed: a new seed needs an app release that pins its public key first.
@@ -232,6 +284,7 @@ After the first sync, Secret Manager holds the contact pepper as version 1. Keep
 | `NGOME_VAULT_BLOB_STORE` | `postgres` until [R2](#adding-r2) |
 | `NGOME_PRIVACY_POLICY_SHA256` | The SHA-256 of each approved privacy policy, as a JSON list: `["<digest>"]`, where the digest is `sha256sum assets/policy/privacy_policy.md` in pesaclarity-app. Add each new version's digest when the app ships it, and keep older ones while older app versions are in use. Unset keeps the policy email off |
 | `FORWARDED_ALLOW_IPS` | `*` |
+| `NGOME_PROXY_HOPS` | `1` (the default). Where the caller's address sits in `X-Forwarded-For`, counted from the right: Cloud Run appends it last, and anything to its left is written by the caller. Set `2` only behind a Google load balancer |
 
 Anything not listed keeps its default from `src/ngome/core/config.py`.
 

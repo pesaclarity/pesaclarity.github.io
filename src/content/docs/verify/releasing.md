@@ -5,8 +5,8 @@ section: "verify"
 order: 41
 repo: "pesaclarity-app"
 path: "RELEASING.md"
-commit: "b401ac205bc8a9bebebe5c52e983bb761f6901d8"
-source: "https://github.com/pesaclarity/pesaclarity-app/blob/b401ac205bc8a9bebebe5c52e983bb761f6901d8/RELEASING.md"
+commit: "ab3c93185e8ee59ebc23157ce24e5fb3b117157c"
+source: "https://github.com/pesaclarity/pesaclarity-app/blob/ab3c93185e8ee59ebc23157ce24e5fb3b117157c/RELEASING.md"
 edit: "https://github.com/pesaclarity/pesaclarity-app/edit/main/RELEASING.md"
 ---
 How a release of the app is built, signed and published. Nothing here has been submitted to a store yet; the checklists at the end track what is still to do.
@@ -30,7 +30,7 @@ Release builds take these `--dart-define` values. Keep them in the release envir
 | `PESACLARITY_DISTRIBUTION` | `website` for the APKs on the website's download page, so their Update button opens that page instead of a store. The APK workflow (`test-apk.yml`) sets it. Leave it unset for Play, F-Droid and iPhone builds |
 | `PESACLARITY_DOWNLOAD_URL` | Optional: the website's download page (default `https://pesaclarity.github.io/install/#download`) |
 
-**Update notices.** On opening, and at most once a day, the app asks the server's `GET /v1/app-status` for the newest version and any notices, without an account. It shows only responses signed with a key pinned in `lib/src/features/app_status/domain/pinned_keys.dart`, as the ujumbe parser packs pin theirs: compiled in, never downloaded. Until `appStatusProductionPublicKey` holds the public key from pesaclarity-backend's `uv run ngome-app-status-key`, the app asks nothing and shows no notices. To change keys, ship a release that pins both the old and the new key before the server signs with the new one. The app blocks itself ("Please update Pesa Clarity") only for a verified notice whose reason is `amounts_wrong` and whose minimum version is newer than the build.
+**Update notices.** On opening, and at most once a day, the app asks the server's `GET /v1/app-status` for the newest version and any notices, without an account. It shows only responses signed with a key pinned in `lib/src/features/app_status/domain/pinned_keys.dart`, as the ujumbe parser packs pin theirs: compiled in, never downloaded. `appStatusProductionPublicKey` holds the public half of the server's signing seed; with it empty, the app would ask nothing and show no notices. To change keys, ship a release that pins both the old and the new key before the server signs with the new one. The app blocks itself ("Please update Pesa Clarity") only for a verified notice whose reason is `amounts_wrong` and whose minimum version is newer than the build.
 
 The app pins certificate authorities, not keys: Cloud Run and Cloudflare renew our certificates with new keys every few months, which would lock out every installed app if keys were pinned.
 
@@ -85,7 +85,7 @@ The steps the `Release to Google Play` workflow automates, done by hand:
    ```
 
    It reads the address from Secret Manager when asked (with your `gcloud` login), refuses anything but https, points the vault at the same server unless `PESACLARITY_VAULT_URL` says otherwise, and prints where the bundle, mapping and Dart symbols are.
-3. **Upload by hand** in Play Console › Test and release › Internal testing (or Closed testing): create a release, upload `app-play-release.aab`, add the notes from `fastlane/metadata/android/en-US/changelogs/<code>.txt`, then send it for review. Google reviews the SMS permission declaration (section 4) and the Data safety form before the first release goes out; new personal developer accounts also need a closed test with at least 12 testers for 14 days before production.
+3. **Upload by hand** in Play Console › Test and release › Internal testing (or Closed testing): create a release, upload `app-play-release.aab`, add the notes from `fastlane/metadata/android/en-US/changelogs/<code>.txt` (or the "What's new" text from `tool/release_notes --version X.Y.Z`, also in the `pesaclarity-play-release` artifact of a workflow run), then send it for review. Google reviews the SMS permission declaration (section 4) and the Data safety form before the first release goes out; new personal developer accounts also need a closed test with at least 12 testers for 14 days before production.
 
 The address is kept out of the repository, but it is compiled into the app, so anyone with the APK can read it. The server must not rely on it staying secret.
 

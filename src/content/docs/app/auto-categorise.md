@@ -5,8 +5,8 @@ section: "app"
 order: 2
 repo: "pesaclarity-app"
 path: "docs/specs/0001-auto-categorise.md"
-commit: "b401ac205bc8a9bebebe5c52e983bb761f6901d8"
-source: "https://github.com/pesaclarity/pesaclarity-app/blob/b401ac205bc8a9bebebe5c52e983bb761f6901d8/docs/specs/0001-auto-categorise.md"
+commit: "ab3c93185e8ee59ebc23157ce24e5fb3b117157c"
+source: "https://github.com/pesaclarity/pesaclarity-app/blob/ab3c93185e8ee59ebc23157ce24e5fb3b117157c/docs/specs/0001-auto-categorise.md"
 edit: "https://github.com/pesaclarity/pesaclarity-app/edit/main/docs/specs/0001-auto-categorise.md"
 ---
 **Status:** Implemented

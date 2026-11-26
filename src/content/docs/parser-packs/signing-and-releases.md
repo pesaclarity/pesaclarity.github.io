@@ -5,8 +5,8 @@ section: "parser-packs"
 order: 7
 repo: "ujumbe-parsers"
 path: "docs/RELEASING.md"
-commit: "fcee5edcab37dd6c2c9a2a0d2f76231d0f57a263"
-source: "https://github.com/pesaclarity/ujumbe-parsers/blob/fcee5edcab37dd6c2c9a2a0d2f76231d0f57a263/docs/RELEASING.md"
+commit: "07ad926149776c1918720dd8fb6a2ea599c8c592"
+source: "https://github.com/pesaclarity/ujumbe-parsers/blob/07ad926149776c1918720dd8fb6a2ea599c8c592/docs/RELEASING.md"
 edit: "https://github.com/pesaclarity/ujumbe-parsers/edit/main/docs/RELEASING.md"
 ---
 Each release of this package is also an over-the-air pack release: phones download the signed packs from the GitHub release and use them without waiting for an app update. This page covers how a release is made, how the signing key is kept, how to rotate it, and how the app trusts it.
@@ -35,10 +35,10 @@ Everything else comes back as a `PackRejection` with a typed `PackRejectionReaso
 
 ## Making a release
 
-Changes go to `dev` through pull requests with [Conventional Commits](https://www.conventionalcommits.org) titles (`feat: …`, `fix: …`, `feat!: …` for a breaking change). `dev` reaches `main` only through a pull request that passes QA (the `Release gate` check), after `tool/check` has passed locally, merged with a merge commit.
+Changes go to `dev` through rebase-merged pull requests, so every commit lands on `dev` as is and must follow [Conventional Commits](https://www.conventionalcommits.org) (`feat: …`, `fix: …`, `feat!: …` for a breaking change). `dev` reaches `main` only through a pull request that passes QA (the `Release gate` check), after `tool/check` has passed locally, merged with a merge commit.
 
 1. Bump the `version` of every pack whose rules changed. If a pack relies on an engine feature added in this release, set its `min_engine` to the next engine version, so older apps skip it instead of failing on it.
-2. On `main`, release-please keeps a release pull request open. It sets the next version from the titles (`feat` bumps the minor, `fix` the patch; before 1.0 a breaking change bumps the minor), in `pubspec.yaml` and `engineVersion` together, and writes the `CHANGELOG.md` entry.
+2. On `main`, release-please keeps a release pull request open. It sets the next version from the commit titles (`feat` bumps the minor, `fix` the patch; before 1.0 a breaking change bumps the minor), in `pubspec.yaml` and `engineVersion` together, and writes the `CHANGELOG.md` entry.
 3. Merging it tags `vX.Y.Z` and runs **Release packs**: the tag against `pubspec.yaml`, a build signed with the `UJUMBE_SIGNING_KEY` secret, `index.json` against its schema, and the upload to the GitHub release. It prints the public key it signed with; check it is one the app pins. The release is then merged back into `dev`.
 
 A tag pushed by hand (`git tag v0.1.0 && git push origin v0.1.0`) also runs **Release packs**.
