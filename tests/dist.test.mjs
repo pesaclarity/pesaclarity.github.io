@@ -352,12 +352,32 @@ test("links to a part of a page find it", () => {
   }
 });
 
+const playListing =
+  "https://play.google.com/store/apps/details?id=com.pesaclarity.app";
+
+test("Android downloads go to Google Play, with its badge", () => {
+  for (const name of [
+    "index.html",
+    "features/index.html",
+    "install/index.html",
+  ]) {
+    const page = pages.find((p) => p.name === name);
+    assert.ok(page, name);
+    assert.ok(page.html.includes(`href="${playListing}"`), name);
+    assert.match(page.html, /alt="Get it on Google Play"/, name);
+  }
+  for (const { name, html } of pages) {
+    assert.doesNotMatch(html, /play\.google\.com\/intl[^"]*badge/, name);
+    assert.doesNotMatch(html, /pesaclarity-play-32bit\.apk/, name);
+  }
+});
+
 test("the install page offers every download", () => {
   const install = pages.find((p) => p.name === "install/index.html");
   assert.ok(install);
+  assert.match(install.html, />APK for testers</);
   for (const file of [
     "pesaclarity-play.apk",
-    "pesaclarity-play-32bit.apk",
     "pesaclarity-foss.apk",
     "pesaclarity-foss-32bit.apk",
   ]) {

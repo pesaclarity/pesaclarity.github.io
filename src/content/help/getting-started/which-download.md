@@ -1,21 +1,20 @@
 ---
 title: "Which download is for me?"
-description: "There are two Android builds, one with Google services and one without, each for newer and older phones, and a test build for iPhone."
+description: "Most Android phones take the app from Google Play. There is also an F-Droid build without Google services, and a test build for iPhone."
 order: 2
-updated: 2026-11-19
+updated: 2026-11-26
 screen: support
 screenCaption: "Support Pesa Clarity, which only the F-Droid build shows. All records are made up."
 ---
 
-There are two Android builds: one with Google services, and the F-Droid build without them. Each comes for newer phones and for older 32-bit phones. Almost everything is in both; the few differences are below.
+There are two Android builds: the Google Play build, and the F-Droid build without Google services. Almost everything is in both; the few differences are below.
 
-The app is not in any store yet. Every build comes from the app's [releases on GitHub](https://github.com/pesaclarity/pesaclarity-app/releases), and the [Install](/install/) page links each one.
+The Google Play build comes from [Google Play](https://play.google.com/store/apps/details?id=com.pesaclarity.app), which also keeps it up to date. The F-Droid build comes from the app's [releases on GitHub](https://github.com/pesaclarity/pesaclarity-app/releases), and the [Install](/install/) page links it.
 
 ## Choose a build
 
-1. **For most phones** is the build made for Google Play. Start here.
-2. **F-Droid build** carries no Google services or other closed code. Choose it if you prefer software that is open all the way through.
-3. If your phone is older or runs Android Go, choose the 32-bit download of the same build: **For older phones**, or **F-Droid, older phones**.
+1. **Google Play** is for most phones. Start here: install it from Play, and Play gives you every update.
+2. **F-Droid build** carries no Google services or other closed code. Choose it if you prefer software that is open all the way through. If your phone is older or runs Android Go, take **F-Droid, older phones**.
 
 ## What differs
 
