@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import PlayBadge from "../components/PlayBadge.astro";
+import PlayButton from "../components/PlayButton.astro";
 import { withBase } from "../lib/paths";
 import {
   apks,
@@ -31,7 +31,7 @@ const changes = release?.changes ?? [];
         keeps it up to date, so there is nothing more to do there.
       </p>
       <div class="play">
-        <PlayBadge height={60} />
+        <PlayButton class="button-large" />
       </div>
 
       <h2 id="download">The F-Droid build</h2>

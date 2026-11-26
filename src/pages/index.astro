@@ -2,7 +2,7 @@
 import { darkScreen } from "../lib/screens";
 import { withBase } from "../lib/paths";
 import Base from "../layouts/Base.astro";
-import PlayBadge from "../components/PlayBadge.astro";
+import PlayButton from "../components/PlayButton.astro";
 import ScreenGallery from "../components/ScreenGallery.astro";
 import Screen from "../components/Screen.astro";
 import { appRelease, homeScreens, screens } from "../data/site";
@@ -56,7 +56,7 @@ const heroDark = darkScreen("home");
           private, and on your phone.
         </p>
         <div class="button-row">
-          <PlayBadge height={52} />
+          <PlayButton class="button-large" />
           <a class="button button-secondary button-large" href="#how">
             How it works
           </a>
