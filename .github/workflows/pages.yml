@@ -91,7 +91,7 @@ jobs:
             code=$(fetch "$SITE$path"); echo "$code /$path"; [ "$code" = 200 ] || fail=1
           done
           code=$(fetch "${SITE}does-not-exist/"); echo "$code /does-not-exist/ (expect 404)"; [ "$code" = 404 ] || fail=1
-          curl -sS "${SITE}does-not-exist/" | grep -q "Page not found" || { echo "custom 404 page not served"; fail=1; }
+          curl -sS "${SITE}does-not-exist/" | grep "Page not found" >/dev/null || { echo "custom 404 page not served"; fail=1; }
           origin=$(echo "$SITE" | sed -E 's#^(https?://[^/]+).*#\1#')
           for page in "" install/ privacy/; do
             for href in $(curl -sS "$SITE$page" | grep -o 'href="/[^"#]*' | cut -d'"' -f2 | sort -u); do
