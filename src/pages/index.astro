@@ -10,6 +10,7 @@ import {
   screens,
   testRelease,
 } from "../data/site";
+import { goals, notEndorsed } from "../data/impact";
 
 // What the app shows, each with its own screen. On phones they scroll
 // sideways in one row; wider screens show all four side by side.
@@ -196,6 +197,40 @@ const privacy = [
       <div class="shot business-shot">
         <Screen screen={screens.sell} />
       </div>
+    </div>
+  </section>
+
+  <section id="why" class="section rule" aria-labelledby="why-title">
+    <div class="container">
+      <div class="why-head">
+        <div>
+          <h2 id="why-title" class="title">
+            Clear money, for everyone.
+          </h2>
+          <p class="lead">
+            Pesa Clarity aims to contribute to three of the UN Sustainable
+            Development Goals.
+          </p>
+        </div>
+        <a class="button button-secondary" href={withBase("/impact/")}>
+          The problem and the goals
+        </a>
+      </div>
+      <ul class="goals" role="list">
+        {goals.map((g) => (
+          <li class="goal">
+            <span class={`sdg sdg-${g.n} goal-n`} aria-hidden="true">
+              {g.n}
+            </span>
+            <p class="goal-label">
+              Goal {g.n} <span aria-hidden="true">·</span> Target {g.target}
+            </p>
+            <h3>{g.goal}</h3>
+            <p class="goal-short">{g.short}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="note muted">These are aims, not results. {notEndorsed}</p>
     </div>
   </section>
 
@@ -450,6 +485,109 @@ const privacy = [
   .business-shot :global(img) {
     border-bottom: 0;
     border-radius: 2rem 2rem 0 0;
+  }
+
+  /* UN goals: each goal's number on its own colour, as the UN shows it;
+     everything else stays plain. */
+  .why-head {
+    display: grid;
+    gap: var(--space-5);
+    margin-bottom: var(--space-6);
+  }
+
+  .why-head .title {
+    margin-bottom: var(--space-4);
+  }
+
+  .why-head .lead {
+    margin: 0;
+  }
+
+  .why-head .button {
+    justify-self: start;
+  }
+
+  @media (min-width: 62rem) {
+    .why-head {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+    }
+  }
+
+  .goals {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 62rem) {
+    .goals {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
+  }
+
+  .goal {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: var(--space-4);
+    align-content: start;
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    background: var(--color-surface);
+  }
+
+  .goal-n {
+    grid-row: span 2;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 1rem;
+    font-size: 1.75rem;
+    letter-spacing: -0.04em;
+  }
+
+  .goal-label {
+    margin: 0;
+    align-self: end;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
+  }
+
+  .goal h3 {
+    margin: 0;
+    font-size: var(--text-lg);
+    line-height: 1.2;
+  }
+
+  .goal-short {
+    grid-column: 1 / -1;
+    margin: var(--space-4) 0 0;
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 62rem) {
+    .goal {
+      grid-template-columns: minmax(0, 1fr);
+      padding: var(--space-6);
+    }
+
+    .goal-n {
+      grid-row: auto;
+      width: 4.5rem;
+      height: 4.5rem;
+      border-radius: 1.25rem;
+      font-size: 2.25rem;
+      margin-bottom: var(--space-6);
+    }
+
+    .goal h3 {
+      margin-top: var(--space-2);
+      font-size: 1.5rem;
+    }
   }
 
   .final {
