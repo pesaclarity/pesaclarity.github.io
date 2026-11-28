@@ -419,7 +419,7 @@ test("sizes come from the release, never typed by hand", () => {
   }
 });
 
-test("Impact: linked from every footer, with honest goals", () => {
+test("Impact: linked from home and every footer, with honest goals", () => {
   const impact = pages.find((p) => p.name === "impact/index.html");
   assert.ok(impact, "impact/index.html is built");
   const link = `href="${base}/impact/"`;
@@ -429,12 +429,21 @@ test("Impact: linked from every footer, with honest goals", () => {
     const footer = html.match(/<footer\b[\s\S]*<\/footer>/)?.[0] ?? "";
     assert.ok(footer.includes(link), `${name}: the footer links to it`);
   }
-  assert.match(
-    impact.html,
-    /not endorsed by or affiliated with the United Nations/,
-  );
-  assert.match(impact.html, /aims to contribute to/);
-  assert.doesNotMatch(impact.html, /\bachieves\b/);
+  assert.match(home, /id="why"/, "the home page has the goals section");
+  for (const html of [impact.html, home]) {
+    assert.match(html, /not endorsed by or affiliated with the United Nations/);
+    assert.match(html, /aims to contribute to/);
+    assert.doesNotMatch(html, /\bachieves\b/);
+  }
+  // The home page names each goal with its number and target.
+  for (const [n, target] of [
+    [1, "1.4"],
+    [8, "8.3"],
+    [10, "10.2"],
+  ]) {
+    assert.match(home, new RegExp(`class="sdg sdg-${n}\\b`), `goal ${n}`);
+    assert.ok(home.includes(`Target ${target}`), `target ${target}`);
+  }
   for (const n of [1, 8, 10]) {
     assert.ok(
       impact.html.includes(`href="https://sdgs.un.org/goals/goal${n}"`),

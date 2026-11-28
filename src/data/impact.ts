@@ -37,6 +37,8 @@ export interface Goal {
   n: 1 | 8 | 10;
   goal: string;
   target: string;
+  /** One short line for the home page, taken from `how`. */
+  short: string;
   /** The target's wording, verbatim from `source`. */
   wording: string;
   source: string;
@@ -50,6 +52,7 @@ export const goals: readonly Goal[] = [
     n: 1,
     goal: "No poverty",
     target: "1.4",
+    short: "A daily amount that lasts until the next money comes.",
     wording:
       "By 2030, ensure that all men and women, in particular the poor and the vulnerable, have equal rights to economic resources, as well as access to basic services, ownership and control over land and other forms of property, inheritance, natural resources, appropriate new technology and financial services, including microfinance",
     source: "https://sdgs.un.org/goals/goal1",
@@ -61,6 +64,7 @@ export const goals: readonly Goal[] = [
     n: 8,
     goal: "Decent work and economic growth",
     target: "8.3",
+    short: "Proper books for a small business, in plain words.",
     wording:
       "Promote development-oriented policies that support productive activities, decent job creation, entrepreneurship, creativity and innovation, and encourage the formalization and growth of micro-, small- and medium-sized enterprises, including through access to financial services",
     source: "https://sdgs.un.org/goals/goal8",
@@ -73,6 +77,7 @@ export const goals: readonly Goal[] = [
     n: 10,
     goal: "Reduced inequalities",
     target: "10.2",
+    short: "Every feature free for everyone, on older phones too.",
     wording:
       "By 2030, empower and promote the social, economic and political inclusion of all, irrespective of age, sex, disability, race, ethnicity, origin, religion or economic or other status",
     source: "https://sdgs.un.org/goals/goal10",
