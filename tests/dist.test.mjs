@@ -372,6 +372,30 @@ test("Android downloads go to Google Play, with the Play button", () => {
   }
 });
 
+test("home: the daily plan, with Android links only to Google Play", () => {
+  const home = pages.find((p) => p.name === "index.html").html;
+  assert.match(home, /<h1[^>]*>Your money has a plan now\.<\/h1>/);
+  assert.match(home, /class="play-store/, "the Play button");
+  // Every link to an app download on the home page goes to the Play listing.
+  for (const [, href] of home.matchAll(/href="([^"]+)"/g)) {
+    assert.doesNotMatch(href, /\.apk$|\/releases\/download\//, href);
+    if (/play\.google\.com/.test(href)) assert.equal(href, playListing);
+  }
+  // The hero screen loads first; nothing is both high priority and lazy.
+  for (const [img] of home.matchAll(/<img\b[^>]*>/g)) {
+    if (/fetchpriority="high"/.test(img)) {
+      assert.doesNotMatch(img, /loading="lazy"/, img);
+    }
+  }
+  assert.match(home, /<img\b[^>]*fetchpriority="high"[^>]*>/);
+  assert.doesNotMatch(home, /daily budget/);
+});
+
+test("the redesign mockups are not published", () => {
+  assert.ok(!existsSync(join(dist, "mockups")), "dist/mockups/ exists");
+  assert.ok(!pages.some((p) => p.name.startsWith("mockups/")));
+});
+
 test("the install page offers every download", () => {
   const install = pages.find((p) => p.name === "install/index.html");
   assert.ok(install);
@@ -395,22 +419,22 @@ test("sizes come from the release, never typed by hand", () => {
   }
 });
 
-test("Impact: linked from home and every footer, with honest goals", () => {
+test("Impact: linked from every footer, with honest goals", () => {
   const impact = pages.find((p) => p.name === "impact/index.html");
   assert.ok(impact, "impact/index.html is built");
   const link = `href="${base}/impact/"`;
   const home = pages.find((p) => p.name === "index.html").html;
   assert.ok(home.includes(link), "the home page links to it");
-  assert.match(home, /id="why"/, "the home page has the Impact section");
   for (const { name, html } of pages) {
     const footer = html.match(/<footer\b[\s\S]*<\/footer>/)?.[0] ?? "";
     assert.ok(footer.includes(link), `${name}: the footer links to it`);
   }
-  for (const html of [impact.html, home]) {
-    assert.match(html, /not endorsed by or affiliated with the United Nations/);
-    assert.match(html, /aims to contribute to/);
-    assert.doesNotMatch(html, /\bachieves\b/);
-  }
+  assert.match(
+    impact.html,
+    /not endorsed by or affiliated with the United Nations/,
+  );
+  assert.match(impact.html, /aims to contribute to/);
+  assert.doesNotMatch(impact.html, /\bachieves\b/);
   for (const n of [1, 8, 10]) {
     assert.ok(
       impact.html.includes(`href="https://sdgs.un.org/goals/goal${n}"`),

@@ -63,8 +63,16 @@ test("a screen with a dark version renders as a light and dark pair", () => {
       assert.equal(d.width, l.width);
       assert.equal(d.height, l.height);
       assert.equal(d.loading, "lazy", "the hidden image is never fetched");
-      assert.equal(l.loading, "lazy", "the hidden image is never fetched");
     }
+    // The hero's light screen loads at once, so the first view never
+    // waits (in dark mode that one light file is fetched too).
+    assert.equal(light[0].loading, undefined, "the hero loads at once");
+    // Besides the hero, only the first screen in a sideways row loads at
+    // once, so it never shows blank; the rest stay lazy.
+    const eager = all.filter(
+      (i) => i.cls.includes("screen-light") && i.loading !== "lazy",
+    );
+    assert.ok(eager.length <= 2, `${eager.length} light screens load at once`);
     // A screen with no dark file stays a single, unmarked image.
     for (const i of all) {
       const name = i.src?.match(/\/screens\/([^/]+)\.webp$/)?.[1];
