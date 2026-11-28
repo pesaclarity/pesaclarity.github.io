@@ -85,8 +85,7 @@ const current = (href: string) => path === href || path.startsWith(href);
     top: 0;
     z-index: 20;
     border-bottom: 1px solid var(--color-border);
-    background: color-mix(in srgb, var(--color-background) 85%, transparent);
-    backdrop-filter: saturate(1.4) blur(12px);
+    background: var(--color-background);
   }
 
   .header-inner {

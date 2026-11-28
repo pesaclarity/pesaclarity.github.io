@@ -7,9 +7,18 @@ import type { Screen } from "../data/site";
 interface Props {
   screen: Screen;
   class?: string;
+  /** Load the light screen at once, for one near the top of a page. */
+  eager?: boolean;
+  /** The page's main image: load it first (implies eager). */
+  priority?: boolean;
 }
 
-const { screen, class: className } = Astro.props;
+const {
+  screen,
+  class: className,
+  eager = false,
+  priority = false,
+} = Astro.props;
 const dark = darkScreen(screen.file);
 ---
 
@@ -19,8 +28,9 @@ const dark = darkScreen(screen.file);
   width="390"
   height="844"
   alt={screen.alt}
-  loading="lazy"
-  decoding="async"
+  loading={eager || priority ? undefined : "lazy"}
+  decoding={eager || priority ? undefined : "async"}
+  fetchpriority={priority ? "high" : undefined}
 />
 {dark && (
   <img

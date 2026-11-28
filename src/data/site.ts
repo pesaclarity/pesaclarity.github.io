@@ -8,7 +8,7 @@ export const site = {
   name: "Pesa Clarity",
   promise: "Know where your pesa goes.",
   description:
-    "Your M-Pesa and bank SMS, turned into a simple daily budget. Free, private, and on your phone.",
+    "Your M-Pesa and bank SMS, turned into a simple daily plan. Free, private, and on your phone.",
   locale: "en_KE",
 } as const;
 
@@ -710,14 +710,6 @@ export const businessScreens: readonly Screen[] = [
   screens.stock,
   screens.closeDay,
   screens.tax,
-];
-
-/** The home page's screens, under the one at the top. */
-export const homeScreens: readonly Screen[] = [
-  screens.activity,
-  screens.plan,
-  screens.debts,
-  screens.insights,
 ];
 
 /** The two sides of the app, on the home page. */
